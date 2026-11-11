@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KMN Clinic – Phòng khám Đa khoa KMN</title>
+  <link rel="stylesheet" href="assets/vendor/fonts/fonts.css">
+  <link rel="stylesheet" href="assets/vendor/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/vendor/bootstrap-icons/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="assets/css/theme.css">
+  <link rel="stylesheet" href="assets/css/public.css">
+</head>
+<body class="public" data-layout="public" data-active="trang-chu">
+  <div id="site-header"></div>
+
+  <main>
+    <!-- HERO: ảnh hero-banner.webp, tiêu đề lấy từ site.json (clinic.heroTitle / heroSubtitle) -->
+    <section class="hero pt-5 pb-5">
+      <div class="container pb-4">
+        <div class="row align-items-center g-5">
+          <div class="col-lg-6">
+            <span class="hero-badge mb-3"><i class="bi bi-heart-pulse"></i>Phòng khám Đa khoa KMN</span>
+            <h1 class="mb-3">Chăm sóc sức khỏe tận tâm cho <span class="text-primary">cả gia đình</span></h1>
+            <p class="lead mb-4">Tra cứu bác sĩ, xem lịch làm việc và đặt lịch khám trực tuyến chỉ trong vài bước.</p>
+            <div class="d-flex flex-wrap gap-2">
+              <a href="dat-lich.html" class="btn btn-primary btn-lg"><i class="bi bi-calendar2-plus me-2"></i>Đặt lịch ngay</a>
+              <a href="bac-si.html" class="btn btn-outline-primary btn-lg"><i class="bi bi-search me-2"></i>Tra cứu bác sĩ</a>
+            </div>
+            <div class="d-flex flex-wrap gap-4 mt-4 text-muted-kmn small">
+              <span><i class="bi bi-clock text-primary me-1"></i>T2–T6: 7:00 – 17:00</span>
+              <span><i class="bi bi-telephone text-primary me-1"></i>Hotline 123 321 367</span>
+            </div>
+          </div>
+          <div class="col-lg-6 position-relative">
+            <img src="assets/img/hero-banner.webp" alt="Không gian tiếp đón tại phòng khám (ảnh minh họa)" class="hero-img">
+            <!-- Hai ô nổi: số liệu đếm từ database (số khoa, số bác sĩ) -->
+            <div class="hero-float f1"><span class="icon-circle ic-green"><i class="bi bi-diagram-3"></i></span>
+              <div><b class="text-navy">4 chuyên khoa</b><br><small class="text-muted-kmn">Đếm từ bảng KHOA</small></div></div>
+            <div class="hero-float f2"><span class="icon-circle ic-blue"><i class="bi bi-person-badge"></i></span>
+              <div><b class="text-navy">8 bác sĩ</b><br><small class="text-muted-kmn">Đang có lịch làm việc</small></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tra cứu nhanh: chọn khoa + ngày -> sang trang bác sĩ đã lọc -->
+    <div class="container">
+      <form class="quick-search row g-2 align-items-end" action="bac-si.html">
+        <div class="col-md-4"><label class="form-label">Chuyên khoa</label>
+          <select class="form-select"><option>Tất cả chuyên khoa</option><option>Nội tổng quát</option><option>Nhi khoa</option><option>Tai Mũi Họng</option><option>Răng Hàm Mặt</option></select></div>
+        <div class="col-md-3"><label class="form-label">Ngày khám</label><input type="date" class="form-control" value="2026-11-12"></div>
+        <div class="col-md-3"><label class="form-label">Tên bác sĩ</label><input class="form-control" placeholder="Nhập tên bác sĩ"></div>
+        <div class="col-md-2 d-grid"><button class="btn btn-primary"><i class="bi bi-search me-1"></i>Tìm</button></div>
+      </form>
+    </div>
+
+    <!-- GIỚI THIỆU: ảnh gioi-thieu.webp; đoạn mô tả lấy từ site.json (clinic.about) -->
+    <section class="section" id="gioi-thieu">
+      <div class="container">
+        <div class="row align-items-center g-5">
+          <div class="col-lg-6"><img src="assets/img/gioi-thieu.webp" alt="Quầy tiếp đón (ảnh minh họa)" class="about-img"></div>
+          <div class="col-lg-6">
+            <div class="section-title text-start mx-0 mb-3"><span class="eyebrow">Về chúng tôi</span>
+              <h2>Phòng khám Đa khoa KMN</h2></div>
+            <p class="text-muted-kmn">Khu vực này hiển thị đoạn giới thiệu do chủ phòng khám cung cấp trong site.json. Khi chưa có nội dung, chỉ hiện các ý dưới đây vì chúng là chức năng thật của website.</p>
+            <ul class="check-list mt-3">
+              <li><i class="bi bi-check-circle-fill"></i>Đặt lịch khám trực tuyến theo lịch làm việc thật của bác sĩ</li>
+              <li><i class="bi bi-check-circle-fill"></i>Theo dõi trạng thái lịch hẹn, xem lại chẩn đoán và đơn thuốc</li>
+              <li><i class="bi bi-check-circle-fill"></i>Hóa đơn minh bạch: tiền công khám và tiền thuốc tách riêng</li>
+            </ul>
+            <a href="chuyen-khoa.html" class="btn btn-soft mt-2">Xem các chuyên khoa <i class="bi bi-arrow-right ms-1"></i></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHUYÊN KHOA: dữ liệu bảng KHOA; ảnh dùng bộ ảnh chung khoa-1..4.svg xoay vòng -->
+    <section class="section bg-sky-2">
+      <div class="container">
+        <div class="section-title"><span class="eyebrow">Chuyên khoa</span><h2>Khám đúng chuyên khoa, đúng bác sĩ</h2>
+          <p>Danh sách khoa lấy trực tiếp từ hệ thống. Chọn một khoa để xem bác sĩ và lịch làm việc.</p></div>
+        <div class="row g-4">
+          <div class="col-sm-6 col-lg-3"><a href="chuyen-khoa.html" class="text-decoration-none"><div class="card-kmn khoa-card hover-lift">
+            <img src="assets/img/khoa/khoa-1.svg" class="khoa-img" alt=""><div class="card-body"><h3>Nội tổng quát</h3>
+            <p>Khám và theo dõi các bệnh lý nội khoa thường gặp.</p><span class="meta"><i class="bi bi-person-badge me-1"></i>3 bác sĩ</span></div></div></a></div>
+          <div class="col-sm-6 col-lg-3"><a href="chuyen-khoa.html" class="text-decoration-none"><div class="card-kmn khoa-card hover-lift">
+            <img src="assets/img/khoa/khoa-2.svg" class="khoa-img" alt=""><div class="card-body"><h3>Nhi khoa</h3>
+            <p>Khám sức khỏe và bệnh lý thường gặp ở trẻ em.</p><span class="meta"><i class="bi bi-person-badge me-1"></i>2 bác sĩ</span></div></div></a></div>
+          <div class="col-sm-6 col-lg-3"><a href="chuyen-khoa.html" class="text-decoration-none"><div class="card-kmn khoa-card hover-lift">
+            <img src="assets/img/khoa/khoa-3.svg" class="khoa-img" alt=""><div class="card-body"><h3>Tai Mũi Họng</h3>
+            <p>Khám các bệnh lý tai, mũi, họng.</p><span class="meta"><i class="bi bi-person-badge me-1"></i>2 bác sĩ</span></div></div></a></div>
+          <div class="col-sm-6 col-lg-3"><a href="chuyen-khoa.html" class="text-decoration-none"><div class="card-kmn khoa-card hover-lift">
+            <img src="assets/img/khoa/khoa-4.svg" class="khoa-img" alt=""><div class="card-body"><h3>Răng Hàm Mặt</h3>
+            <p>Khám răng miệng tổng quát.</p><span class="meta"><i class="bi bi-person-badge me-1"></i>1 bác sĩ</span></div></div></a></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BÁC SĨ NỔI BẬT: featuredDoctorIds trong site.json, nếu trống thì lấy bác sĩ có lịch gần nhất -->
+    <section class="section">
+      <div class="container">
+        <div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4">
+          <div class="section-title text-start m-0"><span class="eyebrow">Đội ngũ bác sĩ</span><h2 class="mb-0">Bác sĩ có lịch trong tuần</h2></div>
+          <a href="bac-si.html" class="btn btn-soft">Xem tất cả bác sĩ <i class="bi bi-arrow-right ms-1"></i></a>
+        </div>
+        <div class="row g-4">
+          <div class="col-md-6 col-lg-3"><div class="card-kmn doctor-card hover-lift">
+            <div class="doctor-head"><img class="avatar avatar-lg" alt="" data-avatar=""><div><h3>BS. Trần Minh Anh</h3><span class="khoa-tag">Nội tổng quát</span></div></div>
+            <hr><div class="small text-muted-kmn mb-2">Lịch gần nhất</div>
+            <div class="slot-list"><span class="slot"><b>T5 12/11</b>Sáng · P.101</span><span class="slot"><b>T7 14/11</b>Chiều · P.101</span></div>
+            <a href="dat-lich.html" class="btn btn-primary btn-sm w-100 mt-3">Đặt lịch</a></div></div>
+          <div class="col-md-6 col-lg-3"><div class="card-kmn doctor-card hover-lift">
+            <div class="doctor-head"><img class="avatar avatar-lg" alt="" data-avatar="https://anh-khong-ton-tai.example/bac-si.jpg"><div><h3>BS. Lê Thu Hà</h3><span class="khoa-tag">Nhi khoa</span></div></div>
+            <hr><div class="small text-muted-kmn mb-2">Lịch gần nhất</div>
+            <div class="slot-list"><span class="slot"><b>T5 12/11</b>Chiều · P.201</span></div>
+            <a href="dat-lich.html" class="btn btn-primary btn-sm w-100 mt-3">Đặt lịch</a></div></div>
+          <div class="col-md-6 col-lg-3"><div class="card-kmn doctor-card hover-lift">
+            <div class="doctor-head"><img class="avatar avatar-lg" alt="" data-avatar=""><div><h3>BS. Phạm Quốc Bảo</h3><span class="khoa-tag">Tai Mũi Họng</span></div></div>
+            <hr><div class="small text-muted-kmn mb-2">Lịch gần nhất</div>
+            <div class="slot-list"><span class="slot"><b>T6 13/11</b>Sáng · P.301</span><span class="slot"><b>CN 15/11</b>Sáng · P.301</span></div>
+            <a href="dat-lich.html" class="btn btn-primary btn-sm w-100 mt-3">Đặt lịch</a></div></div>
+          <div class="col-md-6 col-lg-3"><div class="card-kmn doctor-card hover-lift">
+            <div class="doctor-head"><img class="avatar avatar-lg" alt="" data-avatar=""><div><h3>BS. Võ Ngọc Diễm</h3><span class="khoa-tag">Răng Hàm Mặt</span></div></div>
+            <hr><div class="small text-muted-kmn mb-2">Lịch gần nhất</div>
+            <div class="slot-list"><span class="slot"><b>T2 16/11</b>Chiều · P.401</span></div>
+            <a href="dat-lich.html" class="btn btn-primary btn-sm w-100 mt-3">Đặt lịch</a></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LỊCH KHÁM: Lich_lam_viec 7 ngày tới, nhóm theo ngày và ca -->
+    <section class="section bg-sky-2" id="lich-kham">
+      <div class="container">
+        <div class="section-title"><span class="eyebrow">Lịch làm việc</span><h2>Lịch khám 7 ngày tới</h2>
+          <p>Chỉ hiện lịch còn đặt được (chưa tới giờ bắt đầu ca).</p></div>
+        <div class="card-kmn p-2 p-md-3">
+          <div class="table-responsive">
+            <table class="table week-table mb-0">
+              <thead><tr><th>Ca</th><th>T5 12/11</th><th>T6 13/11</th><th>T7 14/11</th><th>CN 15/11</th><th>T2 16/11</th><th>T3 17/11</th><th>T4 18/11</th></tr></thead>
+              <tbody>
+                <tr><th>Sáng<br><small class="fw-normal text-muted-kmn">7:00–11:30</small></th>
+                  <td><span class="week-chip">BS. Trần Minh Anh<small>Nội · P.101</small></span></td>
+                  <td><span class="week-chip">BS. Phạm Quốc Bảo<small>TMH · P.301</small></span></td>
+                  <td></td>
+                  <td><span class="week-chip">BS. Phạm Quốc Bảo<small>TMH · P.301</small></span></td>
+                  <td><span class="week-chip">BS. Trần Minh Anh<small>Nội · P.101</small></span></td>
+                  <td></td>
+                  <td><span class="week-chip">BS. Lê Thu Hà<small>Nhi · P.201</small></span></td></tr>
+                <tr><th>Chiều<br><small class="fw-normal text-muted-kmn">13:00–17:00</small></th>
+                  <td><span class="week-chip">BS. Lê Thu Hà<small>Nhi · P.201</small></span></td>
+                  <td></td>
+                  <td><span class="week-chip">BS. Trần Minh Anh<small>Nội · P.101</small></span></td>
+                  <td></td>
+                  <td><span class="week-chip">BS. Võ Ngọc Diễm<small>RHM · P.401</small></span></td>
+                  <td><span class="week-chip">BS. Lê Thu Hà<small>Nhi · P.201</small></span></td>
+                  <td></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUY TRÌNH ĐẶT LỊCH: 4 bước, ảnh quy-trinh/buoc-1..4 -->
+    <section class="section">
+      <div class="container">
+        <div class="section-title"><span class="eyebrow">Quy trình</span><h2>Đặt lịch khám trong 4 bước</h2></div>
+        <div class="row g-4">
+          <div class="col-6 col-lg-3"><div class="card-kmn step-card"><span class="step-num">01</span><img src="assets/img/quy-trinh/buoc-1.svg" alt=""><h3 class="h6">Chọn khoa, bác sĩ</h3><p class="small text-muted-kmn mb-0">Tra cứu theo chuyên khoa hoặc tên bác sĩ.</p></div></div>
+          <div class="col-6 col-lg-3"><div class="card-kmn step-card"><span class="step-num">02</span><img src="assets/img/quy-trinh/buoc-2.svg" alt=""><h3 class="h6">Chọn ngày, ca</h3><p class="small text-muted-kmn mb-0">Chỉ hiện lịch làm việc còn đặt được.</p></div></div>
+          <div class="col-6 col-lg-3"><div class="card-kmn step-card"><span class="step-num">03</span><img src="assets/img/quy-trinh/buoc-3.svg" alt=""><h3 class="h6">Xác nhận</h3><p class="small text-muted-kmn mb-0">Lễ tân gọi điện xác nhận lịch hẹn.</p></div></div>
+          <div class="col-6 col-lg-3"><div class="card-kmn step-card"><span class="step-num">04</span><img src="assets/img/quy-trinh/buoc-4.svg" alt=""><h3 class="h6">Đến khám</h3><p class="small text-muted-kmn mb-0">Báo tên tại quầy, lễ tân tiếp nhận.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LIÊN HỆ: thông tin + bản đồ từ site.json (googleMapsEmbedUrl) -->
+    <section class="section bg-sky-2" id="lien-he">
+      <div class="container">
+        <div class="row g-5 align-items-center">
+          <div class="col-lg-5">
+            <div class="section-title text-start mx-0 mb-4"><span class="eyebrow">Liên hệ</span><h2>Ghé thăm KMN Clinic</h2></div>
+            <div class="contact-item"><span class="icon-circle ic-blue"><i class="bi bi-geo-alt"></i></span><div><b class="text-navy">Địa chỉ</b><br>126 Nguyễn Thiện Thành, Phường Hòa Thuận, Vĩnh Long</div></div>
+            <div class="contact-item"><span class="icon-circle ic-cyan"><i class="bi bi-telephone"></i></span><div><b class="text-navy">Điện thoại</b><br>036 6767 367 · Hotline 123 321 367</div></div>
+            <div class="contact-item"><span class="icon-circle ic-green"><i class="bi bi-envelope"></i></span><div><b class="text-navy">Email</b><br>khangnhutminhtvu@gmail.com</div></div>
+            <div class="contact-item"><span class="icon-circle ic-orange"><i class="bi bi-clock"></i></span><div><b class="text-navy">Giờ làm việc</b><br>Thứ 2 – Thứ 6: 7:00 – 17:00<br>Thứ 7 – Chủ nhật: 8:00 – 16:00</div></div>
+          </div>
+          <div class="col-lg-7">
+            <iframe class="map-frame" title="Bản đồ KMN Clinic" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1124.5380450024638!2d106.34575418830666!3d9.92345159459746!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31a0175ea296facb%3A0x55ded92e29068221!2zxJDhuqFpIEjhu41jIFRyw6AgVmluaA!5e1!3m2!1svi!2s!4v1794408505176!5m2!1svi!2s"></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-sm">
+      <div class="container">
+        <div class="cta-band d-flex flex-wrap align-items-center justify-content-between gap-3">
+          <div><h2 class="h3 mb-1">Sẵn sàng đặt lịch khám?</h2><p class="mb-0 opacity-75">Chọn bác sĩ và ca phù hợp, lễ tân sẽ gọi xác nhận.</p></div>
+          <a href="dat-lich.html" class="btn btn-light btn-lg text-primary"><i class="bi bi-calendar2-plus me-2"></i>Đặt lịch ngay</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+  <script src="assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/layout.js"></script>
+</body>
+</html>

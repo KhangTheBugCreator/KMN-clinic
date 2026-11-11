@@ -1,0 +1,150 @@
+/* =========================================================
+   public.css – giao diện Public Website (khách hàng)
+   Phong cách: Modern Healthcare, sáng, nhiều khoảng trắng.
+   ========================================================= */
+
+body.public { background: var(--kmn-white); }
+
+/* ---------- Header ---------- */
+.site-header { position: sticky; top: 0; z-index: 1030; background: rgba(255, 255, 255, .92);
+  backdrop-filter: blur(10px); border-bottom: 1px solid var(--kmn-border); }
+.site-header .navbar { padding: .6rem 0; }
+.site-header .brand img { height: 44px; width: auto; }
+.site-header .nav-link { color: var(--kmn-text); font-weight: 500; padding: .5rem .8rem !important; border-radius: 999px; }
+.site-header .nav-link:hover { color: var(--kmn-blue); background: var(--kmn-sky-2); }
+.site-header .nav-link.active { color: var(--kmn-blue); background: var(--kmn-sky); }
+.topbar { background: var(--kmn-navy); color: #dbe6f7; font-size: .82rem; }
+.topbar a { color: #fff; text-decoration: none; }
+
+/* ---------- Hero ---------- */
+.hero { position: relative; background: linear-gradient(180deg, var(--kmn-sky) 0%, #fff 100%); overflow: hidden; }
+.hero .hero-img { border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); width: 100%;
+  aspect-ratio: 16 / 10; object-fit: cover; background: var(--kmn-sky); }
+.hero h1 { font-size: clamp(2rem, 4vw, 3.1rem); line-height: 1.18; }
+.hero .lead { color: var(--kmn-muted); font-size: 1.1rem; }
+.hero-badge { display: inline-flex; gap: .5rem; align-items: center; background: #fff; color: var(--kmn-blue);
+  border-radius: 999px; padding: .35rem .9rem; font-weight: 600; font-size: .85rem; box-shadow: var(--shadow-sm); }
+.hero-float { position: absolute; background: #fff; border-radius: var(--radius); box-shadow: var(--shadow);
+  padding: .8rem 1rem; display: flex; gap: .7rem; align-items: center; }
+.hero-float.f1 { left: -18px; bottom: 32px; }
+.hero-float.f2 { right: -14px; top: 28px; }
+@media (max-width: 991.98px) { .hero-float { display: none; } }
+
+/* Thanh tra cứu nhanh dưới hero */
+.quick-search { background: #fff; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);
+  padding: 1rem; margin-top: -2.5rem; position: relative; z-index: 2; }
+
+/* ---------- Section ---------- */
+.section { padding: 4.5rem 0; }
+.section-sm { padding: 3rem 0; }
+.section-title { text-align: center; max-width: 640px; margin: 0 auto 2.5rem; }
+.section-title .eyebrow { color: var(--kmn-cyan); font-weight: 600; text-transform: uppercase;
+  letter-spacing: .08em; font-size: .8rem; }
+.section-title h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); margin: .4rem 0 .6rem; }
+.section-title p { color: var(--kmn-muted); }
+
+/* Khối giới thiệu */
+.about-img { border-radius: var(--radius-lg); width: 100%; aspect-ratio: 4 / 3; object-fit: cover; box-shadow: var(--shadow); }
+.check-list { list-style: none; padding: 0; }
+.check-list li { display: flex; gap: .6rem; margin-bottom: .6rem; }
+.check-list i { color: var(--kmn-green); font-size: 1.1rem; }
+
+/* Thẻ chuyên khoa */
+.khoa-card { overflow: hidden; height: 100%; }
+.khoa-card .khoa-img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: var(--kmn-sky); }
+.khoa-card .card-body { padding: 1.1rem 1.2rem 1.3rem; }
+.khoa-card h3 { font-size: 1.1rem; margin-bottom: .35rem; }
+.khoa-card p { color: var(--kmn-muted); font-size: .92rem; margin-bottom: .8rem; }
+.khoa-card .meta { font-size: .85rem; color: var(--kmn-muted); }
+
+/* Thẻ bác sĩ */
+.doctor-card { height: 100%; padding: 1.25rem; }
+.doctor-card .doctor-head { display: flex; gap: 1rem; align-items: center; }
+.doctor-card h3 { font-size: 1.05rem; margin: 0; }
+.doctor-card .khoa-tag { display: inline-block; background: var(--kmn-sky); color: var(--kmn-blue);
+  font-size: .78rem; font-weight: 600; border-radius: 999px; padding: .15rem .6rem; margin-top: .3rem; }
+.slot-list { display: flex; flex-wrap: wrap; gap: .4rem; }
+.slot { border: 1px solid var(--kmn-border); border-radius: 10px; padding: .35rem .6rem; font-size: .8rem;
+  background: var(--kmn-sky-2); line-height: 1.25; }
+.slot b { color: var(--kmn-navy); display: block; font-weight: 600; }
+
+/* Quy trình đặt lịch */
+.step-card { text-align: center; padding: 1.5rem 1rem; height: 100%; position: relative; }
+.step-card img { width: 96px; height: 96px; border-radius: 24px; margin-bottom: 1rem; }
+.step-num { position: absolute; top: 14px; left: 16px; font-family: var(--font-head); font-weight: 700;
+  color: #c9dbf2; font-size: 1.6rem; }
+
+/* Lịch làm việc dạng tuần */
+.week-table th { background: var(--kmn-sky-2); color: var(--kmn-navy); font-weight: 600; font-size: .85rem; white-space: nowrap; }
+.week-table td { font-size: .82rem; vertical-align: top; min-width: 120px; }
+.week-chip { display: block; background: var(--kmn-sky); border-left: 3px solid var(--kmn-blue); border-radius: 8px;
+  padding: .3rem .5rem; margin-bottom: .35rem; color: var(--kmn-navy); }
+.week-chip small { color: var(--kmn-muted); display: block; }
+
+/* Liên hệ */
+.contact-item { display: flex; gap: .9rem; align-items: flex-start; margin-bottom: 1rem; }
+.map-frame { width: 100%; aspect-ratio: 4 / 3; border: 0; border-radius: var(--radius); background: var(--kmn-sky); }
+
+/* CTA cuối trang */
+.cta-band { background: linear-gradient(120deg, var(--kmn-blue) 0%, var(--kmn-cyan) 100%); color: #fff;
+  border-radius: var(--radius-lg); padding: 2.5rem; }
+.cta-band h2 { color: #fff; }
+
+/* ---------- Footer ---------- */
+.site-footer { background: var(--kmn-sky-2); border-top: 1px solid var(--kmn-border); padding: 3rem 0 1.5rem; font-size: .92rem; }
+.site-footer .footer-logo { height: 46px; background: #fff; border-radius: 12px; padding: 4px 8px; }
+.site-footer h6 { font-family: var(--font-head); color: var(--kmn-navy); font-weight: 600; margin-bottom: .9rem; }
+.site-footer a { color: var(--kmn-text); text-decoration: none; }
+.site-footer a:hover { color: var(--kmn-blue); }
+.site-footer .copy { border-top: 1px solid var(--kmn-border); margin-top: 2rem; padding-top: 1rem; color: var(--kmn-muted); font-size: .85rem; }
+
+/* ---------- Trang con: tiêu đề trang ---------- */
+.page-hero { background: linear-gradient(180deg, var(--kmn-sky) 0%, #fff 100%); padding: 2.5rem 0 2rem; }
+.page-hero h1 { font-size: clamp(1.7rem, 3.4vw, 2.4rem); }
+.breadcrumb-kmn { font-size: .85rem; --bs-breadcrumb-divider-color: var(--kmn-muted); }
+.breadcrumb-kmn a { text-decoration: none; }
+
+/* Bộ lọc dính trên trang tra cứu */
+.filter-bar { background: #fff; border: 1px solid var(--kmn-border); border-radius: var(--radius); padding: 1rem; box-shadow: var(--shadow-sm); }
+
+/* ---------- Đặt lịch: wizard ---------- */
+.stepper { display: flex; gap: .5rem; counter-reset: s; overflow-x: auto; padding-bottom: .25rem; }
+.stepper .st { flex: 1; min-width: 110px; text-align: center; font-size: .8rem; color: var(--kmn-muted); position: relative; }
+.stepper .st .dot { width: 34px; height: 34px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
+  background: #eef2f7; color: var(--kmn-muted); font-weight: 600; margin-bottom: .3rem; }
+.stepper .st.done .dot { background: var(--kmn-green); color: #fff; }
+.stepper .st.active .dot { background: var(--kmn-blue); color: #fff; box-shadow: 0 0 0 5px rgba(31, 111, 209, .15); }
+.stepper .st.active { color: var(--kmn-navy); font-weight: 600; }
+.pick-card { cursor: pointer; border: 2px solid var(--kmn-border); border-radius: var(--radius); padding: 1rem; height: 100%;
+  transition: border-color .15s, background .15s; background: #fff; }
+.pick-card:hover { border-color: #b9d6f6; }
+.pick-card.selected { border-color: var(--kmn-blue); background: var(--kmn-sky-2); }
+.pick-card.disabled { opacity: .5; cursor: not-allowed; }
+.date-pill { min-width: 74px; text-align: center; border: 2px solid var(--kmn-border); border-radius: 14px; padding: .5rem .4rem; cursor: pointer; background: #fff; }
+.date-pill .d { font-family: var(--font-head); font-size: 1.3rem; color: var(--kmn-navy); font-weight: 600; line-height: 1.1; }
+.date-pill small { color: var(--kmn-muted); font-size: .75rem; }
+.date-pill.selected { border-color: var(--kmn-blue); background: var(--kmn-sky); }
+.date-pill.off { opacity: .45; cursor: not-allowed; }
+.summary-box { background: var(--kmn-sky-2); border-radius: var(--radius); padding: 1.25rem; position: sticky; top: 90px; }
+.summary-row { display: flex; justify-content: space-between; gap: 1rem; padding: .45rem 0; border-bottom: 1px dashed var(--kmn-border); font-size: .92rem; }
+.summary-row:last-child { border-bottom: 0; }
+.summary-row span:first-child { color: var(--kmn-muted); }
+.summary-row span:last-child { font-weight: 600; color: var(--kmn-navy); text-align: right; }
+
+/* ---------- Đăng nhập / đăng ký ---------- */
+.auth-wrap { min-height: 100vh; display: grid; grid-template-columns: 1.05fr 1fr; }
+.auth-side { position: relative; background: var(--kmn-navy); overflow: hidden; }
+.auth-side img { width: 100%; height: 100%; object-fit: cover; opacity: .55; position: absolute; inset: 0; }
+.auth-side .auth-quote { position: absolute; left: 2.5rem; right: 2.5rem; bottom: 2.5rem; color: #fff; }
+.auth-side .auth-quote h2 { color: #fff; font-size: 1.8rem; }
+.auth-form { display: flex; align-items: center; justify-content: center; padding: 2rem 1.25rem; background: #fff; }
+.auth-form .inner { width: 100%; max-width: 420px; }
+.auth-form .logo { height: 52px; }
+@media (max-width: 991.98px) {
+  .auth-wrap { grid-template-columns: 1fr; }
+  .auth-side { display: none; }
+}
+
+/* Chống xuống dòng trong menu và nút */
+.site-header .nav-link, .site-header .btn { white-space: nowrap; }
+.doctor-card .avatar-lg { width: 72px; height: 72px; }

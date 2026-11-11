@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chuyên khoa – KMN Clinic</title>
+  <link rel="stylesheet" href="assets/vendor/fonts/fonts.css">
+  <link rel="stylesheet" href="assets/vendor/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/vendor/bootstrap-icons/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="assets/css/theme.css">
+  <link rel="stylesheet" href="assets/css/public.css">
+</head>
+<body class="public" data-layout="public" data-active="chuyen-khoa">
+  <div id="site-header"></div>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <nav aria-label="breadcrumb"><ol class="breadcrumb breadcrumb-kmn mb-2">
+          <li class="breadcrumb-item"><a href="trang-chu.html">Trang chủ</a></li>
+          <li class="breadcrumb-item active">Chuyên khoa</li></ol></nav>
+        <div class="row align-items-end g-3">
+          <div class="col-lg-7"><h1 class="mb-2">Chuyên khoa</h1>
+            <p class="text-muted-kmn mb-0">Danh sách khoa lấy từ bảng KHOA. Chọn một khoa để xem bác sĩ thuộc khoa và lịch làm việc.</p></div>
+          <div class="col-lg-5">
+            <div class="input-group input-group-lg"><span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+              <input class="form-control" placeholder="Tìm tên khoa..." aria-label="Tìm khoa"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-sm">
+      <div class="container">
+        <div class="row g-4">
+          <!-- Mỗi thẻ: ten_khoa, mo_ta (KHOA), số bác sĩ (đếm NHAN_VIEN có ma_khoa), ảnh minh họa chung -->
+          <div class="col-sm-6 col-lg-3"><div class="card-kmn khoa-card hover-lift border-primary" style="border-width:2px">
+            <img src="assets/img/khoa/khoa-1.svg" class="khoa-img" alt=""><div class="card-body"><h3>Nội tổng quát</h3>
+            <p>Khám và theo dõi các bệnh lý nội khoa thường gặp.</p>
+            <div class="d-flex justify-content-between align-items-center"><span class="meta"><i class="bi bi-person-badge me-1"></i>3 bác sĩ</span>
+            <span class="badge-st st-xacnhan">Đang xem</span></div></div></div></div>
+          <div class="col-sm-6 col-lg-3"><div class="card-kmn khoa-card hover-lift">
+            <img src="assets/img/khoa/khoa-2.svg" class="khoa-img" alt=""><div class="card-body"><h3>Nhi khoa</h3>
+            <p>Khám sức khỏe và bệnh lý thường gặp ở trẻ em.</p>
+            <div class="d-flex justify-content-between align-items-center"><span class="meta"><i class="bi bi-person-badge me-1"></i>2 bác sĩ</span>
+            <a href="#" class="small fw-semibold text-decoration-none">Xem bác sĩ <i class="bi bi-arrow-right"></i></a></div></div></div></div>
+          <div class="col-sm-6 col-lg-3"><div class="card-kmn khoa-card hover-lift">
+            <img src="assets/img/khoa/khoa-3.svg" class="khoa-img" alt=""><div class="card-body"><h3>Tai Mũi Họng</h3>
+            <p>Khám các bệnh lý tai, mũi, họng.</p>
+            <div class="d-flex justify-content-between align-items-center"><span class="meta"><i class="bi bi-person-badge me-1"></i>2 bác sĩ</span>
+            <a href="#" class="small fw-semibold text-decoration-none">Xem bác sĩ <i class="bi bi-arrow-right"></i></a></div></div></div></div>
+          <div class="col-sm-6 col-lg-3"><div class="card-kmn khoa-card hover-lift">
+            <img src="assets/img/khoa/khoa-4.svg" class="khoa-img" alt=""><div class="card-body"><h3>Răng Hàm Mặt</h3>
+            <p class="fst-italic">Chưa có mô tả.</p>
+            <div class="d-flex justify-content-between align-items-center"><span class="meta"><i class="bi bi-person-badge me-1"></i>1 bác sĩ</span>
+            <a href="#" class="small fw-semibold text-decoration-none">Xem bác sĩ <i class="bi bi-arrow-right"></i></a></div></div></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chi tiết khoa đang chọn: bác sĩ thuộc khoa + lịch 7 ngày tới -->
+    <section class="section-sm pt-0">
+      <div class="container">
+        <div class="card-kmn p-3 p-md-4">
+          <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-3">
+            <div class="d-flex align-items-center gap-3"><span class="icon-circle ic-blue"><i class="bi bi-diagram-3"></i></span>
+              <div><h2 class="h4 mb-0">Nội tổng quát</h2><span class="text-muted-kmn small">3 bác sĩ · Phòng 101, 102</span></div></div>
+            <a href="dat-lich.html" class="btn btn-primary"><i class="bi bi-calendar2-plus me-1"></i>Đặt lịch khoa này</a>
+          </div>
+          <div class="table-responsive">
+            <table class="table align-middle mb-0">
+              <thead class="small text-muted-kmn"><tr><th>Bác sĩ</th><th>Lịch làm việc 7 ngày tới</th><th class="text-end">Thao tác</th></tr></thead>
+              <tbody>
+                <tr><td><div class="d-flex align-items-center gap-2"><img class="avatar" alt="" data-avatar=""><b class="text-navy">BS. Trần Minh Anh</b></div></td>
+                  <td><div class="slot-list"><span class="slot"><b>T5 12/11</b>Sáng · P.101</span><span class="slot"><b>T7 14/11</b>Chiều · P.101</span><span class="slot"><b>T2 16/11</b>Sáng · P.101</span></div></td>
+                  <td class="text-end"><a href="bac-si.html" class="btn btn-soft btn-sm">Xem lịch</a> <a href="dat-lich.html" class="btn btn-primary btn-sm">Đặt lịch</a></td></tr>
+                <tr><td><div class="d-flex align-items-center gap-2"><img class="avatar" alt="" data-avatar=""><b class="text-navy">BS. Huỳnh Gia Khang</b></div></td>
+                  <td><div class="slot-list"><span class="slot"><b>T6 13/11</b>Chiều · P.102</span></div></td>
+                  <td class="text-end"><a href="bac-si.html" class="btn btn-soft btn-sm">Xem lịch</a> <a href="dat-lich.html" class="btn btn-primary btn-sm">Đặt lịch</a></td></tr>
+                <tr><td><div class="d-flex align-items-center gap-2"><img class="avatar" alt="" data-avatar=""><b class="text-navy">BS. Đỗ Thanh Tâm</b></div></td>
+                  <td><span class="text-muted-kmn small"><i class="bi bi-calendar-x me-1"></i>Chưa có lịch trong 7 ngày tới</span></td>
+                  <td class="text-end"><a href="bac-si.html" class="btn btn-soft btn-sm">Xem lịch</a></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+  <script src="assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/layout.js"></script>
+</body>
+</html>

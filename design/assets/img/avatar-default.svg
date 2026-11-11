@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Ảnh đại diện mặc định">
+<rect width="200" height="200" fill="#e8f3fd"/>
+<circle cx="100" cy="78" r="38" fill="#1f6fd1" opacity=".85"/>
+<path d="M30 200c6-46 36-72 70-72s64 26 70 72z" fill="#1f6fd1" opacity=".85"/>
+<path d="M86 128h28l-4 22h-20z" fill="#fff" opacity=".9"/>
+<rect x="94" y="150" width="12" height="30" rx="3" fill="#22b3e6"/>
+<rect x="85" y="159" width="30" height="12" rx="3" fill="#22b3e6"/></svg>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard thu ngân – KMN Clinic</title>
+  <link rel="stylesheet" href="../assets/vendor/fonts/fonts.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap-icons/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="../assets/css/theme.css">
+  <link rel="stylesheet" href="../assets/css/admin.css">
+</head>
+<body class="admin" data-layout="admin" data-role="Thu ngân" data-user="Ngô Thị Thu" data-notify="3"
+      data-search="Tìm theo mã hóa đơn...">
+  <div class="admin-shell" id="admin-shell">
+    <div class="main">
+      <div id="topnav"></div>
+      <div class="content">
+        <div class="page-head">
+          <div><nav aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="#">Trang nội bộ</a></li><li class="breadcrumb-item active">Dashboard</li></ol></nav>
+            <h1>Thu ngân hôm nay</h1><span class="text-muted-kmn small">Thứ 5, 12/11/2026</span></div>
+        </div>
+
+        <div class="row g-3 mb-3">
+          <div class="col-6 col-xl-3"><div class="card-kmn stat-card d-flex gap-3"><span class="icon-circle ic-red"><i class="bi bi-hourglass-split"></i></span>
+            <div><div class="label">Chờ thanh toán</div><div class="value">3</div><div class="sub">Tổng 1.245.000 đ</div></div></div></div>
+          <div class="col-6 col-xl-3"><div class="card-kmn stat-card d-flex gap-3"><span class="icon-circle ic-green"><i class="bi bi-check2-circle"></i></span>
+            <div><div class="label">Đã thu hôm nay</div><div class="value">17</div><div class="sub">hóa đơn</div></div></div></div>
+          <div class="col-6 col-xl-3"><div class="card-kmn stat-card d-flex gap-3"><span class="icon-circle ic-blue"><i class="bi bi-cash-stack"></i></span>
+            <div><div class="label">Doanh thu hôm nay</div><div class="value">5,82 tr</div><div class="sub">Hóa đơn đã thanh toán</div></div></div></div>
+          <div class="col-6 col-xl-3"><div class="card-kmn stat-card d-flex gap-3"><span class="icon-circle ic-cyan"><i class="bi bi-person-check"></i></span>
+            <div><div class="label">Do tôi thu</div><div class="value">12</div><div class="sub">Hóa đơn tôi đã xác nhận</div></div></div></div>
+        </div>
+
+        <div class="row g-3">
+          <div class="col-xl-7"><div class="card-kmn panel p-0">
+            <div class="panel-title p-3 pb-0"><h2>Hóa đơn chờ thanh toán</h2><span class="badge-st st-chua-tt">3 hóa đơn</span></div>
+            <div class="table-responsive mt-2"><table class="table table-kmn">
+              <thead><tr><th>Mã HĐ</th><th>Khách hàng</th><th>Bác sĩ</th><th class="text-end">Tổng tiền</th><th class="text-end">Thao tác</th></tr></thead>
+              <tbody>
+                <tr class="table-active"><td class="mono">HD0180</td><td><b class="text-navy">Nguyễn Văn Bình</b><br><small class="text-muted-kmn">HS0187 · 12/11 7:42</small></td><td>BS. Trần Minh Anh</td>
+                  <td class="text-end fw-semibold">465.000 đ</td><td class="text-end"><button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#ttModal">Thanh toán</button></td></tr>
+                <tr><td class="mono">HD0179</td><td><b class="text-navy">Lý Văn Sang</b><br><small class="text-muted-kmn">HS0186 · 12/11 7:20</small></td><td>BS. Trần Minh Anh</td>
+                  <td class="text-end fw-semibold">380.000 đ</td><td class="text-end"><button class="btn btn-sm btn-soft">Xem</button></td></tr>
+                <tr><td class="mono">HD0178</td><td><b class="text-navy">Phạm Gia Huy</b><br><small class="text-muted-kmn">HS0184 · 12/11 7:05</small></td><td>BS. Lê Thu Hà</td>
+                  <td class="text-end fw-semibold">400.000 đ</td><td class="text-end"><button class="btn btn-sm btn-soft">Xem</button></td></tr>
+              </tbody></table></div>
+          </div></div>
+
+          <!-- Chi tiết hóa đơn đang chọn: tiền công + từng thuốc (đơn giá lúc kê) -->
+          <div class="col-xl-5"><div class="card-kmn panel">
+            <div class="panel-title"><h2>Chi tiết HD0180</h2><span class="badge-st st-chua-tt">Chưa thanh toán</span></div>
+            <div class="small text-muted-kmn mb-2">Nguyễn Văn Bình · 0901 234 567 · BS. Trần Minh Anh</div>
+            <table class="table table-sm mb-2">
+              <thead class="small text-muted-kmn"><tr><th>Khoản</th><th class="text-center">SL</th><th class="text-end">Đơn giá</th><th class="text-end">Thành tiền</th></tr></thead>
+              <tbody class="small">
+                <tr><td>Tiền công khám</td><td class="text-center">—</td><td class="text-end">—</td><td class="text-end">200.000</td></tr>
+                <tr><td>Paracetamol 500mg</td><td class="text-center">10</td><td class="text-end">2.000</td><td class="text-end">20.000</td></tr>
+                <tr><td>Amoxicillin 500mg</td><td class="text-center">15</td><td class="text-end">5.000</td><td class="text-end">75.000</td></tr>
+                <tr><td>Siro ho Prospan</td><td class="text-center">2</td><td class="text-end">85.000</td><td class="text-end">170.000</td></tr>
+              </tbody>
+              <tfoot><tr><th colspan="3">Tổng tiền</th><th class="text-end fs-5 text-primary">465.000 đ</th></tr></tfoot>
+            </table>
+            <button class="btn btn-success w-100 mb-2" data-bs-toggle="modal" data-bs-target="#ttModal"><i class="bi bi-cash-coin me-1"></i>Xác nhận thanh toán</button>
+            <div class="d-flex gap-2">
+              <button class="btn btn-soft flex-fill"><i class="bi bi-printer me-1"></i>In phiếu</button>
+              <button class="btn btn-soft flex-fill"><i class="bi bi-filetype-pdf me-1"></i>Xuất PDF A4</button></div>
+          </div></div>
+
+          <div class="col-12"><div class="card-kmn panel">
+            <div class="panel-title"><h2>Số hóa đơn đã thu theo giờ</h2></div>
+            <div class="chart-box" style="height:200px"><canvas id="chartThuNgan"></canvas></div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal xác nhận thanh toán: một lần bấm, nút khóa sau khi gửi để chống thanh toán lặp -->
+  <div class="modal fade" id="ttModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered"><div class="modal-content rounded-4 border-0"><div class="modal-body p-4 text-center">
+      <span class="icon-circle ic-green mb-3" style="width:60px;height:60px;font-size:1.6rem"><i class="bi bi-cash-coin"></i></span>
+      <h2 class="h5">Xác nhận đã thu 465.000 đ?</h2>
+      <p class="text-muted-kmn">Hóa đơn HD0180 sẽ chuyển sang <b>Đã thanh toán</b> và hệ thống trừ thuốc khỏi kho trong cùng một lần lưu.</p>
+      <div class="d-flex justify-content-center gap-2"><button class="btn btn-soft" data-bs-dismiss="modal">Quay lại</button><button class="btn btn-success" data-bs-dismiss="modal"><i class="bi bi-check2 me-1"></i>Đã thu tiền</button></div>
+    </div></div></div>
+  </div>
+
+  <script src="../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="../assets/vendor/chartjs/chart.umd.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/demo-charts.js"></script>
+</body>
+</html>

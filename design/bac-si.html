@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tra cứu bác sĩ – KMN Clinic</title>
+  <link rel="stylesheet" href="assets/vendor/fonts/fonts.css">
+  <link rel="stylesheet" href="assets/vendor/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/vendor/bootstrap-icons/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="assets/css/theme.css">
+  <link rel="stylesheet" href="assets/css/public.css">
+</head>
+<body class="public" data-layout="public" data-active="bac-si">
+  <div id="site-header"></div>
+
+  <main>
+    <section class="page-hero pb-4">
+      <div class="container">
+        <nav aria-label="breadcrumb"><ol class="breadcrumb breadcrumb-kmn mb-2">
+          <li class="breadcrumb-item"><a href="trang-chu.html">Trang chủ</a></li>
+          <li class="breadcrumb-item active">Bác sĩ</li></ol></nav>
+        <h1 class="mb-2">Tra cứu bác sĩ</h1>
+        <p class="text-muted-kmn mb-4">Tìm theo tên, lọc theo khoa hoặc ngày làm việc. Lịch hiển thị là lịch làm việc thật còn đặt được.</p>
+        <!-- Bộ lọc: ten (LIKE ho_ten_nv), maKhoa, ngay (ngay_lam_viec) -->
+        <form class="filter-bar row g-2 align-items-end">
+          <div class="col-md-4"><label class="form-label">Tên bác sĩ</label>
+            <div class="input-group"><span class="input-group-text"><i class="bi bi-search"></i></span><input class="form-control" value="" placeholder="Ví dụ: Minh Anh"></div></div>
+          <div class="col-md-3"><label class="form-label">Chuyên khoa</label>
+            <select class="form-select"><option>Tất cả</option><option selected>Nội tổng quát</option><option>Nhi khoa</option><option>Tai Mũi Họng</option><option>Răng Hàm Mặt</option></select></div>
+          <div class="col-md-3"><label class="form-label">Ngày làm việc</label><input type="date" class="form-control"></div>
+          <div class="col-md-2 d-grid"><button class="btn btn-primary">Lọc</button></div>
+        </form>
+      </div>
+    </section>
+
+    <section class="section-sm pt-3">
+      <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <span class="text-muted-kmn">Tìm thấy <b class="text-navy">3 bác sĩ</b> · Nội tổng quát</span>
+          <button class="btn btn-sm btn-soft"><i class="bi bi-x-circle me-1"></i>Xóa bộ lọc</button>
+        </div>
+
+        <!-- Thẻ bác sĩ: ảnh (duong_dan_anh, có ảnh dự phòng), họ tên, khoa + mô tả khoa, lịch (ngày, ca, phòng) -->
+        <div class="row g-4">
+          <div class="col-lg-6"><div class="card-kmn doctor-card">
+            <div class="row g-3">
+              <div class="col-sm-auto text-center"><img class="avatar avatar-xl" alt="Ảnh BS. Trần Minh Anh" data-avatar=""></div>
+              <div class="col">
+                <h3 class="h5">BS. Trần Minh Anh</h3>
+                <span class="khoa-tag">Nội tổng quát</span>
+                <p class="small text-muted-kmn mt-2 mb-2">Khám và theo dõi các bệnh lý nội khoa thường gặp.</p>
+                <div class="small text-muted-kmn mb-1">Lịch làm việc sắp tới</div>
+                <div class="slot-list mb-3">
+                  <span class="slot"><b>T5 12/11</b>Sáng 7:00–11:30 · P.101</span>
+                  <span class="slot"><b>T7 14/11</b>Chiều 13:00–17:00 · P.101</span>
+                  <span class="slot"><b>T2 16/11</b>Sáng 7:00–11:30 · P.101</span>
+                </div>
+                <div class="d-flex gap-2"><button class="btn btn-soft btn-sm" data-bs-toggle="modal" data-bs-target="#lichModal"><i class="bi bi-calendar3 me-1"></i>Xem lịch</button>
+                  <a href="dat-lich.html" class="btn btn-primary btn-sm"><i class="bi bi-calendar2-plus me-1"></i>Đặt lịch</a></div>
+              </div>
+            </div>
+          </div></div>
+          <div class="col-lg-6"><div class="card-kmn doctor-card">
+            <div class="row g-3">
+              <div class="col-sm-auto text-center"><img class="avatar avatar-xl" alt="Ảnh BS. Huỳnh Gia Khang" data-avatar="http://anh-khong-an-toan.example/a.jpg"></div>
+              <div class="col">
+                <h3 class="h5">BS. Huỳnh Gia Khang</h3>
+                <span class="khoa-tag">Nội tổng quát</span>
+                <p class="small text-muted-kmn mt-2 mb-2">Khám và theo dõi các bệnh lý nội khoa thường gặp.</p>
+                <div class="small text-muted-kmn mb-1">Lịch làm việc sắp tới</div>
+                <div class="slot-list mb-3"><span class="slot"><b>T6 13/11</b>Chiều 13:00–17:00 · P.102</span></div>
+                <div class="d-flex gap-2"><button class="btn btn-soft btn-sm" data-bs-toggle="modal" data-bs-target="#lichModal"><i class="bi bi-calendar3 me-1"></i>Xem lịch</button>
+                  <a href="dat-lich.html" class="btn btn-primary btn-sm"><i class="bi bi-calendar2-plus me-1"></i>Đặt lịch</a></div>
+              </div>
+            </div>
+          </div></div>
+          <div class="col-lg-6"><div class="card-kmn doctor-card">
+            <div class="row g-3">
+              <div class="col-sm-auto text-center"><img class="avatar avatar-xl" alt="Ảnh BS. Đỗ Thanh Tâm" data-avatar=""></div>
+              <div class="col">
+                <h3 class="h5">BS. Đỗ Thanh Tâm</h3>
+                <span class="khoa-tag">Nội tổng quát</span>
+                <p class="small text-muted-kmn mt-2 mb-2">Khám và theo dõi các bệnh lý nội khoa thường gặp.</p>
+                <div class="small text-muted-kmn mb-1">Lịch làm việc sắp tới</div>
+                <div class="text-muted-kmn small mb-3"><i class="bi bi-calendar-x me-1"></i>Chưa có lịch làm việc còn đặt được</div>
+                <button class="btn btn-primary btn-sm" disabled title="Bác sĩ chưa có lịch còn trống">Đặt lịch</button>
+              </div>
+            </div>
+          </div></div>
+        </div>
+
+        <nav class="mt-4" aria-label="Phân trang"><ul class="pagination justify-content-center">
+          <li class="page-item disabled"><span class="page-link">«</span></li><li class="page-item active"><span class="page-link">1</span></li>
+          <li class="page-item disabled"><span class="page-link">»</span></li></ul></nav>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal xem lịch làm việc của một bác sĩ (14 ngày) -->
+  <div class="modal fade" id="lichModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered"><div class="modal-content rounded-4 border-0">
+      <div class="modal-header border-0"><h2 class="modal-title h5">Lịch làm việc · BS. Trần Minh Anh</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button></div>
+      <div class="modal-body pt-0">
+        <div class="table-responsive"><table class="table week-table mb-0">
+          <thead><tr><th>Ngày</th><th>Ca</th><th>Giờ</th><th>Phòng</th><th></th></tr></thead>
+          <tbody>
+            <tr><td>Thứ 5, 12/11/2026</td><td>Sáng</td><td>7:00 – 11:30</td><td>Phòng 101</td><td class="text-end"><a class="btn btn-primary btn-sm" href="dat-lich.html">Chọn</a></td></tr>
+            <tr><td>Thứ 7, 14/11/2026</td><td>Chiều</td><td>13:00 – 17:00</td><td>Phòng 101</td><td class="text-end"><a class="btn btn-primary btn-sm" href="dat-lich.html">Chọn</a></td></tr>
+            <tr><td>Thứ 2, 16/11/2026</td><td>Sáng</td><td>7:00 – 11:30</td><td>Phòng 101</td><td class="text-end"><a class="btn btn-primary btn-sm" href="dat-lich.html">Chọn</a></td></tr>
+          </tbody></table></div>
+      </div>
+    </div></div>
+  </div>
+
+  <div id="site-footer"></div>
+  <script src="assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/layout.js"></script>
+</body>
+</html>
