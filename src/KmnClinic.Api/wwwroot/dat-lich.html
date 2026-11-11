@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Đặt lịch khám – KMN Clinic</title>
+  <link rel="stylesheet" href="assets/vendor/fonts/fonts.css">
+  <link rel="stylesheet" href="assets/vendor/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/vendor/bootstrap-icons/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="assets/css/theme.css">
+  <link rel="stylesheet" href="assets/css/public.css">
+</head>
+<body class="public" data-layout="public" data-active="" data-mau="1">
+  <div id="site-header"></div>
+
+  <main>
+    <section class="page-hero pb-3">
+      <div class="container">
+        <nav aria-label="breadcrumb"><ol class="breadcrumb breadcrumb-kmn mb-2">
+          <li class="breadcrumb-item"><a href="trang-chu.html">Trang chủ</a></li>
+          <li class="breadcrumb-item active">Đặt lịch khám</li></ol></nav>
+        <h1 class="mb-1">Đặt lịch khám</h1>
+        <p class="text-muted-kmn mb-0">Xin chào <b class="text-navy">Nguyễn Văn Bình</b>. Lịch hẹn sẽ ở trạng thái <span class="badge-st st-dat">Đã đặt</span> cho tới khi lễ tân gọi xác nhận.</p>
+      </div>
+    </section>
+
+    <section class="section-sm pt-2">
+      <div class="container">
+        <!-- 8 bước theo yêu cầu, gộp hiển thị thành 5 chặng trên thanh tiến trình -->
+        <div class="card-kmn p-3 mb-4">
+          <div class="stepper">
+            <div class="st done"><div class="dot"><i class="bi bi-check-lg"></i></div><div>Chuyên khoa</div></div>
+            <div class="st done"><div class="dot"><i class="bi bi-check-lg"></i></div><div>Bác sĩ</div></div>
+            <div class="st active"><div class="dot">3</div><div>Ngày &amp; ca</div></div>
+            <div class="st"><div class="dot">4</div><div>Triệu chứng</div></div>
+            <div class="st"><div class="dot">5</div><div>Kiểm tra &amp; xác nhận</div></div>
+          </div>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-lg-8">
+            <!-- Bước 1–2 đã chọn: hiển thị gọn, bấm Đổi để quay lại -->
+            <div class="card-kmn p-3 mb-3 d-flex flex-wrap align-items-center gap-3">
+              <img class="avatar" alt="" data-avatar="">
+              <div class="flex-grow-1"><b class="text-navy">BS. Trần Minh Anh</b><br><span class="small text-muted-kmn">Nội tổng quát</span></div>
+              <button class="btn btn-soft btn-sm">Đổi bác sĩ</button>
+            </div>
+
+            <!-- Bước 3: chọn ngày (chỉ những ngày bác sĩ có lịch, không có ngày quá khứ) -->
+            <div class="card-kmn p-3 p-md-4 mb-3">
+              <h2 class="h5 mb-3">Chọn ngày khám</h2>
+              <div class="d-flex gap-2 overflow-auto pb-2">
+                <div class="date-pill selected"><small>Thứ 5</small><div class="d">12</div><small>Th11</small></div>
+                <div class="date-pill off" title="Bác sĩ không có lịch"><small>Thứ 6</small><div class="d">13</div><small>Th11</small></div>
+                <div class="date-pill"><small>Thứ 7</small><div class="d">14</div><small>Th11</small></div>
+                <div class="date-pill off"><small>CN</small><div class="d">15</div><small>Th11</small></div>
+                <div class="date-pill"><small>Thứ 2</small><div class="d">16</div><small>Th11</small></div>
+                <div class="date-pill off"><small>Thứ 3</small><div class="d">17</div><small>Th11</small></div>
+                <div class="date-pill off"><small>Thứ 4</small><div class="d">18</div><small>Th11</small></div>
+              </div>
+
+              <!-- Bước 4–5: chọn lịch làm việc -> hiện phòng và ca -->
+              <h2 class="h5 mt-4 mb-3">Chọn ca làm việc</h2>
+              <div class="row g-3">
+                <div class="col-md-6"><div class="pick-card selected">
+                  <div class="d-flex justify-content-between"><b class="text-navy"><i class="bi bi-brightness-high me-1 text-warning"></i>Ca sáng</b><i class="bi bi-check-circle-fill text-primary"></i></div>
+                  <div class="small text-muted-kmn mt-1">7:00 – 11:30 · Phòng 101</div>
+                  <div class="small mt-2"><span class="text-muted-kmn">Đã có</span> <b>5</b> <span class="text-muted-kmn">lịch hẹn (để tham khảo)</span></div>
+                </div></div>
+                <div class="col-md-6"><div class="pick-card disabled" title="Bác sĩ không có lịch ở ca này">
+                  <div class="d-flex justify-content-between"><b class="text-navy"><i class="bi bi-sunset me-1 text-primary"></i>Ca chiều</b><span class="badge-st st-huy">Bác sĩ không trực</span></div>
+                  <div class="small text-muted-kmn mt-1">13:00 – 17:00</div>
+                </div></div>
+              </div>
+            </div>
+
+            <!-- Bước 6: triệu chứng ban đầu (Lich_hen.trieu_chung_ban_dau, tối đa 255 ký tự, không bắt buộc) -->
+            <div class="card-kmn p-3 p-md-4">
+              <h2 class="h5 mb-1">Triệu chứng ban đầu <span class="text-muted-kmn fw-normal fs-6">(không bắt buộc)</span></h2>
+              <p class="small text-muted-kmn">Mô tả ngắn giúp bác sĩ chuẩn bị tốt hơn.</p>
+              <textarea class="form-control" rows="3" maxlength="255" placeholder="Ví dụ: ho, sốt nhẹ 2 ngày nay">Ho khan, sốt nhẹ về chiều khoảng 3 ngày.</textarea>
+              <div class="text-end small text-muted-kmn mt-1">40/255</div>
+              <div class="d-flex justify-content-between mt-3">
+                <button class="btn btn-soft"><i class="bi bi-arrow-left me-1"></i>Quay lại</button>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">Kiểm tra thông tin <i class="bi bi-arrow-right ms-1"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tóm tắt luôn hiển thị bên phải (bước 7: kiểm tra) -->
+          <div class="col-lg-4">
+            <div class="summary-box">
+              <h2 class="h6 text-uppercase text-muted-kmn mb-2">Thông tin lịch hẹn</h2>
+              <div class="summary-row"><span>Chuyên khoa</span><span>Nội tổng quát</span></div>
+              <div class="summary-row"><span>Bác sĩ</span><span>BS. Trần Minh Anh</span></div>
+              <div class="summary-row"><span>Ngày</span><span>Thứ 5, 12/11/2026</span></div>
+              <div class="summary-row"><span>Ca</span><span>Sáng · 7:00 – 11:30</span></div>
+              <div class="summary-row"><span>Phòng</span><span>Phòng 101</span></div>
+              <div class="summary-row"><span>Khách hàng</span><span>Nguyễn Văn Bình<br><small class="fw-normal text-muted-kmn">0901 234 567</small></span></div>
+              <div class="alert alert-info small mt-3 mb-0 border-0 rounded-3"><i class="bi bi-info-circle me-1"></i>Có thể tự hủy khi lịch còn ở trạng thái Đã đặt hoặc Đã xác nhận và trước giờ bắt đầu ca.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Bước 8: modal xác nhận đặt lịch -->
+  <div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered"><div class="modal-content rounded-4 border-0">
+      <div class="modal-body p-4 text-center">
+        <span class="icon-circle ic-blue mb-3" style="width:64px;height:64px;font-size:1.8rem"><i class="bi bi-calendar2-check"></i></span>
+        <h2 class="h5">Xác nhận đặt lịch?</h2>
+        <p class="text-muted-kmn mb-4">BS. Trần Minh Anh · Thứ 5, 12/11/2026 · Ca sáng · Phòng 101</p>
+        <div class="d-flex justify-content-center gap-2"><button class="btn btn-soft" data-bs-dismiss="modal">Xem lại</button>
+          <button class="btn btn-primary" data-bs-dismiss="modal"><i class="bi bi-check2 me-1"></i>Xác nhận đặt lịch</button></div>
+      </div>
+    </div></div>
+  </div>
+
+  <div id="site-footer"></div>
+  <script src="assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/layout.js"></script>
+</body>
+</html>

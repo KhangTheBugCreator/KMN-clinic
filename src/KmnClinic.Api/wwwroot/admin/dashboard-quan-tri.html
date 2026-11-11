@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard quản trị – KMN Clinic</title>
+  <link rel="stylesheet" href="../assets/vendor/fonts/fonts.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap-icons/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="../assets/css/theme.css">
+  <link rel="stylesheet" href="../assets/css/admin.css">
+</head>
+<body class="admin" data-layout="admin" data-vai-tro="QuanTriVien" data-mau="1"
+      data-search="Tìm nhân viên, khách hàng, thuốc, lịch làm việc...">
+  <div class="admin-shell" id="admin-shell">
+    <div class="main">
+      <div id="topnav"></div>
+      <div class="content">
+        <div class="page-head">
+          <div><nav aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="#">Trang nội bộ</a></li><li class="breadcrumb-item active">Dashboard</li></ol></nav>
+            <h1>Tổng quan phòng khám</h1></div>
+          <div class="d-flex gap-2">
+            <select class="form-select form-select-sm" style="width:auto"><option>Tháng 11/2026</option><option>Tháng 10/2026</option></select>
+            <button class="btn btn-soft btn-sm"><i class="bi bi-file-earmark-excel me-1"></i>Xuất Excel</button>
+          </div>
+        </div>
+
+        <!-- 8 chỉ số: tất cả đếm/tổng từ database -->
+        <div class="row g-3 mb-3">
+          <div class="col-6 col-xl-3"><div class="card-kmn stat-card d-flex gap-3"><span class="icon-circle ic-blue"><i class="bi bi-person-badge"></i></span>
+            <div><div class="label">Nhân viên</div><div class="value">14</div><div class="sub">8 bác sĩ · 6 nhân viên khác</div></div></div></div>
+          <div class="col-6 col-xl-3"><div class="card-kmn stat-card d-flex gap-3"><span class="icon-circle ic-cyan"><i class="bi bi-people"></i></span>
+            <div><div class="label">Khách hàng</div><div class="value">326</div><div class="sub">+18 trong tháng</div></div></div></div>
+          <div class="col-6 col-xl-3"><div class="card-kmn stat-card d-flex gap-3"><span class="icon-circle ic-orange"><i class="bi bi-calendar-check"></i></span>
+            <div><div class="label">Lịch hẹn</div><div class="value">212</div><div class="sub">6 chờ xác nhận</div></div></div></div>
+          <div class="col-6 col-xl-3"><div class="card-kmn stat-card d-flex gap-3"><span class="icon-circle ic-purple"><i class="bi bi-journal-medical"></i></span>
+            <div><div class="label">Hồ sơ khám</div><div class="value">187</div><div class="sub">41 khách vãng lai</div></div></div></div>
+          <div class="col-6 col-xl-3"><div class="card-kmn stat-card d-flex gap-3"><span class="icon-circle ic-green"><i class="bi bi-receipt"></i></span>
+            <div><div class="label">Hóa đơn đã thanh toán</div><div class="value">179</div><div class="sub">3 chờ thu</div></div></div></div>
+          <div class="col-6 col-xl-3"><div class="card-kmn stat-card d-flex gap-3"><span class="icon-circle ic-green"><i class="bi bi-cash-stack"></i></span>
+            <div><div class="label">Doanh thu thực tế</div><div class="value">48,6 tr</div><div class="sub">Chỉ tính hóa đơn đã thanh toán</div></div></div></div>
+          <div class="col-6 col-xl-3"><div class="card-kmn stat-card d-flex gap-3"><span class="icon-circle ic-blue"><i class="bi bi-percent"></i></span>
+            <div><div class="label">Tỷ lệ lịch hẹn đã khám</div><div class="value">78%</div><div class="sub">Hủy: 9%</div></div></div></div>
+          <div class="col-6 col-xl-3"><div class="card-kmn stat-card d-flex gap-3"><span class="icon-circle ic-red"><i class="bi bi-capsule"></i></span>
+            <div><div class="label">Thuốc sắp hết</div><div class="value">5</div><div class="sub">Tồn ≤ 20</div></div></div></div>
+        </div>
+
+        <div class="row g-3 mb-3">
+          <div class="col-xl-8"><div class="card-kmn panel">
+            <div class="panel-title"><h2>Doanh thu theo ngày</h2>
+              <div class="btn-group btn-group-sm" role="group"><button class="btn btn-primary">Ngày</button><button class="btn btn-soft">Tháng</button></div></div>
+            <div class="chart-box"><canvas id="chartDoanhThu" aria-label="Biểu đồ doanh thu theo ngày"></canvas></div>
+          </div></div>
+          <div class="col-xl-4"><div class="card-kmn panel">
+            <div class="panel-title"><h2>Lịch hẹn theo trạng thái</h2></div>
+            <div class="chart-box" style="height:220px"><canvas id="chartTrangThai"></canvas></div>
+            <div class="d-flex flex-wrap gap-2 justify-content-center mt-3">
+              <span class="badge-st st-dat">Đã đặt 6</span><span class="badge-st st-xacnhan">Đã xác nhận 21</span>
+              <span class="badge-st st-kham">Đã khám 166</span><span class="badge-st st-huy">Đã hủy 19</span></div>
+          </div></div>
+        </div>
+
+        <div class="row g-3">
+          <div class="col-xl-5"><div class="card-kmn panel">
+            <div class="panel-title"><h2>Số lượt khám 7 ngày qua</h2></div>
+            <div class="chart-box" style="height:230px"><canvas id="chartLuotKham"></canvas></div>
+          </div></div>
+          <div class="col-xl-3"><div class="card-kmn panel">
+            <div class="panel-title"><h2>Thuốc sắp hết</h2><a href="#" class="small text-decoration-none">Xem kho</a></div>
+            <div class="mb-3"><div class="d-flex justify-content-between small"><b class="text-navy">Paracetamol 500mg</b><span>8 viên</span></div><div class="stock-bar"><span style="width:16%"></span></div></div>
+            <div class="mb-3"><div class="d-flex justify-content-between small"><b class="text-navy">Amoxicillin 500mg</b><span>12 viên</span></div><div class="stock-bar"><span style="width:24%"></span></div></div>
+            <div class="mb-3"><div class="d-flex justify-content-between small"><b class="text-navy">Siro ho Prospan</b><span>3 chai</span></div><div class="stock-bar"><span style="width:6%"></span></div></div>
+            <div class="mb-3"><div class="d-flex justify-content-between small"><b class="text-navy">Vitamin C 500mg</b><span>18 viên</span></div><div class="stock-bar"><span style="width:36%"></span></div></div>
+            <div><div class="d-flex justify-content-between small"><b class="text-navy">Oresol</b><span>20 gói</span></div><div class="stock-bar"><span style="width:40%"></span></div></div>
+          </div></div>
+          <div class="col-xl-4"><div class="card-kmn panel">
+            <div class="panel-title"><h2>Thuốc được kê nhiều nhất</h2></div>
+            <table class="table table-sm table-kmn"><thead><tr><th>Thuốc</th><th class="text-end">SL đã xuất</th></tr></thead>
+              <tbody><tr><td>Paracetamol 500mg</td><td class="text-end fw-semibold">412</td></tr>
+                <tr><td>Vitamin C 500mg</td><td class="text-end fw-semibold">305</td></tr>
+                <tr><td>Amoxicillin 500mg</td><td class="text-end fw-semibold">198</td></tr>
+                <tr><td>Oresol</td><td class="text-end fw-semibold">120</td></tr></tbody></table>
+            <p class="small text-muted-kmn mb-0">Tính trên đơn thuốc của hóa đơn đã thanh toán.</p>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="../assets/vendor/chartjs/chart.umd.js"></script>
+  <script src="../assets/js/api.js"></script>
+  <script src="../assets/js/ui.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/demo-charts.js"></script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard bác sĩ – KMN Clinic</title>
+  <link rel="stylesheet" href="../assets/vendor/fonts/fonts.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap-icons/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="../assets/css/theme.css">
+  <link rel="stylesheet" href="../assets/css/admin.css">
+</head>
+<body class="admin" data-layout="admin" data-vai-tro="BacSi" data-mau="1"
+      data-search="Tìm theo mã hồ sơ...">
+  <div class="admin-shell" id="admin-shell">
+    <div class="main">
+      <div id="topnav"></div>
+      <div class="content">
+        <div class="page-head">
+          <div><nav aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="#">Trang nội bộ</a></li><li class="breadcrumb-item active">Dashboard</li></ol></nav>
+            <h1>Lịch khám hôm nay</h1><span class="text-muted-kmn small">Thứ 5, 12/11/2026 · Nội tổng quát · Phòng 101</span></div>
+        </div>
+
+        <!-- Trạng thái hồ sơ suy ra: chưa chẩn đoán = Chờ khám; có chẩn đoán, chưa hóa đơn = Đang xử lý; có hóa đơn = Hoàn thành -->
+        <div class="row g-3 mb-3">
+          <div class="col-6 col-xl-3"><div class="card-kmn stat-card d-flex gap-3"><span class="icon-circle ic-purple"><i class="bi bi-hourglass-split"></i></span>
+            <div><div class="label">Chờ khám</div><div class="value">4</div><div class="sub">Chưa có chẩn đoán</div></div></div></div>
+          <div class="col-6 col-xl-3"><div class="card-kmn stat-card d-flex gap-3"><span class="icon-circle ic-blue"><i class="bi bi-pencil-square"></i></span>
+            <div><div class="label">Đang xử lý</div><div class="value">1</div><div class="sub">Đã chẩn đoán, chưa hoàn tất</div></div></div></div>
+          <div class="col-6 col-xl-3"><div class="card-kmn stat-card d-flex gap-3"><span class="icon-circle ic-green"><i class="bi bi-check2-circle"></i></span>
+            <div><div class="label">Hoàn thành hôm nay</div><div class="value">6</div><div class="sub">Đã tạo hóa đơn</div></div></div></div>
+          <div class="col-6 col-xl-3"><div class="card-kmn stat-card d-flex gap-3"><span class="icon-circle ic-orange"><i class="bi bi-calendar-check"></i></span>
+            <div><div class="label">Lịch hẹn ca chiều</div><div class="value">0</div><div class="sub">Không có lịch trực ca chiều</div></div></div></div>
+        </div>
+
+        <div class="row g-3">
+          <div class="col-xl-7"><div class="card-kmn panel">
+            <div class="panel-title"><h2>Hàng chờ khám</h2><span class="small text-muted-kmn">Sắp theo giờ tiếp nhận</span></div>
+            <div class="queue-item current"><span class="num">1</span>
+              <div class="flex-grow-1"><b class="text-navy">Nguyễn Văn Bình</b> <small class="text-muted-kmn">· Nam · 31 tuổi</small><br>
+                <small class="text-muted-kmn"><i class="bi bi-clock me-1"></i>Tiếp nhận 7:42 · HS0187 · Có lịch hẹn LH0141</small><br>
+                <small><i class="bi bi-chat-left-text me-1 text-primary"></i>Ho khan, sốt nhẹ về chiều khoảng 3 ngày.</small></div>
+              <a href="#" class="btn btn-primary btn-sm">Khám</a></div>
+            <div class="queue-item"><span class="num">2</span>
+              <div class="flex-grow-1"><b class="text-navy">Đặng Văn Lực</b> <small class="text-muted-kmn">· Nam · 54 tuổi</small><br>
+                <small class="text-muted-kmn"><i class="bi bi-clock me-1"></i>Tiếp nhận 7:55 · HS0188 · Khách vãng lai</small><br>
+                <small><i class="bi bi-chat-left-text me-1 text-primary"></i>Đau bụng vùng thượng vị.</small></div>
+              <a href="#" class="btn btn-soft btn-sm">Khám</a></div>
+            <div class="queue-item"><span class="num">3</span>
+              <div class="flex-grow-1"><b class="text-navy">Trần Thị Hồng</b> <small class="text-muted-kmn">· Nữ · 38 tuổi</small><br>
+                <small class="text-muted-kmn"><i class="bi bi-clock me-1"></i>Tiếp nhận 8:10 · HS0189 · Có lịch hẹn LH0138</small><br>
+                <small><i class="bi bi-chat-left-text me-1 text-primary"></i>Đau đầu, chóng mặt.</small></div>
+              <a href="#" class="btn btn-soft btn-sm">Khám</a></div>
+            <div class="queue-item mb-0"><span class="num">4</span>
+              <div class="flex-grow-1"><b class="text-navy">Bùi Thanh Hương</b> <small class="text-muted-kmn">· Nữ · 26 tuổi</small><br>
+                <small class="text-muted-kmn"><i class="bi bi-clock me-1"></i>Tiếp nhận 8:25 · HS0190 · Khách vãng lai</small></div>
+              <a href="#" class="btn btn-soft btn-sm">Khám</a></div>
+          </div></div>
+
+          <div class="col-xl-5">
+            <div class="card-kmn panel mb-3" style="height:auto">
+              <div class="panel-title"><h2>Lịch làm việc tuần này</h2><a href="#" class="small text-decoration-none">Xem lịch</a></div>
+              <ul class="timeline">
+                <li><div class="t">Thứ 5, 12/11 · Ca sáng</div><small class="text-muted-kmn">7:00–11:30 · Phòng 101 · 9 lịch hẹn</small></li>
+                <li><div class="t">Thứ 7, 14/11 · Ca chiều</div><small class="text-muted-kmn">13:00–17:00 · Phòng 101 · 3 lịch hẹn</small></li>
+                <li><div class="t">Thứ 2, 16/11 · Ca sáng</div><small class="text-muted-kmn">7:00–11:30 · Phòng 101 · 1 lịch hẹn</small></li>
+              </ul>
+            </div>
+            <div class="card-kmn panel" style="height:auto">
+              <div class="panel-title"><h2>Đã xử lý hôm nay</h2></div>
+              <table class="table table-sm table-kmn mb-0">
+                <thead><tr><th>Hồ sơ</th><th>Bệnh nhân</th><th>Trạng thái</th></tr></thead>
+                <tbody>
+                  <tr><td class="mono">HS0186</td><td>Lý Văn Sang</td><td><span class="badge-st st-xacnhan">Đang xử lý</span></td></tr>
+                  <tr><td class="mono">HS0185</td><td>Mai Thị Lan</td><td><span class="badge-st st-kham">Hoàn thành</span></td></tr>
+                  <tr><td class="mono">HS0183</td><td>Châu Minh Đức</td><td><span class="badge-st st-kham">Hoàn thành</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Khung khám bệnh: cập nhật Ho_so_kham + kê Chi_tiet_don_thuoc; Hoàn tất tạo Hoa_don (Chưa thanh toán) và khóa hồ sơ -->
+          <div class="col-12"><div class="card-kmn panel">
+            <div class="panel-title flex-wrap"><h2>Khám bệnh · HS0187 · Nguyễn Văn Bình</h2><span class="badge-st st-cho">Đang khám</span></div>
+            <div class="row g-3">
+              <div class="col-lg-5">
+                <label class="form-label">Triệu chứng</label><textarea class="form-control mb-2" rows="2">Ho khan, sốt nhẹ về chiều khoảng 3 ngày.</textarea>
+                <label class="form-label">Chẩn đoán</label><textarea class="form-control mb-2" rows="2">Viêm họng cấp</textarea>
+                <label class="form-label">Lời dặn</label><textarea class="form-control mb-2" rows="2">Uống nhiều nước, tái khám sau 5 ngày nếu còn sốt.</textarea>
+                <label class="form-label">Tiền công khám (đ)</label><input class="form-control" value="200000">
+              </div>
+              <div class="col-lg-7">
+                <label class="form-label">Đơn thuốc</label>
+                <div class="input-group mb-2"><input class="form-control" placeholder="Tìm thuốc theo tên..."><input class="form-control" style="max-width:90px" placeholder="SL"><button class="btn btn-soft" style="border-radius:0 10px 10px 0"><i class="bi bi-plus-lg"></i> Thêm</button></div>
+                <div class="table-responsive"><table class="table table-sm table-kmn mb-2">
+                  <thead><tr><th>Thuốc</th><th class="text-center">SL</th><th class="text-end">Đơn giá</th><th class="text-end">Thành tiền</th><th class="text-end">Tồn</th><th></th></tr></thead>
+                  <tbody>
+                    <tr><td>Paracetamol 500mg</td><td class="text-center">10</td><td class="text-end">2.000</td><td class="text-end">20.000</td><td class="text-end text-warning">8 <i class="bi bi-exclamation-triangle" title="Tồn kho tham khảo thấp hơn số lượng kê"></i></td><td class="text-end"><button class="btn btn-sm btn-link text-danger p-0"><i class="bi bi-x-lg"></i></button></td></tr>
+                    <tr><td>Amoxicillin 500mg</td><td class="text-center">15</td><td class="text-end">5.000</td><td class="text-end">75.000</td><td class="text-end">12</td><td class="text-end"><button class="btn btn-sm btn-link text-danger p-0"><i class="bi bi-x-lg"></i></button></td></tr>
+                    <tr><td>Siro ho Prospan</td><td class="text-center">2</td><td class="text-end">85.000</td><td class="text-end">170.000</td><td class="text-end">3</td><td class="text-end"><button class="btn btn-sm btn-link text-danger p-0"><i class="bi bi-x-lg"></i></button></td></tr>
+                  </tbody>
+                  <tfoot><tr><th colspan="3">Tổng (công khám + thuốc)</th><th class="text-end text-primary">465.000 đ</th><th colspan="2"></th></tr></tfoot>
+                </table></div>
+                <p class="small text-muted-kmn mb-2"><i class="bi bi-info-circle me-1"></i>Đơn giá lấy từ danh mục thuốc lúc kê. Tồn kho chỉ để tham khảo, kho bị trừ khi thu ngân xác nhận thanh toán.</p>
+                <div class="d-flex justify-content-end gap-2"><button class="btn btn-soft"><i class="bi bi-save me-1"></i>Lưu nháp</button><button class="btn btn-primary"><i class="bi bi-check2-all me-1"></i>Hoàn tất khám</button></div>
+              </div>
+            </div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/api.js"></script>
+  <script src="../assets/js/ui.js"></script>
+  <script src="../assets/js/layout.js"></script>
+</body>
+</html>

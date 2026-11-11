@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{3E9D0E54-FCB2-42A2-B837-D455DCD1F0D8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KmnClinic.Api", "src\KmnClinic.Api\KmnClinic.Api.csproj", "{9A97BEDD-9F0F-4D1B-9AEE-06A33DC5BAE4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{3002E172-CCFC-461E-84A2-8D9D2B3453BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KmnClinic.Tests", "tests\KmnClinic.Tests\KmnClinic.Tests.csproj", "{A63C5518-1B12-46E8-89B7-2CC4C5F238A7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9A97BEDD-9F0F-4D1B-9AEE-06A33DC5BAE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A97BEDD-9F0F-4D1B-9AEE-06A33DC5BAE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A97BEDD-9F0F-4D1B-9AEE-06A33DC5BAE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A97BEDD-9F0F-4D1B-9AEE-06A33DC5BAE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A63C5518-1B12-46E8-89B7-2CC4C5F238A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A63C5518-1B12-46E8-89B7-2CC4C5F238A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A63C5518-1B12-46E8-89B7-2CC4C5F238A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A63C5518-1B12-46E8-89B7-2CC4C5F238A7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9A97BEDD-9F0F-4D1B-9AEE-06A33DC5BAE4} = {3E9D0E54-FCB2-42A2-B837-D455DCD1F0D8}
+		{A63C5518-1B12-46E8-89B7-2CC4C5F238A7} = {3002E172-CCFC-461E-84A2-8D9D2B3453BF}
+	EndGlobalSection
+EndGlobal
