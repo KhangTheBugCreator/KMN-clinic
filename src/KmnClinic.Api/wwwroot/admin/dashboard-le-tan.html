@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard lễ tân – KMN Clinic</title>
+  <link rel="stylesheet" href="../assets/vendor/fonts/fonts.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap-icons/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="../assets/css/theme.css">
+  <link rel="stylesheet" href="../assets/css/admin.css">
+</head>
+<body class="admin" data-layout="admin" data-vai-tro="LeTan" data-mau="1"
+      data-search="Tìm theo số điện thoại khách hoặc mã lịch hẹn...">
+  <div class="admin-shell" id="admin-shell">
+    <div class="main">
+      <div id="topnav"></div>
+      <div class="content">
+        <div class="page-head">
+          <div><nav aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="#">Trang nội bộ</a></li><li class="breadcrumb-item active">Dashboard</li></ol></nav>
+            <h1>Chào buổi sáng, Mai</h1><span class="text-muted-kmn small">Thứ 5, 12/11/2026 · Ca sáng</span></div>
+          <div class="d-flex gap-2"><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#vangLaiModal"><i class="bi bi-person-plus me-1"></i>Tiếp nhận khách vãng lai</button></div>
+        </div>
+
+        <div class="row g-3 mb-3">
+          <div class="col-6 col-xl-3"><div class="card-kmn stat-card d-flex gap-3"><span class="icon-circle ic-orange"><i class="bi bi-telephone-outbound"></i></span>
+            <div><div class="label">Chờ xác nhận</div><div class="value">6</div><div class="sub">Lịch Đã đặt cần gọi điện</div></div></div></div>
+          <div class="col-6 col-xl-3"><div class="card-kmn stat-card d-flex gap-3"><span class="icon-circle ic-blue"><i class="bi bi-calendar-day"></i></span>
+            <div><div class="label">Lịch hẹn hôm nay</div><div class="value">14</div><div class="sub">9 đã xác nhận</div></div></div></div>
+          <div class="col-6 col-xl-3"><div class="card-kmn stat-card d-flex gap-3"><span class="icon-circle ic-green"><i class="bi bi-person-check"></i></span>
+            <div><div class="label">Đã tiếp nhận hôm nay</div><div class="value">5</div><div class="sub">2 khách vãng lai</div></div></div></div>
+          <div class="col-6 col-xl-3"><div class="card-kmn stat-card d-flex gap-3"><span class="icon-circle ic-cyan"><i class="bi bi-heart-pulse"></i></span>
+            <div><div class="label">Bác sĩ đang trực</div><div class="value">3</div><div class="sub">Theo lịch làm việc ca này</div></div></div></div>
+        </div>
+
+        <div class="row g-3">
+          <div class="col-xl-8"><div class="card-kmn panel p-0">
+            <div class="panel-title p-3 pb-0 flex-wrap"><h2>Lịch hẹn hôm nay</h2>
+              <div class="d-flex gap-2 flex-wrap">
+                <select class="form-select form-select-sm" style="width:auto"><option>Tất cả trạng thái</option><option>Đã đặt</option><option>Đã xác nhận</option><option>Đã khám</option><option>Đã hủy</option></select>
+                <select class="form-select form-select-sm" style="width:auto"><option>Tất cả bác sĩ</option></select></div></div>
+            <div class="table-responsive mt-2">
+              <table class="table table-kmn">
+                <thead><tr><th>Mã</th><th>Khách hàng</th><th>Bác sĩ · Ca · Phòng</th><th>Triệu chứng</th><th>Trạng thái</th><th class="text-end">Thao tác</th></tr></thead>
+                <tbody>
+                  <tr><td class="mono">LH0141</td><td><div class="person"><div><b>Nguyễn Văn Bình</b><small>0901 234 567</small></div></div></td>
+                    <td>BS. Trần Minh Anh<br><small class="text-muted-kmn">Sáng · P.101 · Nội</small></td><td class="small">Ho khan, sốt nhẹ</td>
+                    <td><span class="badge-st st-dat">Đã đặt</span></td>
+                    <td class="text-end text-nowrap"><button class="btn btn-sm btn-soft">Xác nhận</button>
+                      <button class="btn btn-sm btn-primary" title="Xác nhận rồi tạo hồ sơ khám trong một thao tác">Xác nhận &amp; tiếp nhận</button></td></tr>
+                  <tr><td class="mono">LH0138</td><td><div class="person"><div><b>Trần Thị Hồng</b><small>0938 556 112</small></div></div></td>
+                    <td>BS. Trần Minh Anh<br><small class="text-muted-kmn">Sáng · P.101 · Nội</small></td><td class="small">Đau đầu, chóng mặt</td>
+                    <td><span class="badge-st st-xacnhan">Đã xác nhận</span></td>
+                    <td class="text-end text-nowrap"><button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#huyModal">Hủy</button>
+                      <button class="btn btn-sm btn-primary">Tiếp nhận</button></td></tr>
+                  <tr><td class="mono">LH0135</td><td><div class="person"><div><b>Lê Hoàng Phúc</b><small>0977 300 245</small></div></div></td>
+                    <td>BS. Lê Thu Hà<br><small class="text-muted-kmn">Sáng · P.201 · Nhi</small></td><td class="small text-muted-kmn">—</td>
+                    <td><span class="badge-st st-kham">Đã khám</span></td>
+                    <td class="text-end"><a href="#" class="btn btn-sm btn-soft">Xem hồ sơ</a></td></tr>
+                  <tr><td class="mono">LH0130</td><td><div class="person"><div><b>Võ Minh Tuấn</b><small>0869 112 908</small></div></div></td>
+                    <td>BS. Phạm Quốc Bảo<br><small class="text-muted-kmn">Sáng · P.301 · TMH</small></td><td class="small">Đau họng</td>
+                    <td><span class="badge-st st-huy">Đã hủy</span></td>
+                    <td class="text-end"><span class="small text-muted-kmn">—</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div></div>
+
+          <div class="col-xl-4">
+            <div class="card-kmn panel mb-3" style="height:auto">
+              <div class="panel-title"><h2>Tra cứu khách hàng</h2></div>
+              <div class="input-group mb-2"><span class="input-group-text"><i class="bi bi-phone"></i></span><input class="form-control" value="0938556112" placeholder="Số điện thoại"><button class="btn btn-primary" style="border-radius:0 10px 10px 0">Tìm</button></div>
+              <div class="queue-item mb-0"><img class="avatar" alt="" data-avatar="" style="width:40px;height:40px">
+                <div class="flex-grow-1"><b class="text-navy">Trần Thị Hồng</b><br><small class="text-muted-kmn">Nữ · 1988 · Có tài khoản</small></div>
+                <span class="badge-st st-xacnhan">1 lịch hôm nay</span></div>
+            </div>
+            <div class="card-kmn panel" style="height:auto">
+              <div class="panel-title"><h2>Bác sĩ đang trực</h2><small class="text-muted-kmn">Nhận vãng lai từ 30' trước ca</small></div>
+              <div class="queue-item"><img class="avatar" alt="" data-avatar="" style="width:40px;height:40px"><div class="flex-grow-1"><b class="text-navy">BS. Trần Minh Anh</b><br><small class="text-muted-kmn">Nội · P.101 · 7:00–11:30</small></div><span class="small text-muted-kmn">4 chờ</span></div>
+              <div class="queue-item"><img class="avatar" alt="" data-avatar="" style="width:40px;height:40px"><div class="flex-grow-1"><b class="text-navy">BS. Lê Thu Hà</b><br><small class="text-muted-kmn">Nhi · P.201 · 7:00–11:30</small></div><span class="small text-muted-kmn">2 chờ</span></div>
+              <div class="queue-item mb-0"><img class="avatar" alt="" data-avatar="" style="width:40px;height:40px"><div class="flex-grow-1"><b class="text-navy">BS. Phạm Quốc Bảo</b><br><small class="text-muted-kmn">TMH · P.301 · 7:00–11:30</small></div><span class="small text-muted-kmn">1 chờ</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal xác nhận hủy lịch -->
+  <div class="modal fade" id="huyModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered"><div class="modal-content rounded-4 border-0"><div class="modal-body p-4 text-center">
+      <span class="icon-circle ic-red mb-3" style="width:60px;height:60px;font-size:1.6rem"><i class="bi bi-calendar-x"></i></span>
+      <h2 class="h5">Hủy lịch hẹn LH0138?</h2>
+      <p class="text-muted-kmn">Trần Thị Hồng · BS. Trần Minh Anh · 12/11/2026 ca sáng.<br>Thao tác này không hoàn tác được.</p>
+      <div class="d-flex justify-content-center gap-2"><button class="btn btn-soft" data-bs-dismiss="modal">Không hủy</button><button class="btn btn-danger" data-bs-dismiss="modal">Hủy lịch hẹn</button></div>
+    </div></div></div>
+  </div>
+
+  <!-- Modal tiếp nhận khách vãng lai: ma_lich_hen = NULL, kiểm tra RB41 -->
+  <div class="modal fade" id="vangLaiModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered"><div class="modal-content rounded-4 border-0">
+      <div class="modal-header border-0"><h2 class="modal-title h5">Tiếp nhận khách vãng lai</h2><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button></div>
+      <div class="modal-body pt-0">
+        <div class="row g-3">
+          <div class="col-md-5"><label class="form-label">Số điện thoại</label>
+            <div class="input-group"><input class="form-control" value="0912345678"><button class="btn btn-soft" style="border-radius:0 10px 10px 0">Tìm</button></div>
+            <div class="form-text text-warning"><i class="bi bi-person-plus me-1"></i>Chưa có khách này, nhập thông tin để tạo mới.</div></div>
+          <div class="col-md-7"><label class="form-label">Họ tên</label><input class="form-control" value="Đặng Văn Lực"></div>
+          <div class="col-md-4"><label class="form-label">Ngày sinh</label><input type="date" class="form-control" value="1972-08-02"></div>
+          <div class="col-md-3"><label class="form-label">Giới tính</label><select class="form-select"><option>Nam</option><option>Nữ</option></select></div>
+          <div class="col-md-5"><label class="form-label">Bác sĩ đang trực</label><select class="form-select"><option>BS. Trần Minh Anh – Nội · P.101</option><option>BS. Lê Thu Hà – Nhi · P.201</option></select></div>
+          <div class="col-12"><label class="form-label">Triệu chứng</label><textarea class="form-control" rows="2">Đau bụng vùng thượng vị</textarea></div>
+        </div>
+      </div>
+      <div class="modal-footer border-0"><button class="btn btn-soft" data-bs-dismiss="modal">Hủy bỏ</button><button class="btn btn-primary"><i class="bi bi-journal-plus me-1"></i>Tạo hồ sơ khám</button></div>
+    </div></div>
+  </div>
+
+  <script src="../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/api.js"></script>
+  <script src="../assets/js/ui.js"></script>
+  <script src="../assets/js/layout.js"></script>
+</body>
+</html>

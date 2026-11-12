@@ -1,0 +1,104 @@
+/* =========================================================
+   admin.css – giao diện Internal Management (nhân viên)
+   Bố cục: sidebar trái + header + breadcrumb + nội dung.
+   ========================================================= */
+
+body.admin { background: #f4f7fb; }
+
+.admin-shell { display: flex; min-height: 100vh; }
+
+/* ---------- Sidebar ---------- */
+.sidebar { width: 260px; flex-shrink: 0; background: #fff; border-right: 1px solid var(--kmn-border);
+  position: sticky; top: 0; height: 100vh; overflow-y: auto; display: flex; flex-direction: column; }
+.sidebar .brand { padding: 1.1rem 1.25rem; border-bottom: 1px solid var(--kmn-border); }
+.sidebar .brand img { height: 40px; }
+.sidebar .role-chip { margin: 1rem 1.25rem .25rem; background: var(--kmn-sky); color: var(--kmn-blue);
+  border-radius: 10px; padding: .45rem .7rem; font-size: .8rem; font-weight: 600; display: flex; gap: .45rem; align-items: center; }
+.sidebar .nav-group { padding: .75rem .75rem 0; }
+.sidebar .nav-group-title { font-size: .7rem; text-transform: uppercase; letter-spacing: .08em; color: #9aa6b6;
+  padding: .5rem .6rem .3rem; font-weight: 600; }
+.sidebar .side-link { display: flex; align-items: center; gap: .7rem; padding: .55rem .7rem; border-radius: 10px;
+  color: var(--kmn-text); text-decoration: none; font-weight: 500; font-size: .92rem; margin-bottom: 2px; }
+.sidebar .side-link i { font-size: 1.1rem; color: #8a97a8; width: 20px; text-align: center; }
+.sidebar .side-link:hover { background: var(--kmn-sky-2); color: var(--kmn-blue); }
+.sidebar .side-link:hover i { color: var(--kmn-blue); }
+.sidebar .side-link.active { background: var(--kmn-blue); color: #fff; box-shadow: 0 6px 14px rgba(31, 111, 209, .25); }
+.sidebar .side-link.active i { color: #fff; }
+.sidebar .side-link .count { margin-left: auto; background: #fde8e7; color: #b4352e; border-radius: 999px;
+  font-size: .72rem; padding: .05rem .5rem; font-weight: 600; }
+.sidebar .side-link.active .count { background: rgba(255, 255, 255, .25); color: #fff; }
+.sidebar .side-foot { margin-top: auto; padding: 1rem 1.25rem; border-top: 1px solid var(--kmn-border); font-size: .8rem; color: var(--kmn-muted); }
+
+/* ---------- Khu nội dung ---------- */
+.main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.topnav { background: #fff; border-bottom: 1px solid var(--kmn-border); padding: .7rem 1.5rem; display: flex;
+  align-items: center; gap: 1rem; position: sticky; top: 0; z-index: 1020; }
+.topnav .quick-find { max-width: 380px; flex: 1; }
+.topnav .quick-find .form-control { border-radius: 999px; background: var(--kmn-sky-2); border-color: transparent; padding-left: 2.4rem; }
+.topnav .quick-find i { position: absolute; left: .95rem; top: 50%; transform: translateY(-50%); color: var(--kmn-muted); }
+.topnav .icon-btn { width: 40px; height: 40px; border-radius: 12px; border: 1px solid var(--kmn-border); background: #fff;
+  display: inline-flex; align-items: center; justify-content: center; position: relative; color: var(--kmn-text); }
+.topnav .icon-btn .dot { position: absolute; top: -4px; right: -4px; background: var(--st-chua-tt); color: #fff;
+  font-size: .65rem; border-radius: 999px; padding: 0 .35rem; font-weight: 700; }
+.topnav .user-box { display: flex; align-items: center; gap: .6rem; }
+.topnav .user-box .name { font-weight: 600; font-size: .9rem; color: var(--kmn-navy); line-height: 1.1; }
+.topnav .user-box small { color: var(--kmn-muted); font-size: .76rem; }
+.content { padding: 1.5rem; }
+.page-head { display: flex; flex-wrap: wrap; gap: 1rem; align-items: flex-end; justify-content: space-between; margin-bottom: 1.25rem; }
+.page-head h1 { font-size: 1.5rem; margin: .2rem 0 0; }
+.breadcrumb { font-size: .82rem; margin: 0; }
+.breadcrumb a { text-decoration: none; color: var(--kmn-muted); }
+
+/* ---------- Thẻ thống kê ---------- */
+.stat-card { padding: 1.1rem 1.2rem; height: 100%; }
+.stat-card .label { color: var(--kmn-muted); font-size: .85rem; font-weight: 500; }
+.stat-card .value { font-family: var(--font-head); font-size: 1.7rem; font-weight: 600; color: var(--kmn-navy); line-height: 1.2; margin-top: .25rem; }
+.stat-card .sub { font-size: .8rem; color: var(--kmn-muted); }
+
+.panel { padding: 1.2rem 1.25rem; height: 100%; }
+.panel-title { display: flex; align-items: center; justify-content: space-between; gap: .75rem; margin-bottom: 1rem; }
+.panel-title h2 { font-size: 1.05rem; margin: 0; }
+.chart-box { position: relative; height: 260px; }
+
+/* ---------- Bảng dữ liệu ---------- */
+.table-kmn { margin: 0; font-size: .9rem; }
+.table-kmn thead th { background: var(--kmn-sky-2); color: var(--kmn-navy); font-weight: 600; font-size: .8rem;
+  text-transform: uppercase; letter-spacing: .03em; border-bottom: 1px solid var(--kmn-border); white-space: nowrap; padding: .7rem .75rem; }
+.table-kmn td { vertical-align: middle; padding: .7rem .75rem; border-color: var(--kmn-border); }
+.table-kmn tbody tr:hover { background: #fafcff; }
+.person { display: flex; align-items: center; gap: .6rem; }
+.person .avatar { width: 36px; height: 36px; }
+.person b { font-weight: 600; color: var(--kmn-navy); display: block; line-height: 1.2; }
+.person small { color: var(--kmn-muted); }
+.mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .85rem; color: var(--kmn-navy); }
+
+/* Danh sách hàng chờ */
+.queue-item { display: flex; align-items: center; gap: .8rem; padding: .75rem; border: 1px solid var(--kmn-border);
+  border-radius: 12px; margin-bottom: .6rem; background: #fff; }
+.queue-item .num { width: 34px; height: 34px; border-radius: 10px; background: var(--kmn-sky); color: var(--kmn-blue);
+  display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-family: var(--font-head); }
+.queue-item.current { border-color: var(--kmn-blue); box-shadow: 0 0 0 3px rgba(31, 111, 209, .12); }
+
+/* Lịch trong ngày */
+.timeline { list-style: none; padding: 0; margin: 0; position: relative; }
+.timeline li { position: relative; padding: 0 0 1rem 1.5rem; }
+.timeline li::before { content: ""; position: absolute; left: 5px; top: 6px; bottom: -6px; width: 2px; background: var(--kmn-border); }
+.timeline li:last-child::before { display: none; }
+.timeline li::after { content: ""; position: absolute; left: 0; top: 4px; width: 12px; height: 12px; border-radius: 50%;
+  background: #fff; border: 3px solid var(--kmn-blue); }
+.timeline .t { font-weight: 600; color: var(--kmn-navy); font-size: .9rem; }
+
+/* Thuốc sắp hết */
+.stock-bar { height: 6px; border-radius: 6px; background: #eef2f7; overflow: hidden; }
+.stock-bar span { display: block; height: 100%; background: var(--st-chua-tt); }
+
+/* ---------- Responsive: sidebar thành offcanvas trên màn nhỏ ---------- */
+@media (max-width: 991.98px) {
+  .sidebar { position: fixed; left: 0; top: 0; z-index: 1045; transform: translateX(-100%); transition: transform .25s ease; box-shadow: var(--shadow-lg); }
+  .sidebar.show { transform: none; }
+  .sidebar-backdrop { position: fixed; inset: 0; background: rgba(15, 30, 60, .35); z-index: 1040; display: none; }
+  .sidebar-backdrop.show { display: block; }
+  .topnav { padding: .6rem 1rem; }
+  .topnav .quick-find, .topnav .user-box .meta { display: none; }
+  .content { padding: 1rem; }
+}

@@ -1,0 +1,140 @@
+/* =========================================================
+   KMN Clinic – Bộ giao diện thống nhất (Giai đoạn 2)
+   theme.css: biến màu, font, thành phần dùng chung cho
+   cả Public Website và Internal Management.
+   ========================================================= */
+
+:root {
+  /* Màu thương hiệu lấy theo logo KMN Clinic */
+  --kmn-navy: #17366f;      /* chữ logo, tiêu đề đậm */
+  --kmn-blue: #1f6fd1;      /* màu chính: nút, liên kết */
+  --kmn-blue-600: #1a5fb4;
+  --kmn-cyan: #22b3e6;      /* điểm nhấn */
+  --kmn-green: #4caf6a;     /* màu phụ: trạng thái tốt */
+  --kmn-green-soft: #e3f4e8;
+  --kmn-sky: #eaf4fd;       /* nền xanh nhạt */
+  --kmn-sky-2: #f5f9fe;
+  --kmn-text: #2b3445;      /* xám đậm cho nội dung */
+  --kmn-muted: #6b7686;
+  --kmn-border: #e3e9f1;
+  --kmn-white: #ffffff;
+
+  /* Màu trạng thái nghiệp vụ (dùng thống nhất cho badge) */
+  --st-dat: #f2a33a;        /* Đã đặt */
+  --st-xacnhan: #1f6fd1;    /* Đã xác nhận */
+  --st-kham: #4caf6a;       /* Đã khám / Đã thanh toán */
+  --st-huy: #9aa3af;        /* Đã hủy */
+  --st-chua-tt: #e5534b;    /* Chưa thanh toán */
+
+  --radius-sm: 10px;
+  --radius: 16px;
+  --radius-lg: 24px;
+  --shadow-sm: 0 2px 8px rgba(23, 54, 111, .06);
+  --shadow: 0 8px 24px rgba(23, 54, 111, .08);
+  --shadow-lg: 0 18px 40px rgba(23, 54, 111, .12);
+
+  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-head: 'Poppins', 'Inter', system-ui, sans-serif;
+
+  /* Ghi đè biến của Bootstrap 5 để dùng chung màu */
+  --bs-primary: var(--kmn-blue);
+  --bs-primary-rgb: 31, 111, 209;
+  --bs-body-color: var(--kmn-text);
+  --bs-body-font-family: var(--font-body);
+  --bs-link-color: var(--kmn-blue);
+  --bs-link-hover-color: var(--kmn-blue-600);
+  --bs-border-color: var(--kmn-border);
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--kmn-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, .font-head {
+  font-family: var(--font-head);
+  color: var(--kmn-navy);
+  font-weight: 600;
+  letter-spacing: -.01em;
+}
+
+/* ---------- Nút ---------- */
+.btn { border-radius: 999px; font-weight: 500; padding: .55rem 1.25rem; }
+.btn-sm { padding: .35rem .9rem; }
+.btn-primary { --bs-btn-bg: var(--kmn-blue); --bs-btn-border-color: var(--kmn-blue);
+  --bs-btn-hover-bg: var(--kmn-blue-600); --bs-btn-hover-border-color: var(--kmn-blue-600);
+  --bs-btn-active-bg: var(--kmn-navy); --bs-btn-disabled-bg: var(--kmn-blue); }
+.btn-outline-primary { --bs-btn-color: var(--kmn-blue); --bs-btn-border-color: var(--kmn-blue);
+  --bs-btn-hover-bg: var(--kmn-blue); --bs-btn-hover-border-color: var(--kmn-blue); }
+.btn-soft { background: var(--kmn-sky); color: var(--kmn-blue); border: 0; }
+.btn-soft:hover { background: #d9eafc; color: var(--kmn-blue-600); }
+.btn-success { --bs-btn-bg: var(--kmn-green); --bs-btn-border-color: var(--kmn-green);
+  --bs-btn-hover-bg: #3f9a5b; --bs-btn-hover-border-color: #3f9a5b; }
+
+/* ---------- Card ---------- */
+.card-kmn {
+  background: var(--kmn-white);
+  border: 1px solid var(--kmn-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+.card-kmn.hover-lift { transition: transform .2s ease, box-shadow .2s ease; }
+.card-kmn.hover-lift:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+
+/* ---------- Form ---------- */
+.form-control, .form-select { border-radius: var(--radius-sm); border-color: var(--kmn-border); padding: .6rem .9rem; }
+.form-control:focus, .form-select:focus { border-color: var(--kmn-cyan); box-shadow: 0 0 0 .2rem rgba(34, 179, 230, .18); }
+.form-label { font-weight: 500; font-size: .92rem; color: var(--kmn-navy); }
+.input-group-text { border-radius: var(--radius-sm); background: var(--kmn-sky-2); border-color: var(--kmn-border); }
+
+/* ---------- Badge trạng thái (dùng chung toàn hệ thống) ---------- */
+.badge-st { display: inline-flex; align-items: center; gap: .35rem; padding: .3rem .7rem;
+  border-radius: 999px; font-size: .78rem; font-weight: 600; white-space: nowrap; }
+.badge-st::before { content: ""; width: .45rem; height: .45rem; border-radius: 50%; background: currentColor; }
+.st-dat { color: #b06d0d; background: #fdf1df; }
+.st-xacnhan { color: var(--kmn-blue); background: var(--kmn-sky); }
+.st-kham { color: #2f7d47; background: var(--kmn-green-soft); }
+.st-huy { color: #6b7280; background: #eef0f3; }
+.st-chua-tt { color: #b4352e; background: #fde8e7; }
+.st-cho { color: #7a4fd6; background: #efe9fc; }   /* Chờ khám (suy ra) */
+
+/* ---------- Avatar có ảnh dự phòng ---------- */
+.avatar { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; aspect-ratio: 1;
+  background: var(--kmn-sky); flex-shrink: 0; }
+.avatar-lg { width: 96px; height: 96px; }
+.avatar-xl { width: 128px; height: 128px; }
+
+/* ---------- Nhãn "Bản thiết kế" cho Giai đoạn 2 ---------- */
+.design-ribbon {
+  position: fixed; right: 12px; bottom: 12px; z-index: 2000;
+  background: rgba(23, 54, 111, .92); color: #fff; font-size: .75rem;
+  padding: .35rem .75rem; border-radius: 999px; box-shadow: var(--shadow);
+}
+.design-ribbon i { color: var(--kmn-cyan); }
+
+/* ---------- Empty state, skeleton ---------- */
+.empty-state { text-align: center; padding: 2.5rem 1rem; color: var(--kmn-muted); }
+.empty-state i { font-size: 2.4rem; color: #c3cfde; display: block; margin-bottom: .5rem; }
+.skeleton { background: linear-gradient(90deg, #eef2f7 25%, #f6f8fb 37%, #eef2f7 63%);
+  background-size: 400% 100%; animation: sk 1.4s ease infinite; border-radius: 8px; }
+@keyframes sk { 0% { background-position: 100% 50%; } 100% { background-position: 0 50%; } }
+
+/* ---------- Tiện ích ---------- */
+.text-navy { color: var(--kmn-navy) !important; }
+.text-muted-kmn { color: var(--kmn-muted) !important; }
+.bg-sky { background: var(--kmn-sky) !important; }
+.bg-sky-2 { background: var(--kmn-sky-2) !important; }
+.rounded-kmn { border-radius: var(--radius) !important; }
+.icon-circle { width: 44px; height: 44px; border-radius: 12px; display: inline-flex; align-items: center;
+  justify-content: center; font-size: 1.25rem; flex-shrink: 0; }
+.ic-blue { background: var(--kmn-sky); color: var(--kmn-blue); }
+.ic-cyan { background: #e2f6fd; color: #138cb8; }
+.ic-green { background: var(--kmn-green-soft); color: #2f7d47; }
+.ic-orange { background: #fdf1df; color: #b06d0d; }
+.ic-red { background: #fde8e7; color: #b4352e; }
+.ic-purple { background: #efe9fc; color: #7a4fd6; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
