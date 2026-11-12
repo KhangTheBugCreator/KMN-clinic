@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Khách hàng – KMN Clinic</title>
+  <link rel="stylesheet" href="../assets/vendor/fonts/fonts.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap-icons/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="../assets/css/theme.css">
+  <link rel="stylesheet" href="../assets/css/admin.css">
+</head>
+<body class="admin" data-layout="admin" data-vai-tro="QuanTriVien,LeTan" data-search="Tìm nhanh...">
+  <div class="admin-shell" id="admin-shell">
+    <div class="main">
+      <div id="topnav"></div>
+      <div class="content">
+        <div class="page-head">
+          <div><nav aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="#">Con người</a></li><li class="breadcrumb-item active">Khách hàng</li></ol></nav>
+            <h1>Khách hàng</h1><span class="text-muted-kmn small">Số điện thoại không trùng (RB7). Khách đã có lịch hẹn hoặc hồ sơ khám thì không xóa được.</span></div>
+          <button class="btn btn-primary" id="btnThem"><i class="bi bi-plus-lg me-1"></i>Thêm khách hàng</button>
+        </div>
+        <div class="card-kmn panel p-0">
+          <div class="d-flex flex-wrap gap-2 p-3 pb-0">
+            <div class="input-group" style="max-width:340px"><span class="input-group-text"><i class="bi bi-search"></i></span>
+              <input id="oTim" class="form-control" placeholder="Tìm theo tên, số điện thoại hoặc mã" aria-label="Tìm kiếm"></div>
+            <select id="locGioiTinh" class="form-select" style="width:auto" aria-label="Lọc theo giới tính"><option value="">Tất cả giới tính</option><option>Nam</option><option>Nữ</option></select>
+          </div>
+          <div class="table-responsive mt-2"><table class="table table-kmn mb-0">
+            <thead><tr><th>Mã</th><th>Khách hàng</th><th>Số điện thoại</th><th>Ngày sinh</th><th>Địa chỉ</th><th class="text-center">Lịch hẹn</th><th class="text-center">Hồ sơ</th><th class="text-end">Thao tác</th></tr></thead>
+            <tbody id="bang"></tbody></table></div>
+          <div class="p-3" id="phanTrang"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/api.js"></script>
+  <script src="../assets/js/ui.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/danh-sach.js"></script>
+  <script src="../assets/js/pages/khach-hang.js"></script>
+</body>
+</html>

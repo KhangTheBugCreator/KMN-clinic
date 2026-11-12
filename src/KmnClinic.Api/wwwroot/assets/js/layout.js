@@ -33,7 +33,16 @@ const DEFAULT_AVATAR = IMG + 'avatar-default.svg';
 function renderAvatar(img, url) {
   const useDefault = () => { img.onerror = null; img.src = DEFAULT_AVATAR; };
   let ok = false;
-  try { ok = !!url && new URL(url).protocol === 'https:'; } catch (e) { ok = false; }
+  try {
+    const u = new URL(url);
+    const h = u.hostname.toLowerCase().replace(/^\[|\]$/g, '');
+    // chỉ HTTPS công khai: không tải ảnh từ localhost, IP nội bộ, tên máy LAN (cùng quy tắc với backend)
+    const noiBo = !h.includes('.') && !h.includes(':') || /\.(localhost|local|internal|lan|home|corp|intranet)$/.test(h)
+      || /^(0|10|127)\./.test(h) || /^169\.254\./.test(h) || /^192\.168\./.test(h) || /^172\.(1[6-9]|2\d|3[01])\./.test(h)
+      || /^100\.(6[4-9]|[7-9]\d|1[01]\d|12[0-7])\./.test(h) || /^(2(2[4-9]|[3-5]\d))\./.test(h)
+      || h === '::1' || /^(fc|fd|fe8|fe9|fea|feb)/.test(h) && h.includes(':');
+    ok = !!url && u.protocol === 'https:' && !u.username && !u.password && !u.port && !noiBo;
+  } catch (e) { ok = false; }
   if (!ok) { useDefault(); return; }
   img.onerror = useDefault;
   const timer = setTimeout(() => { if (!img.complete || img.naturalWidth === 0) useDefault(); }, 8000);
@@ -145,7 +154,7 @@ const ROLE_MENU = {
     groups: [
       ['Tổng quan', [['bi-grid-1x2', 'Dashboard', 'dashboard-quan-tri.html'], ['bi-bar-chart-line', 'Thống kê', '#'], ['bi-file-earmark-excel', 'Báo cáo Excel', '#']]],
       ['Danh mục', [['bi-diagram-3', 'Khoa', 'danh-muc-khoa.html'], ['bi-door-open', 'Phòng làm việc', 'danh-muc-phong.html'], ['bi-clock-history', 'Ca làm việc', 'danh-muc-ca.html'], ['bi-capsule', 'Thuốc', 'thuoc.html']]],
-      ['Con người', [['bi-person-badge', 'Nhân viên', '#'], ['bi-people', 'Khách hàng', '#']]],
+      ['Con người', [['bi-person-badge', 'Nhân viên', 'nhan-vien.html'], ['bi-people', 'Khách hàng', 'khach-hang.html']]],
       ['Vận hành', [['bi-calendar3', 'Lịch làm việc', '#'], ['bi-calendar-check', 'Lịch hẹn', '#'], ['bi-journal-medical', 'Hồ sơ khám', '#'], ['bi-receipt', 'Hóa đơn', '#']]]
     ]
   },
@@ -153,7 +162,7 @@ const ROLE_MENU = {
     icon: 'bi-person-workspace',
     groups: [
       ['Tổng quan', [['bi-grid-1x2', 'Dashboard', 'dashboard-le-tan.html']]],
-      ['Tiếp đón', [['bi-calendar-check', 'Lịch hẹn', '#'], ['bi-person-plus', 'Tiếp nhận khách', '#'], ['bi-people', 'Khách hàng', '#'], ['bi-journal-medical', 'Hồ sơ khám', '#']]],
+      ['Tiếp đón', [['bi-calendar-check', 'Lịch hẹn', '#'], ['bi-person-plus', 'Tiếp nhận khách', '#'], ['bi-people', 'Khách hàng', 'khach-hang.html'], ['bi-journal-medical', 'Hồ sơ khám', '#']]],
       ['Tra cứu', [['bi-calendar3', 'Lịch làm việc bác sĩ', '#']]]
     ]
   },

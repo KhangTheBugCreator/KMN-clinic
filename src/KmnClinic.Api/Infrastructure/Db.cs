@@ -71,4 +71,6 @@ public static class SqlExtensions
         var i = r.GetOrdinal(col);
         return r.IsDBNull(i) ? null : r.GetString(i);
     }
+
+    public static string? GetStringOrNull(this SqlDataReader r, int i) => r.IsDBNull(i) ? null : r.GetString(i);
 }

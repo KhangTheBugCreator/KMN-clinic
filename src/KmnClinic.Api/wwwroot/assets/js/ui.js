@@ -85,6 +85,8 @@
   const pad = n => String(n).padStart(2, '0');
   function fmtNgay(v) {
     if (!v) return '';
+    const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(v); // ngày thuần (DateOnly): không qua múi giờ
+    if (m) return `${m[3]}/${m[2]}/${m[1]}`;
     const d = new Date(v);
     return isNaN(d) ? '' : `${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()}`;
   }
