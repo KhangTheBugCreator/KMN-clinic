@@ -28,7 +28,7 @@ quản trị viên, lễ tân, bác sĩ, thu ngân. Chạy trên database **PHON
    ```
 
    Có thể dùng biến môi trường `ConnectionStrings__PhongKham` và `Jwt__Key` thay cho User Secrets.
-3. Chạy: `dotnet run` rồi mở địa chỉ hiện trên màn hình (ví dụ `http://localhost:5xxx/`).
+3. Chạy: `dotnet run` rồi mở `http://localhost:5080/`. Máy chỉ có .NET 10 thì chạy `dotnet run -p:RollForward=Major`.
 
 Tài khoản thử (sau khi nạp dữ liệu mẫu, mật khẩu `matkhau123`):
 
