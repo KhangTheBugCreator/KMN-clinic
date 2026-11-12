@@ -104,8 +104,38 @@
     return `<span class="badge-st ${map[tt] || 'st-huy'}">${esc(tt)}</span>`;
   }
 
+  /**
+   * Vẽ thanh phân trang vào `el` cho kết quả { total, page, pageSize }; bấm trang gọi onChange(trang).
+   */
+  function phanTrang(el, kq, onChange) {
+    const soTrang = Math.max(1, Math.ceil(kq.total / kq.pageSize));
+    const tu = kq.total ? (kq.page - 1) * kq.pageSize + 1 : 0, den = Math.min(kq.total, kq.page * kq.pageSize);
+    const nut = (p, nhan, tat, hien) => `<li class="page-item ${tat ? 'disabled' : ''} ${hien ? 'active' : ''}">
+      <button type="button" class="page-link" data-trang="${p}" ${tat ? 'tabindex="-1"' : ''}>${nhan}</button></li>`;
+    const trang = [];
+    for (let p = Math.max(1, kq.page - 2); p <= Math.min(soTrang, kq.page + 2); p++) trang.push(nut(p, p, false, p === kq.page));
+    el.innerHTML = `<div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+      <small class="text-muted-kmn">Hiển thị ${tu}–${den} / ${kq.total}</small>
+      <ul class="pagination pagination-sm mb-0">${nut(kq.page - 1, '<i class="bi bi-chevron-left"></i>', kq.page <= 1)}${trang.join('')}${nut(kq.page + 1, '<i class="bi bi-chevron-right"></i>', kq.page >= soTrang)}</ul></div>`;
+    el.querySelectorAll('[data-trang]').forEach(b => b.addEventListener('click', () => {
+      const p = +b.dataset.trang;
+      if (p >= 1 && p <= soTrang && p !== kq.page) onChange(p);
+    }));
+  }
+
+  /** Gọi fn sau khi người dùng ngừng gõ `ms` mili giây. */
+  function treo(fn, ms = 300) {
+    let h;
+    return (...a) => { clearTimeout(h); h = setTimeout(() => fn(...a), ms); };
+  }
+
+  /** Dòng trống / đang tải cho bảng. */
+  const dongTrong = (soCot, noiDung, icon = 'inbox') =>
+    `<tr><td colspan="${soCot}"><div class="empty-state"><i class="bi bi-${icon}"></i>${esc(noiDung)}</div></td></tr>`;
+  const dongDangTai = soCot => `<tr><td colspan="${soCot}"><div class="skeleton" style="height:42px"></div></td></tr>`;
+
   /** Lấy tham số trên URL. */
   const thamSo = ten => new URLSearchParams(location.search).get(ten);
 
-  window.Ui = { esc, toast, loi, xacNhan, dangXuLy, fmtTien, fmtNgay, fmtNgayGio, fmtGio, badgeTrangThai, thamSo };
+  window.Ui = { esc, toast, loi, xacNhan, dangXuLy, fmtTien, fmtNgay, fmtNgayGio, fmtGio, badgeTrangThai, thamSo, phanTrang, treo, dongTrong, dongDangTai };
 })();
