@@ -53,7 +53,8 @@ Kiểm thử cần database có dữ liệu mẫu; mọi thay đổi trong lúc 
 ## Tiến độ theo module
 
 - [x] **M0 Nền tảng**: kết nối SQL, xử lý lỗi, sinh mã, giả lập vai trò, phân quyền theo vai trò, bộ giao diện chung
-- [ ] M1 Danh mục · M2 Nhân viên, khách hàng · M3 Lịch làm việc · M4 Website công khai · M5 Khách hàng đặt lịch
+- [x] **M1 Danh mục**: khoa, phòng làm việc (kèm lịch sử dùng phòng), ca làm việc, thuốc (lọc sắp hết; bác sĩ và thu ngân chỉ xem)
+- [ ] M2 Nhân viên, khách hàng · M3 Lịch làm việc · M4 Website công khai · M5 Khách hàng đặt lịch
 - [ ] M6 Lễ tân · M7 Bác sĩ · M8 Thu ngân · M9 Thống kê, báo cáo · M10 Hoàn thiện
 
 Các trang còn nhãn "Nội dung mẫu · chưa nối dữ liệu" sẽ được nối API ở module tương ứng.

@@ -15,6 +15,7 @@ builder.Services.AddSingleton(jwtOptions);
 builder.Services.AddSingleton<JwtService>();
 builder.Services.AddSingleton<Db>();
 builder.Services.AddScoped<AuthRepository>();
+builder.Services.AddScoped<DanhMucRepository>();
 
 // ---------- Xác thực JWT + phân quyền theo vai trò ----------
 builder.Services
@@ -50,7 +51,9 @@ builder.Services
 builder.Services.AddAuthorization();
 
 // ---------- Controllers: lỗi kiểm tra dữ liệu trả về { message } giống các lỗi khác ----------
-builder.Services.AddControllers().ConfigureApiBehaviorOptions(o =>
+builder.Services.AddControllers()
+    .AddJsonOptions(o => o.JsonSerializerOptions.Converters.Add(new GioJsonConverter()))
+    .ConfigureApiBehaviorOptions(o =>
 {
     o.InvalidModelStateResponseFactory = ctx =>
     {

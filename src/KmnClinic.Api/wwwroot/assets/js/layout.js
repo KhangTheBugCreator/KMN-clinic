@@ -144,7 +144,7 @@ const ROLE_MENU = {
     icon: 'bi-shield-check',
     groups: [
       ['Tổng quan', [['bi-grid-1x2', 'Dashboard', 'dashboard-quan-tri.html'], ['bi-bar-chart-line', 'Thống kê', '#'], ['bi-file-earmark-excel', 'Báo cáo Excel', '#']]],
-      ['Danh mục', [['bi-diagram-3', 'Khoa', '#'], ['bi-door-open', 'Phòng làm việc', '#'], ['bi-clock-history', 'Ca làm việc', '#'], ['bi-capsule', 'Thuốc', '#']]],
+      ['Danh mục', [['bi-diagram-3', 'Khoa', 'danh-muc-khoa.html'], ['bi-door-open', 'Phòng làm việc', 'danh-muc-phong.html'], ['bi-clock-history', 'Ca làm việc', 'danh-muc-ca.html'], ['bi-capsule', 'Thuốc', 'thuoc.html']]],
       ['Con người', [['bi-person-badge', 'Nhân viên', '#'], ['bi-people', 'Khách hàng', '#']]],
       ['Vận hành', [['bi-calendar3', 'Lịch làm việc', '#'], ['bi-calendar-check', 'Lịch hẹn', '#'], ['bi-journal-medical', 'Hồ sơ khám', '#'], ['bi-receipt', 'Hóa đơn', '#']]]
     ]
@@ -161,7 +161,7 @@ const ROLE_MENU = {
     icon: 'bi-heart-pulse',
     groups: [
       ['Tổng quan', [['bi-grid-1x2', 'Dashboard', 'dashboard-bac-si.html']]],
-      ['Khám bệnh', [['bi-hourglass-split', 'Hàng chờ khám', '#'], ['bi-journal-medical', 'Hồ sơ của tôi', '#'], ['bi-capsule', 'Tra cứu thuốc', '#']]],
+      ['Khám bệnh', [['bi-hourglass-split', 'Hàng chờ khám', '#'], ['bi-journal-medical', 'Hồ sơ của tôi', '#'], ['bi-capsule', 'Tra cứu thuốc', 'thuoc.html']]],
       ['Lịch', [['bi-calendar3', 'Lịch làm việc của tôi', '#'], ['bi-calendar-check', 'Lịch hẹn của tôi', '#']]]
     ]
   },
@@ -169,7 +169,8 @@ const ROLE_MENU = {
     icon: 'bi-cash-coin',
     groups: [
       ['Tổng quan', [['bi-grid-1x2', 'Dashboard', 'dashboard-thu-ngan.html']]],
-      ['Thanh toán', [['bi-receipt', 'Hóa đơn chờ thu', '#'], ['bi-check2-circle', 'Lịch sử thanh toán', '#']]]
+      ['Thanh toán', [['bi-receipt', 'Hóa đơn chờ thu', '#'], ['bi-check2-circle', 'Lịch sử thanh toán', '#']]],
+      ['Tra cứu', [['bi-capsule', 'Thuốc', 'thuoc.html']]]
     ]
   }
 };
@@ -224,7 +225,7 @@ function adminTopnav(user) {
   const body = document.body;
 
   // Trang nội bộ: chặn ngay khi chưa đăng nhập hoặc sai vai trò (backend vẫn kiểm tra quyền ở từng API).
-  if (body.dataset.layout === 'admin' && !Auth.yeuCau([body.dataset.vaiTro])) {
+  if (body.dataset.layout === 'admin' && !Auth.yeuCau((body.dataset.vaiTro || '').split(',').filter(Boolean))) {
     body.style.visibility = 'hidden';
     return;
   }
