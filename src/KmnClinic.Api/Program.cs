@@ -16,6 +16,7 @@ builder.Services.AddSingleton<JwtService>();
 builder.Services.AddSingleton<Db>();
 builder.Services.AddScoped<AuthRepository>();
 builder.Services.AddScoped<DanhMucRepository>();
+builder.Services.AddScoped<NhanSuRepository>();
 
 // ---------- Xác thực JWT + phân quyền theo vai trò ----------
 builder.Services
