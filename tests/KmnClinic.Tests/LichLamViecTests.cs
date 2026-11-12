@@ -96,6 +96,7 @@ public class LichLamViecTests : IClassFixture<TestApp>
 
     [Theory]
     [InlineData(-1, "NV0003", "P0001", "RB9")]
+    [InlineData(0, "NV0003", "P0001", "ngày mai")]
     [InlineData(10, "NV0002", "P0001", "RB10")]
     [InlineData(10, "NV0003", "P0003", "RB11")]
     public async Task Vi_pham_RB9_RB10_RB11_tra_400(int sauSoNgay, string maNv, string maPhong, string rb)
@@ -151,6 +152,10 @@ public class LichLamViecTests : IClassFixture<TestApp>
         var thuSai = await qtv.PostAsJsonAsync("/api/lich-lam-viec/hang-loat", new
         { tuNgay = Ngay(5), denNgay = Ngay(10), cacThu = new[] { 9 }, maNv = "NV0004", maPhong = "P0003", maCa = "CA0001" });
         Assert.Equal(HttpStatusCode.BadRequest, thuSai.StatusCode);
+        var homNay = await qtv.PostAsJsonAsync("/api/lich-lam-viec/hang-loat", new
+        { tuNgay = Ngay(0), denNgay = Ngay(6), cacThu = new[] { 0, 1, 2, 3, 4, 5, 6 }, maNv = "NV0004", maPhong = "P0003", maCa = "CA0001" });
+        Assert.Equal(HttpStatusCode.BadRequest, homNay.StatusCode);
+        Assert.Equal("Chỉ xếp lịch làm việc từ ngày mai trở đi.", await DocLoi(homNay));
         var rong = await qtv.PostAsJsonAsync("/api/lich-lam-viec/hang-loat", new
         { tuNgay = Ngay(5), denNgay = Ngay(10), cacThu = Array.Empty<int>(), maNv = "NV0004", maPhong = "P0003", maCa = "CA0001" });
         Assert.Equal(HttpStatusCode.BadRequest, rong.StatusCode);
@@ -174,6 +179,8 @@ public class LichLamViecTests : IClassFixture<TestApp>
             Assert.Equal("Phòng 102", (await sua.Content.ReadFromJsonAsync<JsonElement>()).GetProperty("tenPhong").GetString());
             // Sửa vào ngày đã qua → 400
             Assert.Equal(HttpStatusCode.BadRequest, (await qtv.PutAsJsonAsync($"/api/lich-lam-viec/{maA}", Lich(Ngay(-3), "NV0003", "P0002", ca))).StatusCode);
+            // Sửa vào hôm nay → 400 (chỉ xếp từ ngày mai)
+            Assert.Equal(HttpStatusCode.BadRequest, (await qtv.PutAsJsonAsync($"/api/lich-lam-viec/{maA}", Lich(Ngay(0), "NV0003", "P0002", ca))).StatusCode);
 
             // B: có lịch hẹn → không sửa, không xóa
             await Sql(@"INSERT INTO Lich_hen (ma_lich_hen, ngay_gio_dat, trieu_chung_ban_dau, trang_thai, ma_kh, ma_lich_lam_viec, ma_nv)

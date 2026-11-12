@@ -15,6 +15,7 @@
   const cong = (d, n) => { const x = new Date(d); x.setDate(x.getDate() + n); return x; };
   const dauTuan = d => cong(d, -((d.getDay() + 6) % 7));
   const homNay = iso(new Date());
+  const ngayMai = iso(cong(new Date(), 1)); // chỉ xếp lịch từ ngày mai trở đi
   const ngayNgan = d => `${pad(d.getDate())}/${pad(d.getMonth() + 1)}`;
 
   let kieu = 'tuan', moc = new Date();
@@ -65,7 +66,7 @@
     const rows = dsCa.map(ca => `<tr><th class="cot-ca">${Ui.esc(ca.tenCa)}<br><small class="text-muted-kmn fw-normal">${Ui.fmtGio(ca.gioBatDau)}–${Ui.fmtGio(ca.gioKetThuc)}</small></th>${ngays.map(d => {
       const n = iso(d), qua = n < homNay;
       const ls = dsLich.filter(l => l.ngayLamViec === n && l.maCa === ca.maCa);
-      return `<td class="${qua ? 'da-qua' : ''}">${ls.map(chip).join('')}${laQuanTri && !qua
+      return `<td class="${qua ? 'da-qua' : ''}">${ls.map(chip).join('')}${laQuanTri && n >= ngayMai
         ? `<button type="button" class="nut-them-o" data-them-ngay="${n}" data-them-ca="${Ui.esc(ca.maCa)}" aria-label="Thêm lịch ${THU[d.getDay()]} ${ngayNgan(d)}, ${Ui.esc(ca.tenCa)}"><i class="bi bi-plus"></i></button>` : ''}</td>`;
     }).join('')}</tr>`).join('');
     $('lich').innerHTML = `<table class="table lich-tuan mb-0"><thead><tr><th class="cot-ca">Ca</th>${head}</tr></thead><tbody>${rows}</tbody></table>
@@ -98,7 +99,7 @@
         <td class="text-center">${l.soLichHenConHieuLuc} / ${l.soLichHen}</td>
         <td class="text-end"><button class="btn btn-sm btn-soft" data-ma="${Ui.esc(l.maLichLamViec)}"><i class="bi bi-eye"></i> Xem</button></td></tr>`).join('')
         : Ui.dongTrong(6, laBacSi ? 'Bạn không có lịch trực ngày này.' : 'Chưa có lịch làm việc ngày này.', 'calendar-x')}</tbody></table>
-      ${laQuanTri && !qua ? `<button class="btn btn-soft mt-3" data-them-ngay="${n}"><i class="bi bi-plus-lg me-1"></i>Thêm lịch ngày này</button>` : ''}`;
+      ${laQuanTri && n >= ngayMai ? `<button class="btn btn-soft mt-3" data-them-ngay="${n}"><i class="bi bi-plus-lg me-1"></i>Thêm lịch ngày này</button>` : ''}`;
     $('lich').querySelectorAll('img[data-avatar]').forEach(img => renderAvatar(img, img.dataset.avatar));
   }
 
@@ -107,6 +108,7 @@
     const qua = l.ngayLamViec < homNay;
     const lyDo = qua ? 'Lịch đã qua nên không sửa, xóa được để giữ lịch sử.'
       : l.soLichHen ? `Lịch đã có ${l.soLichHen} lịch hẹn của khách nên không sửa, xóa được.` : '';
+    const khoaSua = !lyDo && l.ngayLamViec === homNay ? 'Lịch hôm nay không đổi được nữa (chỉ xếp lịch từ ngày mai), chỉ có thể xóa.' : '';
     const wrap = document.createElement('div');
     wrap.className = 'modal fade'; wrap.tabIndex = -1;
     wrap.innerHTML = `<div class="modal-dialog modal-dialog-centered"><div class="modal-content rounded-4 border-0">
@@ -121,11 +123,11 @@
           <dt class="col-4">Phòng</dt><dd class="col-8">${Ui.esc(l.tenPhong)}</dd>
           <dt class="col-4">Lịch hẹn</dt><dd class="col-8">${l.soLichHen} lịch, ${l.soLichHenConHieuLuc} đang chờ khám</dd>
         </dl>
-        ${laQuanTri && lyDo ? `<div class="alert alert-secondary small mt-3 mb-0"><i class="bi bi-lock me-1"></i>${lyDo}</div>` : ''}
+        ${laQuanTri && (lyDo || khoaSua) ? `<div class="alert alert-secondary small mt-3 mb-0"><i class="bi bi-lock me-1"></i>${lyDo || khoaSua}</div>` : ''}
       </div>
       ${laQuanTri ? `<div class="modal-footer border-0">
         <button type="button" class="btn btn-outline-danger me-auto" data-hanh-dong="xoa" ${lyDo ? 'disabled' : ''}><i class="bi bi-trash me-1"></i>Xóa</button>
-        <button type="button" class="btn btn-primary" data-hanh-dong="sua" ${lyDo ? 'disabled' : ''}><i class="bi bi-pencil me-1"></i>Sửa</button></div>` : ''}
+        <button type="button" class="btn btn-primary" data-hanh-dong="sua" ${lyDo || khoaSua ? 'disabled' : ''}><i class="bi bi-pencil me-1"></i>Sửa</button></div>` : ''}
     </div></div>`;
     document.body.appendChild(wrap);
     renderAvatar(wrap.querySelector('img'), l.duongDanAnh || '');
@@ -180,10 +182,10 @@
     DanhSach.moForm({
       tieuDe: l ? `Sửa lịch ${l.maLichLamViec}` : 'Thêm lịch làm việc',
       noiDung: `<div class="row g-3">
-        <div class="col-sm-6"><label class="form-label" for="ngayLamViec">Ngày làm việc</label><input id="ngayLamViec" name="ngayLamViec" type="date" class="form-control" min="${homNay}" required></div>
+        <div class="col-sm-6"><label class="form-label" for="ngayLamViec">Ngày làm việc</label><input id="ngayLamViec" name="ngayLamViec" type="date" class="form-control" min="${ngayMai}" required></div>
         ${oChonChung()}</div>`,
       khiMo: f => {
-        f.ngayLamViec.value = l?.ngayLamViec || macDinh.ngay || homNay;
+        f.ngayLamViec.value = l?.ngayLamViec || macDinh.ngay || ngayMai;
         f.maCa.value = l?.maCa || macDinh.ca || '';
         const capNhat = () => capNhatLuaChon(f, l?.maLichLamViec);
         capNhat().then(() => { if (l) { f.maNv.value = l.maNv; return capNhat().then(() => { f.maPhong.value = l.maPhong; }); } });
@@ -192,7 +194,7 @@
       thuThap: f => {
         const body = { ngayLamViec: f.ngayLamViec.value, maCa: f.maCa.value, maNv: f.maNv.value, maPhong: f.maPhong.value };
         if (!body.ngayLamViec) return 'Vui lòng chọn ngày làm việc.';
-        if (body.ngayLamViec < homNay) return 'Không được xếp lịch cho ngày đã qua (RB9).';
+        if (body.ngayLamViec < ngayMai) return 'Chỉ xếp lịch làm việc từ ngày mai trở đi.';
         if (!body.maCa) return 'Vui lòng chọn ca.';
         if (!body.maNv) return 'Vui lòng chọn bác sĩ.';
         if (!body.maPhong) return 'Vui lòng chọn phòng.';
@@ -213,8 +215,8 @@
       noiDung: `<p class="small text-muted-kmn">Xếp cùng một bác sĩ vào cùng phòng, cùng ca cho các thứ đã chọn (tối đa 62 ngày).
           Nếu có ngày bị trùng, hệ thống không tạo lịch nào và báo các ngày trùng.</p>
         <div class="row g-3">
-        <div class="col-sm-6"><label class="form-label" for="tuNgay">Từ ngày</label><input id="tuNgay" name="tuNgay" type="date" class="form-control" min="${homNay}" required></div>
-        <div class="col-sm-6"><label class="form-label" for="denNgay">Đến ngày</label><input id="denNgay" name="denNgay" type="date" class="form-control" min="${homNay}" required></div>
+        <div class="col-sm-6"><label class="form-label" for="tuNgay">Từ ngày</label><input id="tuNgay" name="tuNgay" type="date" class="form-control" min="${ngayMai}" required></div>
+        <div class="col-sm-6"><label class="form-label" for="denNgay">Đến ngày</label><input id="denNgay" name="denNgay" type="date" class="form-control" min="${ngayMai}" required></div>
         <div class="col-12"><span class="form-label d-block">Các thứ trong tuần</span><div class="btn-group flex-wrap thu-chon" role="group" aria-label="Các thứ trong tuần">
           ${[1, 2, 3, 4, 5, 6, 0].map(t => `<input type="checkbox" class="btn-check" name="thu" id="thu${t}" value="${t}" ${t >= 1 && t <= 5 ? 'checked' : ''}><label class="btn btn-outline-primary" for="thu${t}">${THU_NGAN[t]}</label>`).join('')}
         </div><div class="form-text" id="soNgay"></div></div>
@@ -235,7 +237,7 @@
         const body = { tuNgay: f.tuNgay.value, denNgay: f.denNgay.value, cacThu: [...f.querySelectorAll('[name=thu]:checked')].map(x => +x.value),
           maCa: f.maCa.value, maNv: f.maNv.value, maPhong: f.maPhong.value };
         if (!body.tuNgay || !body.denNgay) return 'Vui lòng chọn khoảng ngày.';
-        if (body.tuNgay < homNay) return 'Không được xếp lịch cho ngày đã qua (RB9).';
+        if (body.tuNgay < ngayMai) return 'Chỉ xếp lịch làm việc từ ngày mai trở đi.';
         if (body.denNgay < body.tuNgay) return 'Ngày kết thúc phải sau ngày bắt đầu.';
         if (!body.cacThu.length) return 'Vui lòng chọn ít nhất một thứ trong tuần.';
         if (!body.maCa || !body.maNv || !body.maPhong) return 'Vui lòng chọn đủ ca, bác sĩ và phòng.';

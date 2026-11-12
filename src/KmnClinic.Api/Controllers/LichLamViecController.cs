@@ -87,10 +87,14 @@ public class LichLamViecController : ControllerBase
         return Ok(new { message = "Đã xóa lịch làm việc." });
     }
 
-    /// <summary>RB9: không xếp vào ngày đã qua (trigger chỉ chặn khi thêm; backend chặn cả khi sửa).</summary>
+    /// <summary>
+    /// Chủ phòng khám quyết định (12/11/2026): chỉ xếp lịch từ ngày mai trở đi, chặt hơn RB9 (không xếp ngày đã qua).
+    /// Trigger RB9 chỉ chặn khi thêm; backend áp dụng cả khi sửa.
+    /// </summary>
     private static void KiemTraNgay(DateOnly ngay)
     {
         if (ngay < HomNay) throw AppException.BadRequest("Không được xếp lịch làm việc cho ngày trong quá khứ (RB9).");
+        if (ngay == HomNay) throw AppException.BadRequest("Chỉ xếp lịch làm việc từ ngày mai trở đi.");
         if (ngay > HomNay.AddYears(1)) throw AppException.BadRequest("Chỉ xếp lịch trong vòng một năm tới.");
     }
 }
