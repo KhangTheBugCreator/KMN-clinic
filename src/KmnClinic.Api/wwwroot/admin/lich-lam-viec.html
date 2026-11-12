@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lịch làm việc – KMN Clinic</title>
+  <link rel="stylesheet" href="../assets/vendor/fonts/fonts.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap-icons/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="../assets/css/theme.css">
+  <link rel="stylesheet" href="../assets/css/admin.css">
+</head>
+<body class="admin" data-layout="admin" data-vai-tro="QuanTriVien,LeTan,BacSi" data-search="Tìm nhanh...">
+  <div class="admin-shell" id="admin-shell">
+    <div class="main">
+      <div id="topnav"></div>
+      <div class="content">
+        <div class="page-head">
+          <div><nav aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="#" id="nhomMenu">Vận hành</a></li><li class="breadcrumb-item active" id="tenTrang">Lịch làm việc</li></ol></nav>
+            <h1 id="tieuDe">Lịch làm việc</h1><span class="text-muted-kmn small" id="moTa">Mỗi phòng và mỗi bác sĩ chỉ có một lịch trong một ca của một ngày (RB12, RB13). Phòng phải thuộc khoa của bác sĩ (RB11).</span></div>
+          <div class="d-flex gap-2 d-none" id="nutQuanTri">
+            <button class="btn btn-soft" id="btnHangLoat"><i class="bi bi-calendar-range me-1"></i>Xếp nhiều ngày</button>
+            <button class="btn btn-primary" id="btnThem"><i class="bi bi-plus-lg me-1"></i>Thêm lịch</button>
+          </div>
+        </div>
+        <div class="card-kmn panel">
+          <div class="lich-toolbar mb-3">
+            <div class="btn-group" role="group" aria-label="Chuyển khoảng thời gian">
+              <button class="btn btn-soft" id="btnTruoc" aria-label="Trước"><i class="bi bi-chevron-left"></i></button>
+              <button class="btn btn-soft" id="btnHomNay">Hôm nay</button>
+              <button class="btn btn-soft" id="btnSau" aria-label="Sau"><i class="bi bi-chevron-right"></i></button>
+            </div>
+            <span class="khoang" id="khoang" aria-live="polite"></span>
+            <div class="btn-group ms-auto" role="group" aria-label="Kiểu xem">
+              <input type="radio" class="btn-check" name="kieuXem" id="xemNgay" value="ngay"><label class="btn btn-outline-primary" for="xemNgay">Ngày</label>
+              <input type="radio" class="btn-check" name="kieuXem" id="xemTuan" value="tuan" checked><label class="btn btn-outline-primary" for="xemTuan">Tuần</label>
+              <input type="radio" class="btn-check" name="kieuXem" id="xemThang" value="thang"><label class="btn btn-outline-primary" for="xemThang">Tháng</label>
+            </div>
+          </div>
+          <div class="d-flex flex-wrap gap-2 mb-3" id="boLoc">
+            <select id="locKhoa" class="form-select" style="width:auto" aria-label="Lọc theo khoa"><option value="">Tất cả khoa</option></select>
+            <select id="locBacSi" class="form-select" style="width:auto" aria-label="Lọc theo bác sĩ"><option value="">Tất cả bác sĩ</option></select>
+            <select id="locPhong" class="form-select" style="width:auto" aria-label="Lọc theo phòng"><option value="">Tất cả phòng</option></select>
+          </div>
+          <div class="table-responsive" id="lich"></div>
+          <div class="small text-muted-kmn mt-2"><span class="me-3"><i class="bi bi-square-fill text-primary me-1"></i>Chưa có lịch hẹn</span><span><i class="bi bi-square-fill me-1" style="color:var(--st-dat)"></i>Có lịch hẹn của khách</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/api.js"></script>
+  <script src="../assets/js/ui.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/danh-sach.js"></script>
+  <script src="../assets/js/pages/lich-lam-viec.js"></script>
+</body>
+</html>
