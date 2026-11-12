@@ -102,3 +102,31 @@ body.admin { background: #f4f7fb; }
   .topnav .quick-find, .topnav .user-box .meta { display: none; }
   .content { padding: 1rem; }
 }
+
+/* ---------- Lịch làm việc (M3) ---------- */
+.lich-toolbar { display:flex; flex-wrap:wrap; gap:.5rem; align-items:center; }
+.lich-toolbar .khoang { font-weight:600; color:var(--kmn-navy); min-width:190px; }
+.lich-tuan { table-layout:fixed; min-width:880px; }
+.lich-tuan th, .lich-tuan td { border:1px solid var(--kmn-border); vertical-align:top; }
+.lich-tuan thead th { background:var(--kmn-sky-2); text-align:center; font-size:.85rem; color:var(--kmn-navy); padding:.5rem; }
+.lich-tuan thead th.hom-nay { background:var(--kmn-blue); color:#fff; }
+.lich-tuan th.cot-ca { width:120px; text-align:left; background:var(--kmn-sky-2); font-size:.85rem; }
+.lich-tuan td { padding:.35rem; height:92px; }
+.lich-tuan td.da-qua, .lich-thang .o-ngay.da-qua { background:repeating-linear-gradient(135deg,#fafbfd,#fafbfd 6px,#f3f5f9 6px,#f3f5f9 12px); }
+.chip-lich { display:block; width:100%; text-align:left; border:0; border-left:3px solid var(--kmn-blue); background:var(--kmn-sky);
+  border-radius:8px; padding:.3rem .45rem; margin-bottom:.3rem; font-size:.78rem; line-height:1.25; color:var(--kmn-text); }
+.chip-lich:hover, .chip-lich:focus-visible { background:#d9ebfc; outline:none; }
+.chip-lich b { color:var(--kmn-navy); display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.chip-lich.co-hen { border-left-color:var(--st-dat); }
+.da-qua .chip-lich { opacity:.7; }
+.nut-them-o { width:100%; border:1px dashed var(--kmn-border); background:transparent; border-radius:8px; color:var(--kmn-muted); font-size:.75rem; padding:.15rem; }
+.nut-them-o:hover { border-color:var(--kmn-blue); color:var(--kmn-blue); }
+.lich-thang { display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); border-left:1px solid var(--kmn-border); border-top:1px solid var(--kmn-border); min-width:760px; }
+.lich-thang .ten-thu { background:var(--kmn-sky-2); text-align:center; font-size:.8rem; font-weight:600; color:var(--kmn-navy); padding:.4rem; border-right:1px solid var(--kmn-border); border-bottom:1px solid var(--kmn-border); }
+.lich-thang .o-ngay { min-height:104px; padding:.35rem; border-right:1px solid var(--kmn-border); border-bottom:1px solid var(--kmn-border); cursor:pointer; }
+.lich-thang .o-ngay:hover { background:var(--kmn-sky-2); }
+.lich-thang .o-ngay.ngoai-thang { color:#b3bac5; background:#fcfdfe; }
+.lich-thang .so-ngay { font-size:.8rem; font-weight:600; }
+.lich-thang .o-ngay.hom-nay .so-ngay { background:var(--kmn-blue); color:#fff; border-radius:999px; padding:0 .45rem; }
+.lich-thang .dong-ngan { font-size:.72rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; border-left:3px solid var(--kmn-blue); padding-left:.3rem; margin-top:.2rem; }
+.thu-chon .btn { min-width:46px; }
