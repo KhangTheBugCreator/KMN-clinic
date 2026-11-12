@@ -14,8 +14,6 @@ namespace KmnClinic.Tests;
 /// </summary>
 public class TestApp : WebApplicationFactory<Program>
 {
-    /// <summary>Nới giới hạn đăng nhập để các bài kiểm thử khác không bị chặn.</summary>
-    protected virtual int GioiHanDangNhap => 1000;
 
     public static string ChuoiKetNoi =>
         Environment.GetEnvironmentVariable("KMN_TEST_DB")
@@ -26,7 +24,6 @@ public class TestApp : WebApplicationFactory<Program>
         Environment.SetEnvironmentVariable("ConnectionStrings__PhongKham", ChuoiKetNoi);
         Environment.SetEnvironmentVariable("Jwt__Key", "khoa-chi-dung-cho-kiem-thu-0123456789abcdef");
         builder.UseEnvironment("Development");
-        builder.UseSetting("PhongKham:GioiHanDangNhapMoiPhut", GioiHanDangNhap.ToString());
         builder.ConfigureServices(s => s.AddControllers().AddApplicationPart(typeof(KiemThuController).Assembly));
     }
 }
@@ -61,10 +58,4 @@ VALUES ('LVTEST01', '2020-01-01', 'NV0003', 'P0001', 'CA0001')", tx);
         });
         return Ok();
     }
-}
-
-/// <summary>Bản API giữ giới hạn thấp để thử chức năng chặn dò mật khẩu.</summary>
-public class TestAppGioiHanThap : TestApp
-{
-    protected override int GioiHanDangNhap => 3;
 }

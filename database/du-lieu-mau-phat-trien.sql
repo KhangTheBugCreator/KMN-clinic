@@ -3,12 +3,11 @@
    ---------------------------------------------------------------------
    - Chỉ INSERT dữ liệu vào các bảng có sẵn, không đổi cấu trúc database.
    - Tên người, số điện thoại, thuốc đều là dữ liệu giả để chạy thử.
-   - Mật khẩu đang lưu dạng chuỗi gốc theo quyết định Q5 (tạm thời).
+   - Website không dùng mật khẩu (giả lập vai trò); cột mat_khau_nv NOT NULL nên vẫn điền giá trị mẫu.
    - Chạy được nhiều lần: bản ghi đã có (theo mã) sẽ được bỏ qua.
-   Tài khoản thử (mật khẩu chung: matkhau123):
-     Quản trị viên 0900000001 · Lễ tân 0900000002 · Bác sĩ 0900000003, 0900000004
-     Thu ngân 0900000005 · Khách hàng 0911111111 (có tài khoản)
-     Khách vãng lai 0922222222 (không có mật khẩu)
+   Người dùng để chọn ở trang Chọn vai trò:
+     Quản trị viên NV0001 · Lễ tân NV0002 · Bác sĩ NV0003, NV0004 · Thu ngân NV0005
+     Khách hàng KH0001 · Khách vãng lai KH0002
    ===================================================================== */
 USE PHONGKHAM;
 SET NOCOUNT ON;

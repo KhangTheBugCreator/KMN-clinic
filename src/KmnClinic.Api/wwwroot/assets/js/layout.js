@@ -78,12 +78,11 @@ function publicHeader(active) {
   </header>`;
 }
 
-/** Nút tài khoản trên header public: chưa đăng nhập / khách hàng / nhân viên. */
+/** Nút vai trò trên header public: chưa chọn / đang giả lập khách hàng hoặc nhân viên. */
 function publicAccount() {
   const nd = window.Auth ? Auth.nguoiDung() : null;
   if (!nd) return `
-            <a href="dang-nhap.html" class="btn btn-soft">Đăng nhập</a>
-            <a href="dang-ky.html" class="btn btn-outline-primary">Đăng ký</a>`;
+            <a href="chon-vai-tro.html" class="btn btn-soft"><i class="bi bi-person-badge me-1"></i>Chọn vai trò</a>`;
   const vao = nd.loai === 'NV'
     ? `<li><a class="dropdown-item" href="${Auth.trangChinh(nd)}"><i class="bi bi-grid-1x2 me-2"></i>Trang nội bộ</a></li>`
     : '';
@@ -91,10 +90,10 @@ function publicAccount() {
             <div class="dropdown">
               <button class="btn btn-soft dropdown-toggle w-100" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="bi bi-person-circle me-1"></i>${Ui.esc(nd.hoTen)}</button>
-              <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-4">${vao}
-                <li><a class="dropdown-item" href="#" data-action="doi-mat-khau"><i class="bi bi-key me-2"></i>Đổi mật khẩu</a></li>
+              <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-4">
+                <li><span class="dropdown-item-text small text-muted-kmn">Đang giả lập: ${Ui.esc(nd.chucVu || 'Khách hàng')}</span></li>${vao}
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item text-danger" href="#" data-action="dang-xuat"><i class="bi bi-box-arrow-right me-2"></i>Đăng xuất</a></li>
+                <li><a class="dropdown-item" href="#" data-action="doi-vai-tro"><i class="bi bi-arrow-left-right me-2"></i>Đổi vai trò</a></li>
               </ul>
             </div>`;
 }
@@ -210,57 +209,14 @@ function adminTopnav(user) {
           <i class="bi bi-chevron-down text-muted-kmn small"></i>
         </button>
         <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-4">
-          <li><a class="dropdown-item" href="#" data-action="doi-mat-khau"><i class="bi bi-key me-2"></i>Đổi mật khẩu</a></li>
+          <li><span class="dropdown-item-text small text-muted-kmn">Đang giả lập vai trò này</span></li>
+          <li><a class="dropdown-item" href="../trang-chu.html"><i class="bi bi-house me-2"></i>Xem website</a></li>
           <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item text-danger" href="#" data-action="dang-xuat"><i class="bi bi-box-arrow-right me-2"></i>Đăng xuất</a></li>
+          <li><a class="dropdown-item" href="#" data-action="doi-vai-tro"><i class="bi bi-arrow-left-right me-2"></i>Đổi vai trò</a></li>
         </ul>
       </div>
     </div>
   </div>`;
-}
-
-/* ---------- Đổi mật khẩu (dùng chung cho khách hàng và nhân viên) ---------- */
-function moDoiMatKhau() {
-  const wrap = document.createElement('div');
-  wrap.className = 'modal fade';
-  wrap.tabIndex = -1;
-  wrap.innerHTML = `
-    <div class="modal-dialog modal-dialog-centered"><form class="modal-content rounded-4 border-0" novalidate>
-      <div class="modal-header border-0"><h2 class="modal-title h5">Đổi mật khẩu</h2>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button></div>
-      <div class="modal-body pt-0">
-        <div class="alert alert-danger small d-none" role="alert"></div>
-        <label class="form-label" for="mkCu">Mật khẩu hiện tại</label>
-        <input id="mkCu" type="password" class="form-control mb-3" autocomplete="current-password" required>
-        <label class="form-label" for="mkMoi">Mật khẩu mới</label>
-        <input id="mkMoi" type="password" class="form-control mb-3" autocomplete="new-password" minlength="8" required>
-        <label class="form-label" for="mkMoi2">Nhập lại mật khẩu mới</label>
-        <input id="mkMoi2" type="password" class="form-control" autocomplete="new-password" required>
-        <div class="form-text">Tối thiểu 8 ký tự.</div>
-      </div>
-      <div class="modal-footer border-0"><button type="button" class="btn btn-soft" data-bs-dismiss="modal">Hủy</button>
-        <button type="submit" class="btn btn-primary">Lưu mật khẩu</button></div>
-    </form></div>`;
-  document.body.appendChild(wrap);
-  const m = bootstrap.Modal.getOrCreateInstance(wrap);
-  const form = wrap.querySelector('form'), alertEl = wrap.querySelector('.alert');
-  const baoLoi = msg => { alertEl.textContent = msg; alertEl.classList.remove('d-none'); };
-  form.addEventListener('submit', async e => {
-    e.preventDefault();
-    alertEl.classList.add('d-none');
-    const cu = form.mkCu.value, moi = form.mkMoi.value, moi2 = form.mkMoi2.value;
-    if (!cu) return baoLoi('Vui lòng nhập mật khẩu hiện tại.');
-    if (moi.length < 8) return baoLoi('Mật khẩu mới phải có ít nhất 8 ký tự.');
-    if (moi !== moi2) return baoLoi('Hai lần nhập mật khẩu mới không khớp.');
-    try {
-      await Ui.dangXuLy(form.querySelector('[type=submit]'),
-        () => Api.put('auth/doi-mat-khau', { matKhauCu: cu, matKhauMoi: moi }));
-      m.hide();
-      Ui.toast('Đã đổi mật khẩu.');
-    } catch (err) { baoLoi(err.message); }
-  });
-  wrap.addEventListener('hidden.bs.modal', () => wrap.remove());
-  m.show();
 }
 
 /* ---------- Khởi tạo khi trang tải xong ---------- */
@@ -268,7 +224,7 @@ function moDoiMatKhau() {
   const body = document.body;
 
   // Trang nội bộ: chặn ngay khi chưa đăng nhập hoặc sai vai trò (backend vẫn kiểm tra quyền ở từng API).
-  if (body.dataset.layout === 'admin' && !Auth.yeuCau([body.dataset.vaiTro], true)) {
+  if (body.dataset.layout === 'admin' && !Auth.yeuCau([body.dataset.vaiTro])) {
     body.style.visibility = 'hidden';
     return;
   }
@@ -294,12 +250,10 @@ function moDoiMatKhau() {
       bd.addEventListener('click', toggle);
     }
 
-    // Đăng xuất / đổi mật khẩu
+    // Đổi vai trò
     document.addEventListener('click', e => {
-      const a = e.target.closest('[data-action]');
-      if (!a) return;
-      if (a.dataset.action === 'dang-xuat') { e.preventDefault(); Auth.dangXuat(); }
-      if (a.dataset.action === 'doi-mat-khau') { e.preventDefault(); moDoiMatKhau(); }
+      const a = e.target.closest('[data-action="doi-vai-tro"]');
+      if (a) { e.preventDefault(); Auth.doiVaiTro(); }
     });
 
     // Ảnh đại diện: mọi <img data-avatar> đều đi qua renderAvatar

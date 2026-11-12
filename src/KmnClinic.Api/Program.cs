@@ -1,5 +1,4 @@
 using System.Security.Claims;
-using System.Threading.RateLimiting;
 using KmnClinic.Api.Data;
 using KmnClinic.Api.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -15,7 +14,6 @@ var signingKey = jwtOptions.SigningKey(); // dừng chương trình ngay nếu t
 builder.Services.AddSingleton(jwtOptions);
 builder.Services.AddSingleton<JwtService>();
 builder.Services.AddSingleton<Db>();
-builder.Services.AddSingleton<IPasswordService, PlainTextPasswordService>(); // Q5: đổi sang lớp băm tại đây
 builder.Services.AddScoped<AuthRepository>();
 
 // ---------- Xác thực JWT + phân quyền theo vai trò ----------
@@ -43,28 +41,13 @@ builder.Services
             {
                 ctx.HandleResponse();
                 await ExceptionMiddleware.WriteAsync(ctx.HttpContext, StatusCodes.Status401Unauthorized,
-                    "Bạn cần đăng nhập để tiếp tục.");
+                    "Bạn cần chọn vai trò để tiếp tục.");
             },
             OnForbidden = ctx => ExceptionMiddleware.WriteAsync(ctx.HttpContext, StatusCodes.Status403Forbidden,
                 "Bạn không có quyền thực hiện thao tác này."),
         };
     });
 builder.Services.AddAuthorization();
-
-// ---------- Giới hạn số lần đăng nhập (chống dò mật khẩu) ----------
-builder.Services.AddRateLimiter(o =>
-{
-    o.AddPolicy("dang-nhap", http =>
-    {
-        var gioiHan = http.RequestServices.GetRequiredService<IConfiguration>()
-            .GetValue("PhongKham:GioiHanDangNhapMoiPhut", 10);
-        return RateLimitPartition.GetFixedWindowLimiter(
-            http.Connection.RemoteIpAddress?.ToString() ?? "unknown",
-            _ => new FixedWindowRateLimiterOptions { PermitLimit = gioiHan, Window = TimeSpan.FromMinutes(1), QueueLimit = 0 });
-    });
-    o.OnRejected = (ctx, _) => new ValueTask(ExceptionMiddleware.WriteAsync(ctx.HttpContext,
-        StatusCodes.Status429TooManyRequests, "Bạn thử đăng nhập quá nhiều lần. Vui lòng đợi 1 phút."));
-});
 
 // ---------- Controllers: lỗi kiểm tra dữ liệu trả về { message } giống các lỗi khác ----------
 builder.Services.AddControllers().ConfigureApiBehaviorOptions(o =>
@@ -92,7 +75,6 @@ if (!app.Environment.IsDevelopment())
 app.UseDefaultFiles(new DefaultFilesOptions { DefaultFileNames = { "trang-chu.html" } });
 app.UseStaticFiles();
 
-app.UseRateLimiter();
 app.UseAuthentication();
 app.UseAuthorization();
 

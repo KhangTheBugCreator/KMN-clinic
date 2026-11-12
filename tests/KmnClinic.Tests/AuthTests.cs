@@ -2,26 +2,26 @@ using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json;
+using Microsoft.Data.SqlClient;
 
 namespace KmnClinic.Tests;
 
-/// <summary>M0: đăng nhập 2 loại tài khoản, 401/403, không lộ mật khẩu, lỗi trigger trả đúng câu.</summary>
+/// <summary>M0: giả lập vai trò, 401/403, không lộ mật khẩu, lỗi trigger trả đúng câu.</summary>
 public class AuthTests : IClassFixture<TestApp>
 {
-    private const string MatKhauMau = "matkhau123";
     private readonly TestApp _app;
 
     public AuthTests(TestApp app) => _app = app;
 
-    private async Task<(HttpStatusCode Status, JsonElement Body)> DangNhap(string loai, string sdt, string mk)
+    private async Task<(HttpStatusCode Status, JsonElement Body)> VaoVaiTro(string loai, string ma)
     {
-        var res = await _app.CreateClient().PostAsJsonAsync($"/api/auth/{loai}/dang-nhap", new { soDienThoai = sdt, matKhau = mk });
+        var res = await _app.CreateClient().PostAsJsonAsync("/api/gia-lap/vao-vai-tro", new { loai, ma });
         return (res.StatusCode, await res.Content.ReadFromJsonAsync<JsonElement>());
     }
 
-    private async Task<HttpClient> ClientDaDangNhap(string loai, string sdt)
+    private async Task<HttpClient> ClientVaiTro(string loai, string ma)
     {
-        var (status, body) = await DangNhap(loai, sdt, MatKhauMau);
+        var (status, body) = await VaoVaiTro(loai, ma);
         Assert.Equal(HttpStatusCode.OK, status);
         var c = _app.CreateClient();
         c.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", body.GetProperty("token").GetString());
@@ -29,65 +29,114 @@ public class AuthTests : IClassFixture<TestApp>
     }
 
     [Theory]
-    [InlineData("0900000001", "QuanTriVien")]
-    [InlineData("0900000002", "LeTan")]
-    [InlineData("0900000003", "BacSi")]
-    [InlineData("0900000005", "ThuNgan")]
-    public async Task NhanVien_dang_nhap_dung_nhan_dung_vai_tro(string sdt, string vaiTro)
+    [InlineData("NV", "NV0001", "QuanTriVien")]
+    [InlineData("NV", "NV0002", "LeTan")]
+    [InlineData("NV", "NV0003", "BacSi")]
+    [InlineData("NV", "NV0005", "ThuNgan")]
+    [InlineData("KH", "KH0001", "KhachHang")]
+    [InlineData("KH", "KH0002", "KhachHang")]   // khách vãng lai (không mật khẩu) vẫn giả lập được
+    public async Task Vao_vai_tro_nhan_dung_vai_tro_theo_database(string loai, string ma, string vaiTro)
     {
-        var (status, body) = await DangNhap("nhan-vien", sdt, MatKhauMau);
+        var (status, body) = await VaoVaiTro(loai, ma);
         Assert.Equal(HttpStatusCode.OK, status);
         Assert.Equal(vaiTro, body.GetProperty("nguoiDung").GetProperty("vaiTro").GetString());
         Assert.False(string.IsNullOrEmpty(body.GetProperty("token").GetString()));
     }
 
-    [Fact]
-    public async Task KhachHang_dang_nhap_dung()
-    {
-        var (status, body) = await DangNhap("khach-hang", "0911111111", MatKhauMau);
-        Assert.Equal(HttpStatusCode.OK, status);
-        Assert.Equal("KhachHang", body.GetProperty("nguoiDung").GetProperty("vaiTro").GetString());
-    }
-
     [Theory]
-    [InlineData("nhan-vien", "0900000001", "saimatkhau")]   // sai mật khẩu
-    [InlineData("nhan-vien", "0999999999", MatKhauMau)]      // không có số điện thoại
-    [InlineData("khach-hang", "0922222222", MatKhauMau)]     // khách vãng lai chưa có mật khẩu
-    [InlineData("khach-hang", "0900000001", MatKhauMau)]     // nhân viên đăng nhập nhầm cửa khách hàng
-    public async Task Dang_nhap_sai_tra_401_cung_mot_cau(string loai, string sdt, string mk)
+    [InlineData("NV", "NV9999")]
+    [InlineData("KH", "KH9999")]
+    [InlineData("NV", "KH0001")]   // mã khách hàng nhưng chọn loại nhân viên
+    public async Task Ma_khong_ton_tai_tra_404(string loai, string ma)
     {
-        var (status, body) = await DangNhap(loai, sdt, mk);
-        Assert.Equal(HttpStatusCode.Unauthorized, status);
-        Assert.Equal("Số điện thoại hoặc mật khẩu không đúng.", body.GetProperty("message").GetString());
+        var (status, body) = await VaoVaiTro(loai, ma);
+        Assert.Equal(HttpStatusCode.NotFound, status);
+        Assert.Equal("Không tìm thấy người dùng đã chọn.", body.GetProperty("message").GetString());
     }
 
     [Fact]
-    public async Task So_dien_thoai_sai_dinh_dang_tra_400_tieng_viet()
+    public async Task Loai_sai_tra_400_tieng_viet()
     {
-        var (status, body) = await DangNhap("nhan-vien", "12ab", "x");
+        var (status, body) = await VaoVaiTro("ADMIN", "NV0001");
         Assert.Equal(HttpStatusCode.BadRequest, status);
-        Assert.Equal("Số điện thoại gồm 10 chữ số, bắt đầu bằng 0.", body.GetProperty("message").GetString());
+        Assert.Equal("Loại người dùng chỉ nhận NV hoặc KH.", body.GetProperty("message").GetString());
+    }
+
+    [Fact]
+    public async Task Danh_sach_nhan_vien_dung_chuc_vu_va_khong_lo_mat_khau()
+    {
+        var res = await _app.CreateClient().GetAsync("/api/gia-lap/nhan-vien?chucVu=" + Uri.EscapeDataString("Bác sĩ"));
+        var text = await res.Content.ReadAsStringAsync();
+        Assert.Equal(HttpStatusCode.OK, res.StatusCode);
+        var ds = JsonSerializer.Deserialize<JsonElement>(text);
+        Assert.True(ds.GetArrayLength() >= 2);
+        Assert.All(ds.EnumerateArray(), nv => Assert.Equal("Bác sĩ", nv.GetProperty("chucVu").GetString()));
+        Assert.DoesNotContain("matkhau", text, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("mat_khau", text, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public async Task Chuc_vu_khong_hop_le_tra_400()
+    {
+        var res = await _app.CreateClient().GetAsync("/api/gia-lap/nhan-vien?chucVu=Giam%20doc");
+        Assert.Equal(HttpStatusCode.BadRequest, res.StatusCode);
+    }
+
+    [Fact]
+    public async Task Tim_khach_theo_dau_so_dien_thoai()
+    {
+        var ds = await _app.CreateClient().GetFromJsonAsync<JsonElement>("/api/gia-lap/khach-hang?q=0911");
+        Assert.Contains(ds.EnumerateArray(), kh => kh.GetProperty("ma").GetString() == "KH0001");
+    }
+
+    [Fact]
+    public async Task Tao_khach_moi_khong_mat_khau_va_vao_vai_tro_luon()
+    {
+        const string sdt = "0988000111";
+        try
+        {
+            var res = await _app.CreateClient().PostAsJsonAsync("/api/gia-lap/khach-hang",
+                new { hoTen = "Khách thử tự động", ngaySinh = "1999-05-20", gioiTinh = "Nữ", soDienThoai = sdt });
+            var body = await res.Content.ReadFromJsonAsync<JsonElement>();
+            Assert.Equal(HttpStatusCode.OK, res.StatusCode);
+            var nd = body.GetProperty("nguoiDung");
+            Assert.Equal("KhachHang", nd.GetProperty("vaiTro").GetString());
+            Assert.StartsWith("KH", nd.GetProperty("ma").GetString());
+
+            // Số điện thoại trùng: UNIQUE trong database trả câu tiếng Việt
+            var trung = await _app.CreateClient().PostAsJsonAsync("/api/gia-lap/khach-hang",
+                new { hoTen = "Khách trùng", ngaySinh = "1999-05-20", gioiTinh = "Nam", soDienThoai = sdt });
+            Assert.Equal(HttpStatusCode.Conflict, trung.StatusCode);
+            Assert.Equal("Số điện thoại khách hàng đã được sử dụng.",
+                (await trung.Content.ReadFromJsonAsync<JsonElement>()).GetProperty("message").GetString());
+        }
+        finally
+        {
+            await using var conn = new SqlConnection(TestApp.ChuoiKetNoi);
+            await conn.OpenAsync();
+            await using var cmd = new SqlCommand("DELETE FROM Khach_hang WHERE sdt_kh = @sdt AND mat_khau_kh IS NULL", conn);
+            cmd.Parameters.AddWithValue("@sdt", sdt);
+            await cmd.ExecuteNonQueryAsync();
+        }
+    }
+
+    [Fact]
+    public async Task Tao_khach_thieu_du_lieu_tra_400()
+    {
+        var res = await _app.CreateClient().PostAsJsonAsync("/api/gia-lap/khach-hang",
+            new { hoTen = "", ngaySinh = "1999-05-20", gioiTinh = "Nam", soDienThoai = "0988000222" });
+        Assert.Equal(HttpStatusCode.BadRequest, res.StatusCode);
+        Assert.Equal("Vui lòng nhập họ tên.", (await res.Content.ReadFromJsonAsync<JsonElement>()).GetProperty("message").GetString());
     }
 
     [Fact]
     public async Task Json_hong_khong_lo_chi_tiet_ky_thuat()
     {
-        var res = await _app.CreateClient().PostAsync("/api/auth/nhan-vien/dang-nhap",
+        var res = await _app.CreateClient().PostAsync("/api/gia-lap/vao-vai-tro",
             new StringContent("{abc", System.Text.Encoding.UTF8, "application/json"));
-        var body = await res.Content.ReadFromJsonAsync<JsonElement>();
         Assert.Equal(HttpStatusCode.BadRequest, res.StatusCode);
-        Assert.Equal("Dữ liệu gửi lên không đúng định dạng.", body.GetProperty("message").GetString());
-    }
-
-    [Fact]
-    public async Task Phan_hoi_khong_bao_gio_chua_mat_khau()
-    {
-        var res = await _app.CreateClient().PostAsJsonAsync("/api/auth/nhan-vien/dang-nhap",
-            new { soDienThoai = "0900000001", matKhau = MatKhauMau });
-        var text = await res.Content.ReadAsStringAsync();
-        Assert.DoesNotContain(MatKhauMau, text);
-        Assert.DoesNotContain("matKhau", text, StringComparison.OrdinalIgnoreCase);
-        Assert.DoesNotContain("mat_khau", text, StringComparison.OrdinalIgnoreCase);
+        Assert.Equal("Dữ liệu gửi lên không đúng định dạng.",
+            (await res.Content.ReadFromJsonAsync<JsonElement>()).GetProperty("message").GetString());
     }
 
     [Fact]
@@ -108,9 +157,9 @@ public class AuthTests : IClassFixture<TestApp>
     [Fact]
     public async Task Sai_vai_tro_tra_403_dung_vai_tro_tra_200()
     {
-        var bacSi = await ClientDaDangNhap("nhan-vien", "0900000003");
-        var quanTri = await ClientDaDangNhap("nhan-vien", "0900000001");
-        var khach = await ClientDaDangNhap("khach-hang", "0911111111");
+        var bacSi = await ClientVaiTro("NV", "NV0003");
+        var quanTri = await ClientVaiTro("NV", "NV0001");
+        var khach = await ClientVaiTro("KH", "KH0001");
 
         Assert.Equal(HttpStatusCode.Forbidden, (await bacSi.GetAsync("/api/kiem-thu/chi-quan-tri")).StatusCode);
         Assert.Equal(HttpStatusCode.OK, (await quanTri.GetAsync("/api/kiem-thu/chi-quan-tri")).StatusCode);
@@ -124,24 +173,10 @@ public class AuthTests : IClassFixture<TestApp>
     [Fact]
     public async Task Me_tra_dung_nguoi_trong_token()
     {
-        var khach = await ClientDaDangNhap("khach-hang", "0911111111");
-        var me = await khach.GetFromJsonAsync<JsonElement>("/api/auth/me");
-        Assert.Equal("KH0001", me.GetProperty("ma").GetString());
-    }
-
-    [Fact]
-    public async Task Doi_mat_khau_kiem_tra_do_dai_va_mat_khau_cu()
-    {
-        var c = await ClientDaDangNhap("nhan-vien", "0900000002");
-        var ngan = await c.PutAsJsonAsync("/api/auth/doi-mat-khau", new { matKhauCu = MatKhauMau, matKhauMoi = "1234567" });
-        Assert.Equal(HttpStatusCode.BadRequest, ngan.StatusCode);
-        var saiCu = await c.PutAsJsonAsync("/api/auth/doi-mat-khau", new { matKhauCu = "khongdung1", matKhauMoi = "matkhaumoi1" });
-        Assert.Equal(HttpStatusCode.BadRequest, saiCu.StatusCode);
-
-        // Đổi rồi đổi lại để không ảnh hưởng các bài kiểm thử khác.
-        Assert.Equal(HttpStatusCode.OK, (await c.PutAsJsonAsync("/api/auth/doi-mat-khau", new { matKhauCu = MatKhauMau, matKhauMoi = "matkhaumoi1" })).StatusCode);
-        Assert.Equal(HttpStatusCode.OK, (await DangNhap("nhan-vien", "0900000002", "matkhaumoi1")).Status);
-        Assert.Equal(HttpStatusCode.OK, (await c.PutAsJsonAsync("/api/auth/doi-mat-khau", new { matKhauCu = "matkhaumoi1", matKhauMoi = MatKhauMau })).StatusCode);
+        var bacSi = await ClientVaiTro("NV", "NV0003");
+        var me = await bacSi.GetFromJsonAsync<JsonElement>("/api/auth/me");
+        Assert.Equal("NV0003", me.GetProperty("ma").GetString());
+        Assert.Equal("K0001", me.GetProperty("maKhoa").GetString());
     }
 
     [Fact]

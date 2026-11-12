@@ -30,15 +30,9 @@ quản trị viên, lễ tân, bác sĩ, thu ngân. Chạy trên database **PHON
    Có thể dùng biến môi trường `ConnectionStrings__PhongKham` và `Jwt__Key` thay cho User Secrets.
 3. Chạy: `dotnet run` rồi mở `http://localhost:5080/`. Máy chỉ có .NET 10 thì chạy `dotnet run -p:RollForward=Major`.
 
-Tài khoản thử (sau khi nạp dữ liệu mẫu, mật khẩu `matkhau123`):
-
-| Vai trò | Số điện thoại | Trang mở sau khi đăng nhập |
-|---|---|---|
-| Quản trị viên | 0900000001 | `admin/dashboard-quan-tri.html` |
-| Lễ tân | 0900000002 | `admin/dashboard-le-tan.html` |
-| Bác sĩ | 0900000003 | `admin/dashboard-bac-si.html` |
-| Thu ngân | 0900000005 | `admin/dashboard-thu-ngan.html` |
-| Khách hàng | 0911111111 | `trang-chu.html` |
+Website **không có đăng nhập** (quyết định 12/11/2026): mở `http://localhost:5080/chon-vai-tro.html`, chọn vai trò
+rồi chọn một người có sẵn trong database (hoặc tạo khách hàng mới). Mọi API vẫn phân quyền theo vai trò đã chọn.
+Với dữ liệu mẫu: quản trị viên NV0001, lễ tân NV0002, bác sĩ NV0003 và NV0004, thu ngân NV0005, khách hàng KH0001.
 
 ## Kiểm thử tự động
 
@@ -53,13 +47,13 @@ Kiểm thử cần database có dữ liệu mẫu; mọi thay đổi trong lúc 
 
 - Mọi lỗi API trả về JSON `{ "message": "..." }` bằng tiếng Việt. Lỗi từ trigger (THROW 500xx) được trả nguyên câu.
 - Mã khóa chính tự sinh dạng tiền tố + số: `KH0001`, `NV0001`, `LH0001`, `HS0001`, `HD0001`...
-- Mật khẩu tạm lưu dạng chuỗi gốc theo quyết định Q5; mọi xử lý mật khẩu nằm ở `PasswordService` để chuyển sang băm sau.
+- Không đăng nhập: vai trò được giả lập ở trang Chọn vai trò; website không đọc cột mật khẩu.
 - Phân quyền kiểm tra ở backend cho từng API; việc ẩn nút ở giao diện chỉ để tiện dùng.
 
 ## Tiến độ theo module
 
-- [x] **M0 Nền tảng**: kết nối SQL, xử lý lỗi, sinh mã, đăng nhập JWT 2 loại tài khoản, phân quyền, đổi mật khẩu, bộ giao diện chung
-- [ ] M1 Danh mục · M2 Nhân viên, khách hàng · M3 Lịch làm việc · M4 Website công khai · M5 Tài khoản khách, đặt lịch
+- [x] **M0 Nền tảng**: kết nối SQL, xử lý lỗi, sinh mã, giả lập vai trò, phân quyền theo vai trò, bộ giao diện chung
+- [ ] M1 Danh mục · M2 Nhân viên, khách hàng · M3 Lịch làm việc · M4 Website công khai · M5 Khách hàng đặt lịch
 - [ ] M6 Lễ tân · M7 Bác sĩ · M8 Thu ngân · M9 Thống kê, báo cáo · M10 Hoàn thiện
 
 Các trang còn nhãn "Nội dung mẫu · chưa nối dữ liệu" sẽ được nối API ở module tương ứng.

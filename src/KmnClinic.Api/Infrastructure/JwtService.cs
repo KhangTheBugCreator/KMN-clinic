@@ -58,7 +58,7 @@ public static class ClaimsPrincipalExtensions
 {
     /// <summary>Mã người đang đăng nhập (ma_kh hoặc ma_nv), lấy từ token đã xác thực, không lấy từ dữ liệu client gửi.</summary>
     public static string MaNguoiDung(this ClaimsPrincipal user)
-        => user.FindFirstValue(ClaimKmn.Ma) ?? throw AppException.Unauthorized("Phiên đăng nhập không hợp lệ.");
+        => user.FindFirstValue(ClaimKmn.Ma) ?? throw AppException.Unauthorized("Phiên làm việc không hợp lệ. Vui lòng chọn lại vai trò.");
 
     public static bool LaKhachHang(this ClaimsPrincipal user) => user.FindFirstValue(ClaimKmn.Loai) == "KH";
 }

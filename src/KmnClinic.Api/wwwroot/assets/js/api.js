@@ -11,7 +11,7 @@
 
   /* ---------- Phiên đăng nhập ---------- */
   const Auth = {
-    /** Lưu phiên trả về từ /api/auth/.../dang-nhap. Không bao giờ lưu mật khẩu. */
+    /** Lưu phiên trả về từ /api/gia-lap/... (vai trò giả lập). */
     luu(phien) {
       localStorage.setItem(KHOA_PHIEN, JSON.stringify({
         token: phien.token, hetHan: phien.hetHan, nguoiDung: phien.nguoiDung
@@ -41,33 +41,30 @@
       }
     },
 
-    /** Trang đăng nhập để quay về (nhân viên hay khách hàng). */
-    trangDangNhap(nhanVien) {
-      return Api.goc + (nhanVien ? 'admin/dang-nhap.html' : 'dang-nhap.html');
+    /** Trang chọn vai trò (thay cho đăng nhập). */
+    trangChonVaiTro() {
+      return Api.goc + 'chon-vai-tro.html';
     },
 
     /**
      * Chặn trang theo vai trò ngay khi tải (chỉ để điều hướng giao diện;
      * quyền thật được kiểm tra ở backend cho từng API).
      */
-    yeuCau(vaiTros, nhanVien) {
+    yeuCau(vaiTros) {
       const nd = Auth.nguoiDung();
-      if (!nd) {
+      if (!nd || (vaiTros && vaiTros.length && !vaiTros.includes(nd.vaiTro))) {
         const quayLai = encodeURIComponent(location.pathname + location.search);
-        location.replace(Auth.trangDangNhap(nhanVien) + '?quayLai=' + quayLai);
-        return false;
-      }
-      if (vaiTros && vaiTros.length && !vaiTros.includes(nd.vaiTro)) {
-        location.replace(Api.goc + Auth.trangChinh(nd));
+        const can = vaiTros && vaiTros.length ? '&vaiTro=' + encodeURIComponent(vaiTros[0]) : '';
+        location.replace(Auth.trangChonVaiTro() + '?quayLai=' + quayLai + can);
         return false;
       }
       return true;
     },
 
-    dangXuat() {
-      const nv = Auth.laNhanVien();
+    /** Thoát vai trò hiện tại và về trang chọn vai trò. */
+    doiVaiTro() {
       Auth.xoa();
-      location.href = Auth.trangDangNhap(nv);
+      location.href = Auth.trangChonVaiTro();
     }
   };
 
@@ -104,11 +101,10 @@
     if (res.ok) return data;
 
     const message = data?.message || 'Có lỗi xảy ra. Vui lòng thử lại.';
-    // Token hết hạn hoặc không hợp lệ: chỉ tự chuyển trang khi đang có phiên (không áp dụng cho form đăng nhập).
+    // Phiên hết hạn hoặc không hợp lệ: về trang chọn vai trò.
     if (res.status === 401 && phien) {
-      const nv = phien.nguoiDung?.loai === 'NV';
       Auth.xoa();
-      location.href = Auth.trangDangNhap(nv) + '?hetPhien=1';
+      location.href = Auth.trangChonVaiTro() + '?hetPhien=1';
     }
     throw new ApiError(res.status, message);
   }

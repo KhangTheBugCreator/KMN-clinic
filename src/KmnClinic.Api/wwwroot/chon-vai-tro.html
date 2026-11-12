@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chọn vai trò – KMN Clinic</title>
+  <link rel="stylesheet" href="assets/vendor/fonts/fonts.css">
+  <link rel="stylesheet" href="assets/vendor/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/vendor/bootstrap-icons/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="assets/css/theme.css">
+  <link rel="stylesheet" href="assets/css/public.css">
+</head>
+<body class="public" data-layout="public" data-active="">
+  <div id="site-header"></div>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <h1 class="mb-2">Chọn vai trò</h1>
+        <p class="text-muted-kmn mb-0">Website đang ở chế độ giả lập: chọn vai trò và người dùng có sẵn trong database để làm việc thay họ, không cần mật khẩu.</p>
+      </div>
+    </section>
+
+    <section class="pb-5">
+      <div class="container">
+        <div id="thongBao" class="alert alert-warning d-none" role="alert"></div>
+
+        <!-- Bước 1: chọn vai trò -->
+        <div class="row g-3 mb-4" id="dsVaiTro" role="radiogroup" aria-label="Vai trò">
+          <div class="col-6 col-md-4 col-xl"><button type="button" class="pick-card w-100 text-start" data-vai-tro="KhachHang">
+            <span class="icon-circle ic-cyan mb-2"><i class="bi bi-person-heart"></i></span>
+            <div class="fw-semibold text-navy">Khách hàng</div><small class="text-muted-kmn">Đặt lịch, xem hồ sơ, hóa đơn của mình</small></button></div>
+          <div class="col-6 col-md-4 col-xl"><button type="button" class="pick-card w-100 text-start" data-vai-tro="QuanTriVien" data-chuc-vu="Quản trị viên">
+            <span class="icon-circle ic-blue mb-2"><i class="bi bi-shield-check"></i></span>
+            <div class="fw-semibold text-navy">Quản trị viên</div><small class="text-muted-kmn">Danh mục, nhân viên, lịch làm việc, thống kê</small></button></div>
+          <div class="col-6 col-md-4 col-xl"><button type="button" class="pick-card w-100 text-start" data-vai-tro="LeTan" data-chuc-vu="Lễ tân">
+            <span class="icon-circle ic-orange mb-2"><i class="bi bi-person-workspace"></i></span>
+            <div class="fw-semibold text-navy">Lễ tân</div><small class="text-muted-kmn">Xác nhận lịch hẹn, tiếp nhận khách</small></button></div>
+          <div class="col-6 col-md-4 col-xl"><button type="button" class="pick-card w-100 text-start" data-vai-tro="BacSi" data-chuc-vu="Bác sĩ">
+            <span class="icon-circle ic-purple mb-2"><i class="bi bi-heart-pulse"></i></span>
+            <div class="fw-semibold text-navy">Bác sĩ</div><small class="text-muted-kmn">Khám bệnh, kê đơn, hoàn tất hồ sơ</small></button></div>
+          <div class="col-6 col-md-4 col-xl"><button type="button" class="pick-card w-100 text-start" data-vai-tro="ThuNgan" data-chuc-vu="Thu ngân">
+            <span class="icon-circle ic-green mb-2"><i class="bi bi-cash-coin"></i></span>
+            <div class="fw-semibold text-navy">Thu ngân</div><small class="text-muted-kmn">Thu tiền, in hóa đơn</small></button></div>
+        </div>
+
+        <!-- Bước 2a: chọn nhân viên -->
+        <div id="khungNhanVien" class="card-kmn p-4 d-none">
+          <h2 class="h5 mb-1">Chọn <span id="tenChucVu"></span></h2>
+          <p class="small text-muted-kmn">Danh sách lấy từ bảng Nhan_vien theo chức vụ.</p>
+          <div id="dsNhanVien" class="row g-3"></div>
+        </div>
+
+        <!-- Bước 2b: chọn hoặc tạo khách hàng -->
+        <div id="khungKhachHang" class="card-kmn p-4 d-none">
+          <div class="row g-4">
+            <div class="col-lg-6">
+              <h2 class="h5 mb-1">Chọn khách hàng có sẵn</h2>
+              <p class="small text-muted-kmn">Tìm theo số điện thoại hoặc họ tên.</p>
+              <div class="input-group mb-3"><span class="input-group-text"><i class="bi bi-search"></i></span>
+                <input id="timKhach" class="form-control" placeholder="Ví dụ 0911 hoặc Nguyễn" aria-label="Tìm khách hàng"></div>
+              <div id="dsKhachHang" class="list-group"></div>
+            </div>
+            <div class="col-lg-6">
+              <h2 class="h5 mb-1">Hoặc tạo khách hàng mới</h2>
+              <p class="small text-muted-kmn">Khách mới được lưu vào bảng Khach_hang, không có mật khẩu.</p>
+              <form id="formKhachMoi" novalidate>
+                <div class="alert alert-danger small d-none" role="alert"></div>
+                <div class="row g-3">
+                  <div class="col-12"><label class="form-label" for="hoTen">Họ tên</label><input id="hoTen" name="hoTen" class="form-control" maxlength="50" required></div>
+                  <div class="col-sm-6"><label class="form-label" for="ngaySinh">Ngày sinh</label><input id="ngaySinh" name="ngaySinh" type="date" class="form-control" required></div>
+                  <div class="col-sm-6"><label class="form-label" for="gioiTinh">Giới tính</label>
+                    <select id="gioiTinh" name="gioiTinh" class="form-select" required><option value="">Chọn</option><option>Nam</option><option>Nữ</option></select></div>
+                  <div class="col-12"><label class="form-label" for="sdt">Số điện thoại</label><input id="sdt" name="sdt" class="form-control" inputmode="numeric" maxlength="10" placeholder="10 chữ số, bắt đầu bằng 0" required></div>
+                  <div class="col-12"><label class="form-label" for="diaChi">Địa chỉ <small class="text-muted-kmn">(không bắt buộc)</small></label><input id="diaChi" name="diaChi" class="form-control" maxlength="100"></div>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3"><i class="bi bi-person-plus me-1"></i>Tạo và vào vai trò</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+  <script src="assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/pages/chon-vai-tro.js"></script>
+</body>
+</html>
