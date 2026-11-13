@@ -53,6 +53,46 @@ Với dữ liệu mẫu: quản trị viên NV0001, lễ tân NV0002, bác sĩ N
 5. **Thu ngân** (NV0005) → Hóa đơn chờ thu: xác nhận đã thu (kho thuốc trừ lúc này), in hoặc xuất PDF A4.
 6. **Quản trị viên** → Dashboard, Báo cáo Excel; mục Vận hành xem lại lịch hẹn, hồ sơ khám, hóa đơn (chỉ xem).
 
+## Đưa lên máy chủ chạy 24/7 (Linux + Docker)
+
+Cần một máy chủ Linux (Ubuntu 22.04/24.04) **tối thiểu 2 GB RAM** (SQL Server cần chừng đó), mở cổng 80.
+Web và SQL Server 2025 Express chạy trong Docker, tự bật lại khi máy khởi động lại hoặc khi bị lỗi.
+
+1. Đăng nhập máy chủ bằng SSH, cài Docker và Git:
+
+   ```bash
+   curl -fsSL https://get.docker.com | sudo sh
+   sudo apt-get install -y git
+   ```
+2. Lấy mã nguồn (repo riêng tư: GitHub hỏi mật khẩu thì dán Personal Access Token) rồi cài:
+
+   ```bash
+   git clone https://github.com/KhangTheBugCreator/KMN-clinic.git
+   cd KMN-clinic
+   sudo bash deploy/cai-dat.sh
+   ```
+
+   Lần đầu script tạo `deploy/.env` chứa mật khẩu SQL và khóa JWT ngẫu nhiên (không đưa lên Git, đừng xóa),
+   tạo database `PHONGKHAM` từ `database/cau-truc-phongkham.sql` và nạp dữ liệu mẫu. Muốn database trống thì sửa
+   `NAP_DU_LIEU_MAU=0` trong `deploy/.env` trước lần chạy đầu.
+3. Mở `http://<IP máy chủ>/chon-vai-tro.html`.
+
+**Cập nhật khi có code mới:** `cd KMN-clinic && git pull && sudo bash deploy/cai-dat.sh`. Dữ liệu được giữ nguyên
+(nằm trong volume Docker `kmn-clinic_dulieu-sql`); database đã có thì không bị tạo lại.
+
+**Lệnh hay dùng** (chạy trong thư mục `deploy`):
+
+| Việc | Lệnh |
+|---|---|
+| Xem trạng thái | `sudo docker compose ps` |
+| Xem log web | `sudo docker compose logs web --tail 100` |
+| Khởi động lại | `sudo docker compose restart web` |
+| Sao lưu database ra file `.bak` | `sudo bash deploy/sao-luu.sh` (chạy ở thư mục gốc repo) |
+| Tắt hẳn (giữ dữ liệu) | `sudo docker compose down` |
+
+> Website không có đăng nhập: ai biết địa chỉ cũng chọn được mọi vai trò. Chỉ dùng cho học tập, chia sẻ địa chỉ
+> trong nhóm; không nhập dữ liệu thật của bệnh nhân.
+
 ## Kiểm thử tự động
 
 ```bash
