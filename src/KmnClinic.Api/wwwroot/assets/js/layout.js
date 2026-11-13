@@ -164,7 +164,7 @@ const ROLE_MENU = {
       ['Tổng quan', [['bi-grid-1x2', 'Dashboard', 'dashboard-quan-tri.html'], ['bi-file-earmark-excel', 'Báo cáo Excel', 'bao-cao.html']]],
       ['Danh mục', [['bi-diagram-3', 'Khoa', 'danh-muc-khoa.html'], ['bi-door-open', 'Phòng làm việc', 'danh-muc-phong.html'], ['bi-clock-history', 'Ca làm việc', 'danh-muc-ca.html'], ['bi-capsule', 'Thuốc', 'thuoc.html']]],
       ['Con người', [['bi-person-badge', 'Nhân viên', 'nhan-vien.html'], ['bi-people', 'Khách hàng', 'khach-hang.html']]],
-      ['Vận hành', [['bi-calendar3', 'Lịch làm việc', 'lich-lam-viec.html'], ['bi-calendar-check', 'Lịch hẹn', '#'], ['bi-journal-medical', 'Hồ sơ khám', '#'], ['bi-receipt', 'Hóa đơn', '#']]]
+      ['Vận hành', [['bi-calendar3', 'Lịch làm việc', 'lich-lam-viec.html'], ['bi-calendar-check', 'Lịch hẹn', 'qt-lich-hen.html'], ['bi-journal-medical', 'Hồ sơ khám', 'qt-ho-so.html'], ['bi-receipt', 'Hóa đơn', 'qt-hoa-don.html']]]
     ]
   },
   LeTan: {
@@ -180,7 +180,7 @@ const ROLE_MENU = {
     groups: [
       ['Tổng quan', [['bi-grid-1x2', 'Dashboard', 'dashboard-bac-si.html']]],
       ['Khám bệnh', [['bi-hourglass-split', 'Hàng chờ khám', 'kham-benh.html'], ['bi-journal-medical', 'Hồ sơ của tôi', 'ho-so-cua-toi.html'], ['bi-capsule', 'Tra cứu thuốc', 'thuoc.html']]],
-      ['Lịch', [['bi-calendar3', 'Lịch làm việc của tôi', 'lich-lam-viec.html'], ['bi-calendar-check', 'Lịch hẹn của tôi', '#']]]
+      ['Lịch', [['bi-calendar3', 'Lịch làm việc của tôi', 'lich-lam-viec.html'], ['bi-calendar-check', 'Lịch hẹn của tôi', 'lich-hen-bac-si.html']]]
     ]
   },
   ThuNgan: {
@@ -277,11 +277,5 @@ function adminTopnav(user) {
 
     // Ảnh đại diện: mọi <img data-avatar> đều đi qua renderAvatar
     document.querySelectorAll('img[data-avatar]').forEach(img => renderAvatar(img, img.dataset.avatar));
-
-    // Trang còn dùng dữ liệu mẫu (chưa nối API) có nhãn nhắc
-    if (body.dataset.mau === '1') {
-      body.insertAdjacentHTML('beforeend',
-        '<div class="design-ribbon"><i class="bi bi-brush me-1"></i>Nội dung mẫu · chưa nối dữ liệu</div>');
-    }
   });
 })();

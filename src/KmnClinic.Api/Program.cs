@@ -84,7 +84,12 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseDefaultFiles(new DefaultFilesOptions { DefaultFileNames = { "trang-chu.html" } });
-app.UseStaticFiles();
+// Trình duyệt luôn hỏi lại máy chủ trước khi dùng bản lưu tạm (no-cache + ETag, file không đổi chỉ trả 304).
+// Nếu không, sau khi cập nhật code trình duyệt có thể giữ layout.js cũ: menu trỏ "#" hoặc thiếu trang mới.
+app.UseStaticFiles(new StaticFileOptions
+{
+    OnPrepareResponse = ctx => ctx.Context.Response.Headers.CacheControl = "no-cache"
+});
 
 app.UseAuthentication();
 app.UseAuthorization();

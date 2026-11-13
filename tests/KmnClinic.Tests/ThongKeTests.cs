@@ -19,14 +19,7 @@ public class ThongKeTests : IClassFixture<TestApp>
     private readonly TestApp _app;
     public ThongKeTests(TestApp app) => _app = app;
 
-    private static async Task<object?> Sql(string sql, params (string, object)[] ps)
-    {
-        await using var conn = new SqlConnection(TestApp.ChuoiKetNoi);
-        await conn.OpenAsync();
-        await using var cmd = new SqlCommand(sql, conn);
-        foreach (var (n, v) in ps) cmd.Parameters.AddWithValue(n, v);
-        return await cmd.ExecuteScalarAsync();
-    }
+    private static Task<object?> Sql(string sql, params (string, object)[] ps) => TestApp.SqlAsync(sql, ps);
 
     private HttpClient VoiToken(string token)
     {

@@ -20,7 +20,8 @@ public static class TrangThaiHoSo
 /// <summary>Một dòng hồ sơ trong hàng chờ hoặc lịch sử của bác sĩ.</summary>
 public record HoSoBacSiItem(string MaHoSo, DateTime NgayGioKham, string TrieuChung, string? ChanDoanBenh,
     string? MaLichHen, string MaKh, string TenKhach, string GioiTinh, DateOnly NgaySinh,
-    int SoThuoc, string TrangThai, string? MaHoaDon, decimal? TongTien);
+    int SoThuoc, string TrangThai, string? MaHoaDon, decimal? TongTien,
+    string MaNvKham, string TenBacSi, string TenKhoa);
 
 public record ThuocTrongDon(string MaThuoc, string TenThuoc, decimal HamLuong, string DonViTinh, int SoLuong,
     string LieuDung, decimal DonGia, decimal ThanhTien, int SoLuongTon);
@@ -44,6 +45,12 @@ public class HoSoBacSiQuery : TimKiemQuery
     public DateOnly? TuNgay { get; set; }
     public DateOnly? DenNgay { get; set; }
     public string? TrangThai { get; set; }
+}
+
+/// <summary>Quản trị viên lọc hồ sơ của mọi bác sĩ (M10, chỉ đọc).</summary>
+public class HoSoQuanTriQuery : HoSoBacSiQuery
+{
+    public string? MaNv { get; set; }
 }
 
 public class KhamBenhRequest

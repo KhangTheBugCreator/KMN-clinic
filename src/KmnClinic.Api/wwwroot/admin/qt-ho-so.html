@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hồ sơ khám – KMN Clinic</title>
+  <link rel="stylesheet" href="../assets/vendor/fonts/fonts.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap-icons/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="../assets/css/theme.css">
+  <link rel="stylesheet" href="../assets/css/admin.css">
+</head>
+<body class="admin" data-layout="admin" data-vai-tro="QuanTriVien" data-search="Tìm nhanh...">
+  <div class="admin-shell" id="admin-shell">
+    <div class="main">
+      <div id="topnav"></div>
+      <div class="content">
+        <div class="page-head">
+          <div><nav aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="dashboard-quan-tri.html">Vận hành</a></li><li class="breadcrumb-item active">Hồ sơ khám</li></ol></nav>
+            <h1>Hồ sơ khám</h1><span class="text-muted-kmn small">Hồ sơ khám của mọi bác sĩ. Chỉ xem: chẩn đoán và kê đơn do bác sĩ phụ trách thực hiện.</span></div>
+        </div>
+        <div class="row g-3">
+          <div class="col-xl-7"><div class="card-kmn panel p-0" style="height:auto">
+            <div class="d-flex flex-wrap gap-2 p-3 pb-0 align-items-center">
+              <div class="input-group" style="max-width:300px"><span class="input-group-text"><i class="bi bi-search"></i></span>
+                <input id="oTim" class="form-control" placeholder="Mã hồ sơ, bệnh nhân, chẩn đoán" aria-label="Tìm kiếm"></div>
+              <label class="small text-muted-kmn" for="tuNgay">Từ</label><input id="tuNgay" type="date" class="form-control" style="width:auto">
+              <label class="small text-muted-kmn" for="denNgay">đến</label><input id="denNgay" type="date" class="form-control" style="width:auto">
+              <select id="locTrangThai" class="form-select" style="width:auto" aria-label="Lọc theo trạng thái">
+                <option value="">Tất cả trạng thái</option><option>Chờ khám</option><option>Đang khám</option><option>Hoàn tất</option><option>Đã thanh toán</option></select>
+              <select id="locBacSi" class="form-select" style="width:auto" aria-label="Lọc theo bác sĩ"><option value="">Tất cả bác sĩ</option></select>
+            </div>
+            <div class="table-responsive mt-2"><table class="table table-kmn mb-0">
+              <thead><tr><th>Mã</th><th>Bệnh nhân</th><th>Bác sĩ</th><th>Trạng thái</th><th class="text-end">Tổng tiền</th></tr></thead>
+              <tbody id="bang"></tbody></table></div>
+            <div class="p-3" id="phanTrang"></div>
+          </div></div>
+          <div class="col-xl-5"><div class="card-kmn panel panel-chi-tiet" style="height:auto" id="chiTiet"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/api.js"></script>
+  <script src="../assets/js/ui.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/danh-sach.js"></script>
+  <script src="../assets/js/bac-si.js"></script>
+  <script src="../assets/js/pages/qt-ho-so.js"></script>
+</body>
+</html>

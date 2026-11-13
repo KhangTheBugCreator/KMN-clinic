@@ -137,3 +137,6 @@ body.admin { background: #f4f7fb; }
 .pick-card:hover { border-color: #b9d6f6; }
 .pick-card.selected { border-color: var(--kmn-blue); background: var(--kmn-sky-2); }
 .pick-card.disabled { opacity: .5; cursor: not-allowed; }
+
+/* M10: khung chi tiết bên phải (hồ sơ, hóa đơn quản trị) bám theo khi cuộn trên màn hình rộng */
+@media (min-width: 1200px) { .panel-chi-tiet { position: sticky; top: 5rem; } }

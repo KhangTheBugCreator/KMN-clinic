@@ -36,7 +36,7 @@
   }
 
   /* ---------- Khung chi tiết ---------- */
-  function chiTiet(hd) {
+  function chiTiet(hd, chiXem = false) {
     const thieu = !daThu(hd) && hd.thuoc.some(t => t.soLuong > t.soLuongTon);
     return `<div class="panel-title flex-wrap gap-2"><h2 class="mb-0">Hóa đơn <span class="mono">${esc(hd.maHoaDon)}</span></h2>${Ui.badgeTrangThai(hd.trangThai)}</div>
       <div class="small mb-1"><b class="text-navy">${esc(hd.tenKhach)}</b> · ${esc(hd.sdtKhach)} · <span class="mono">${esc(hd.maKh)}</span></div>
@@ -55,6 +55,7 @@
       <div class="small text-muted-kmn mb-3 fst-italic">${esc(docTien(hd.tongTien))}</div>
       ${daThu(hd)
         ? `<div class="alert alert-success border-0 rounded-3 small"><i class="bi bi-check2-circle me-1"></i>Đã thu lúc ${Ui.fmtNgayGio(hd.ngayGioThanhToan)} · ${esc(hd.tenNvThu || '')}</div>`
+        : chiXem ? '<div class="alert alert-secondary border-0 rounded-3 small"><i class="bi bi-hourglass-split me-1"></i>Hóa đơn đang chờ thu ngân thu tiền.</div>'
         : `${thieu ? '<div class="alert alert-warning border-0 rounded-3 small"><i class="bi bi-exclamation-triangle me-1"></i>Kho không đủ thuốc, chưa thanh toán được. Báo quản trị viên nhập thêm thuốc.</div>' : ''}
           <button class="btn btn-success w-100 mb-2" data-thanh-toan="${esc(hd.maHoaDon)}" ${thieu ? 'disabled' : ''}><i class="bi bi-cash-coin me-1"></i>Xác nhận đã thu ${Ui.fmtTien(hd.tongTien)}</button>`}
       <div class="d-flex gap-2">
@@ -65,13 +66,14 @@
   /**
    * Gắn khung chi tiết vào el. Trả { mo(ma), hienTai() }. sauThanhToan(hd) chạy khi thu tiền xong.
    * Nút thanh toán khóa ngay khi bấm; backend vẫn chặn bấm lặp (409).
+   * api: tiền tố API đọc hóa đơn ('quan-tri' cho trang quản trị); chiXem: ẩn nút thu tiền.
    */
-  function khungChiTiet(el, { sauThanhToan, rong = 'Chọn một hóa đơn để xem chi tiết.' } = {}) {
+  function khungChiTiet(el, { sauThanhToan, rong = 'Chọn một hóa đơn để xem chi tiết.', api = 'thu-ngan', chiXem = false } = {}) {
     let hd = null, dangThu = false;
     const veRong = () => { el.innerHTML = `<div class="empty-state"><i class="bi bi-receipt"></i>${esc(rong)}</div>`; };
     async function mo(ma) {
       el.innerHTML = '<div class="skeleton" style="height:280px"></div>';
-      try { hd = await Api.get('thu-ngan/hoa-don/' + encodeURIComponent(ma)); el.innerHTML = chiTiet(hd); }
+      try { hd = await Api.get(api + '/hoa-don/' + encodeURIComponent(ma)); el.innerHTML = chiTiet(hd, chiXem); }
       catch (e) { hd = null; el.innerHTML = `<div class="empty-state"><i class="bi bi-exclamation-circle"></i>${esc(e.message)}</div>`; }
     }
     async function thanhToan(b) {
@@ -93,7 +95,7 @@
     el.addEventListener('click', async e => {
       const b = e.target.closest('button');
       if (!b || !hd) return;
-      if (b.dataset.thanhToan) {
+      if (b.dataset.thanhToan && !chiXem) {
         if (dangThu) return; // bấm lần hai khi hộp xác nhận hoặc yêu cầu trước chưa xong
         dangThu = true;
         try { await thanhToan(b); } finally { dangThu = false; }
