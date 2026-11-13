@@ -25,11 +25,30 @@ public class Db
         return conn;
     }
 
+    private const int SoLanThuToiDa = 3;
+
     /// <summary>
     /// Chạy một khối công việc trong transaction: commit khi xong, rollback khi có lỗi.
+    /// Nếu SQL Server chọn transaction này làm nạn nhân deadlock (lỗi 1205) thì chạy lại cả khối, tối đa 3 lần:
+    /// toàn bộ thay đổi đã bị rollback nên chạy lại là an toàn. Khối công việc không được làm gì ngoài database.
     /// </summary>
     public async Task<T> InTransactionAsync<T>(Func<SqlConnection, SqlTransaction, Task<T>> work,
         IsolationLevel isolation = IsolationLevel.ReadCommitted, CancellationToken ct = default)
+    {
+        for (int lan = 1; ; lan++)
+        {
+            try
+            {
+                return await ChayMotLan(work, isolation, ct);
+            }
+            catch (SqlException ex) when (ex.Number == 1205 && lan < SoLanThuToiDa)
+            {
+                await Task.Delay(Random.Shared.Next(20, 80) * lan, ct);
+            }
+        }
+    }
+
+    private async Task<T> ChayMotLan<T>(Func<SqlConnection, SqlTransaction, Task<T>> work, IsolationLevel isolation, CancellationToken ct)
     {
         await using var conn = await OpenAsync(ct);
         await using var tx = (SqlTransaction)await conn.BeginTransactionAsync(isolation, ct);
