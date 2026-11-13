@@ -103,7 +103,7 @@ function publicAccount() {
             <a href="chon-vai-tro.html" class="btn btn-soft"><i class="bi bi-person-badge me-1"></i>Chọn vai trò</a>`;
   const vao = nd.loai === 'NV'
     ? `<li><a class="dropdown-item" href="${Auth.trangChinh(nd)}"><i class="bi bi-grid-1x2 me-2"></i>Trang nội bộ</a></li>`
-    : '';
+    : `<li><a class="dropdown-item" href="lich-hen-cua-toi.html"><i class="bi bi-list-check me-2"></i>Lịch hẹn của tôi</a></li>`;
   return `
             <div class="dropdown">
               <button class="btn btn-soft dropdown-toggle w-100" data-bs-toggle="dropdown" aria-expanded="false">
