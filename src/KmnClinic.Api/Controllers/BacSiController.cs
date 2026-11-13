@@ -16,13 +16,24 @@ namespace KmnClinic.Api.Controllers;
 public class BacSiController : ControllerBase
 {
     private readonly BacSiRepository _repo;
-    public BacSiController(BacSiRepository repo) => _repo = repo;
+    private readonly LeTanRepository _lichHen;
+    public BacSiController(BacSiRepository repo, LeTanRepository lichHen) => (_repo, _lichHen) = (repo, lichHen);
 
     private string MaBs => User.MaNguoiDung();
     private static AppException KhongThay() => AppException.NotFound("Không tìm thấy hồ sơ khám của bạn.");
 
     [HttpGet("tong-quan")]
     public Task<TongQuanBacSi> TongQuan(CancellationToken ct) => _repo.TongQuanAsync(MaBs, DateTime.Now, ct);
+
+    /// <summary>Lịch hẹn của khách vào các ca của chính bác sĩ (chỉ xem). Bộ lọc bác sĩ luôn ép theo token.</summary>
+    [HttpGet("lich-hen")]
+    public Task<TrangKetQua<LichHenLeTanItem>> LichHen([FromQuery] LichHenLeTanQuery tk, CancellationToken ct)
+    {
+        if (tk.TrangThai is { Length: > 0 } tt && !TrangThaiLichHen.TatCa.Contains(tt))
+            throw AppException.BadRequest("Trạng thái lịch hẹn không hợp lệ.");
+        tk.MaNv = MaBs;
+        return _lichHen.DanhSachLichHenAsync(tk, ct);
+    }
 
     [HttpGet("hang-cho")]
     public Task<List<HoSoBacSiItem>> HangCho(CancellationToken ct) => _repo.HangChoAsync(MaBs, ct);

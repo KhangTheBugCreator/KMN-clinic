@@ -29,15 +29,18 @@ public class BacSiRepository
 SELECT hs.ma_ho_so, hs.ngay_gio_kham, hs.trieu_chung, hs.chan_doan_benh, hs.ma_lich_hen,
        k.ma_kh, k.ho_ten_kh, k.gioi_tinh_kh, k.ngay_sinh_kh,
        (SELECT COUNT(*) FROM Chi_tiet_don_thuoc x WHERE x.ma_ho_so = hs.ma_ho_so),
-       {BieuThucTrangThai}, d.ma_hoa_don, d.tong_tien
+       {BieuThucTrangThai}, d.ma_hoa_don, d.tong_tien, bs.ma_nv, bs.ho_ten_nv, kh.ten_khoa
 FROM Ho_so_kham hs
 JOIN Khach_hang k ON k.ma_kh = hs.ma_kh
+JOIN Nhan_vien bs ON bs.ma_nv = hs.ma_nv_kham
+JOIN Khoa kh ON kh.ma_khoa = bs.ma_khoa
 LEFT JOIN Hoa_don d ON d.ma_ho_so = hs.ma_ho_so";
 
     private static HoSoBacSiItem DocDong(SqlDataReader r) => new(
         r.GetString(0), r.GetDateTime(1), r.GetString(2), r.GetStringOrNull(3), r.GetStringOrNull(4),
         r.GetString(5), r.GetString(6), r.GetString(7), DateOnly.FromDateTime(r.GetDateTime(8)),
-        r.GetInt32(9), r.GetString(10), r.GetStringOrNull(11), r.IsDBNull(12) ? null : r.GetDecimal(12));
+        r.GetInt32(9), r.GetString(10), r.GetStringOrNull(11), r.IsDBNull(12) ? null : r.GetDecimal(12),
+        r.GetString(13), r.GetString(14), r.GetString(15));
 
     /* ---------- Đọc ---------- */
 
@@ -51,10 +54,14 @@ ORDER BY hs.ngay_gio_kham, hs.ma_ho_so").P("@bs", SqlDbType.VarChar, 10, maBs);
         return await DocDanhSach(cmd, DocDong, ct);
     }
 
-    public async Task<TrangKetQua<HoSoBacSiItem>> LichSuAsync(string maBs, HoSoBacSiQuery q, CancellationToken ct)
+    /// <summary>
+    /// Danh sách hồ sơ có lọc. maBs null chỉ dùng cho quản trị viên (xem mọi bác sĩ, chỉ đọc);
+    /// controller bác sĩ luôn truyền mã lấy từ token.
+    /// </summary>
+    public async Task<TrangKetQua<HoSoBacSiItem>> LichSuAsync(string? maBs, HoSoBacSiQuery q, CancellationToken ct)
     {
         var where = $@"
-WHERE hs.ma_nv_kham = @bs
+WHERE (@bs IS NULL OR hs.ma_nv_kham = @bs)
   AND (@tu IS NULL OR hs.ngay_gio_kham >= @tu) AND (@den IS NULL OR hs.ngay_gio_kham < DATEADD(day, 1, @den))
   AND (@q IS NULL OR hs.ma_ho_so LIKE @q OR k.ho_ten_kh LIKE @q OR k.ma_kh LIKE @q OR hs.chan_doan_benh LIKE @q)
   AND (@tt IS NULL OR {BieuThucTrangThai} = @tt)";
@@ -71,14 +78,17 @@ OFFSET @bo ROWS FETCH NEXT @lay ROWS ONLY")).P("@bo", q.BoQua).P("@lay", q.CoTra
         return new(await DocDanhSach(cmd, DocDong, ct), total, q.TrangHopLe, q.CoTrangHopLe);
     }
 
-    /// <summary>Chi tiết hồ sơ kèm đơn thuốc và hóa đơn. Null nếu không có hoặc không phải hồ sơ của bác sĩ này.</summary>
-    public async Task<HoSoChiTiet?> ChiTietAsync(string ma, string maBs, CancellationToken ct)
+    /// <summary>
+    /// Chi tiết hồ sơ kèm đơn thuốc và hóa đơn. Null nếu không có hoặc không phải hồ sơ của bác sĩ này.
+    /// maBs null: quản trị viên xem mọi hồ sơ (chỉ đọc).
+    /// </summary>
+    public async Task<HoSoChiTiet?> ChiTietAsync(string ma, string? maBs, CancellationToken ct)
     {
         await using var conn = await _db.OpenAsync(ct);
         return await ChiTietAsync(conn, null, ma, maBs, ct);
     }
 
-    private static async Task<HoSoChiTiet?> ChiTietAsync(SqlConnection conn, SqlTransaction? tx, string ma, string maBs, CancellationToken ct)
+    private static async Task<HoSoChiTiet?> ChiTietAsync(SqlConnection conn, SqlTransaction? tx, string ma, string? maBs, CancellationToken ct)
     {
         HoSoChiTiet? hs;
         await using (var cmd = conn.Cmd($@"
@@ -91,7 +101,7 @@ JOIN Nhan_vien bs ON bs.ma_nv = hs.ma_nv_kham
 JOIN Khoa kh ON kh.ma_khoa = bs.ma_khoa
 JOIN Nhan_vien lt ON lt.ma_nv = hs.ma_nv_tiep_nhan
 LEFT JOIN Hoa_don d ON d.ma_ho_so = hs.ma_ho_so
-WHERE hs.ma_ho_so = @ma AND hs.ma_nv_kham = @bs", tx).P("@ma", SqlDbType.VarChar, 10, ma).P("@bs", SqlDbType.VarChar, 10, maBs))
+WHERE hs.ma_ho_so = @ma AND (@bs IS NULL OR hs.ma_nv_kham = @bs)", tx).P("@ma", SqlDbType.VarChar, 10, ma).P("@bs", SqlDbType.VarChar, 10, maBs))
         await using (var r = await cmd.ExecuteReaderAsync(ct))
         {
             if (!await r.ReadAsync(ct)) return null;
