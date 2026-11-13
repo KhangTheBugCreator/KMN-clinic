@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Khám bệnh – KMN Clinic</title>
+  <link rel="stylesheet" href="../assets/vendor/fonts/fonts.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap-icons/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="../assets/css/theme.css">
+  <link rel="stylesheet" href="../assets/css/admin.css">
+</head>
+<body class="admin" data-layout="admin" data-vai-tro="BacSi" data-search="Tìm nhanh...">
+  <div class="admin-shell" id="admin-shell">
+    <div class="main">
+      <div id="topnav"></div>
+      <div class="content">
+        <div class="page-head">
+          <div><nav aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="dashboard-bac-si.html">Khám bệnh</a></li><li class="breadcrumb-item active">Hàng chờ khám</li></ol></nav>
+            <h1>Hàng chờ khám</h1><span class="text-muted-kmn small">Hoàn tất khám sẽ lập hóa đơn chờ thu ngân và khóa hồ sơ, không sửa được nữa.</span></div>
+          <a class="btn btn-soft" href="ho-so-cua-toi.html"><i class="bi bi-journal-medical me-1"></i>Hồ sơ của tôi</a>
+        </div>
+        <div class="row g-3">
+          <div class="col-xl-4">
+            <div class="card-kmn panel" style="height:auto">
+              <div class="panel-title"><h2>Bệnh nhân chờ</h2>
+                <button type="button" class="btn btn-sm btn-soft" id="btnTaiHangCho" aria-label="Tải lại hàng chờ"><i class="bi bi-arrow-clockwise"></i></button></div>
+              <div id="hangCho"></div>
+            </div>
+          </div>
+          <div class="col-xl-8">
+            <div id="khungKham"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/api.js"></script>
+  <script src="../assets/js/ui.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/danh-sach.js"></script>
+  <script src="../assets/js/bac-si.js"></script>
+  <script src="../assets/js/pages/kham-benh.js"></script>
+</body>
+</html>

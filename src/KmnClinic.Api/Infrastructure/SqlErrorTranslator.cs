@@ -23,6 +23,7 @@ public static class SqlErrorTranslator
         ["UQ_LICH_LAM_VIEC_phong_ca_ngay"] = "Phòng này đã được xếp lịch ở ca đó trong ngày.",
         ["UQ_Thuoc_ten_nsx_ham_luong"] = "Thuốc cùng tên, nhà sản xuất và hàm lượng đã tồn tại.",
         ["UQ_Hoa_don_ma_ho_so"] = "Hồ sơ khám này đã có hóa đơn.",
+        ["PK_Chi_tiet_don_thuoc"] = "Thuốc này đã có trong đơn.",
         ["UX_Ho_so_kham_ma_lich_hen"] = "Lịch hẹn này đã được tiếp nhận thành hồ sơ khám.",
         ["CK_Ca_lam_viec_gio"] = "Giờ bắt đầu ca phải nhỏ hơn giờ kết thúc.",
         ["CK_CTDT_so_luong"] = "Số lượng thuốc phải lớn hơn 0.",
