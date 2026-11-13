@@ -8,6 +8,7 @@ services:
     environment:
       ACCEPT_EULA: "Y"
       MSSQL_PID: Express
+      MSSQL_MEMORY_LIMIT_MB: ${SQL_RAM_MB:-1200}   # giới hạn RAM cho SQL Server, chừa phần cho web (VPS 2GB)
       MSSQL_SA_PASSWORD: ${SA_PASSWORD:?Thiếu SA_PASSWORD trong deploy/.env}
       TZ: Asia/Ho_Chi_Minh
     volumes:

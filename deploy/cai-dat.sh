@@ -4,6 +4,12 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 command -v docker >/dev/null || { echo "Chưa có Docker. Cài bằng: curl -fsSL https://get.docker.com | sh"; exit 1; }
+# VPS nhỏ (2GB RAM): tạo 2GB swap một lần để máy không bị treo khi RAM tăng đột ngột
+if [ "$(swapon --show --noheadings | wc -l)" = "0" ] && [ ! -f /swapfile ]; then
+  echo "Tạo 2GB swap..."
+  fallocate -l 2G /swapfile && chmod 600 /swapfile && mkswap /swapfile >/dev/null && swapon /swapfile
+  grep -q '^/swapfile' /etc/fstab || echo '/swapfile none swap sw 0 0' >> /etc/fstab
+fi
 if [ ! -f .env ]; then
   ngau() { tr -dc 'A-Za-z0-9' < /dev/urandom | head -c "$1"; }
   cat > .env <<EOT
