@@ -101,7 +101,8 @@
   function badgeTrangThai(tt) {
     const map = {
       'Đã đặt': 'st-dat', 'Đã xác nhận': 'st-xacnhan', 'Đã khám': 'st-kham', 'Đã hủy': 'st-huy',
-      'Chưa thanh toán': 'st-chua-tt', 'Đã thanh toán': 'st-kham'
+      'Chưa thanh toán': 'st-chua-tt', 'Đã thanh toán': 'st-kham',
+      'Chờ khám': 'st-cho', 'Đang khám': 'st-xacnhan', 'Hoàn tất': 'st-kham'
     };
     return `<span class="badge-st ${map[tt] || 'st-huy'}">${esc(tt)}</span>`;
   }

@@ -130,3 +130,4 @@ body.admin { background: #f4f7fb; }
 .lich-thang .o-ngay.hom-nay .so-ngay { background:var(--kmn-blue); color:#fff; border-radius:999px; padding:0 .45rem; }
 .lich-thang .dong-ngan { font-size:.72rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; border-left:3px solid var(--kmn-blue); padding-left:.3rem; margin-top:.2rem; }
 .thu-chon .btn { min-width:46px; }
+.min-w-0 { min-width: 0; }

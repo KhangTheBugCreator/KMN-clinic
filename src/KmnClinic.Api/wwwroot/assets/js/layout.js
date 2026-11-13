@@ -179,7 +179,7 @@ const ROLE_MENU = {
     icon: 'bi-heart-pulse',
     groups: [
       ['Tổng quan', [['bi-grid-1x2', 'Dashboard', 'dashboard-bac-si.html']]],
-      ['Khám bệnh', [['bi-hourglass-split', 'Hàng chờ khám', '#'], ['bi-journal-medical', 'Hồ sơ của tôi', '#'], ['bi-capsule', 'Tra cứu thuốc', 'thuoc.html']]],
+      ['Khám bệnh', [['bi-hourglass-split', 'Hàng chờ khám', 'kham-benh.html'], ['bi-journal-medical', 'Hồ sơ của tôi', 'ho-so-cua-toi.html'], ['bi-capsule', 'Tra cứu thuốc', 'thuoc.html']]],
       ['Lịch', [['bi-calendar3', 'Lịch làm việc của tôi', 'lich-lam-viec.html'], ['bi-calendar-check', 'Lịch hẹn của tôi', '#']]]
     ]
   },
