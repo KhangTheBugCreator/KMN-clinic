@@ -161,7 +161,7 @@ const ROLE_MENU = {
   QuanTriVien: {
     icon: 'bi-shield-check',
     groups: [
-      ['Tổng quan', [['bi-grid-1x2', 'Dashboard', 'dashboard-quan-tri.html'], ['bi-bar-chart-line', 'Thống kê', '#'], ['bi-file-earmark-excel', 'Báo cáo Excel', '#']]],
+      ['Tổng quan', [['bi-grid-1x2', 'Dashboard', 'dashboard-quan-tri.html'], ['bi-file-earmark-excel', 'Báo cáo Excel', 'bao-cao.html']]],
       ['Danh mục', [['bi-diagram-3', 'Khoa', 'danh-muc-khoa.html'], ['bi-door-open', 'Phòng làm việc', 'danh-muc-phong.html'], ['bi-clock-history', 'Ca làm việc', 'danh-muc-ca.html'], ['bi-capsule', 'Thuốc', 'thuoc.html']]],
       ['Con người', [['bi-person-badge', 'Nhân viên', 'nhan-vien.html'], ['bi-people', 'Khách hàng', 'khach-hang.html']]],
       ['Vận hành', [['bi-calendar3', 'Lịch làm việc', 'lich-lam-viec.html'], ['bi-calendar-check', 'Lịch hẹn', '#'], ['bi-journal-medical', 'Hồ sơ khám', '#'], ['bi-receipt', 'Hóa đơn', '#']]]

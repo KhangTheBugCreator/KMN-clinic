@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Báo cáo Excel – KMN Clinic</title>
+  <link rel="stylesheet" href="../assets/vendor/fonts/fonts.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap-icons/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="../assets/css/theme.css">
+  <link rel="stylesheet" href="../assets/css/admin.css">
+</head>
+<body class="admin" data-layout="admin" data-vai-tro="QuanTriVien" data-search="Tìm nhanh...">
+  <div class="admin-shell" id="admin-shell">
+    <div class="main">
+      <div id="topnav"></div>
+      <div class="content">
+        <div class="page-head">
+          <div><nav aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="dashboard-quan-tri.html">Tổng quan</a></li><li class="breadcrumb-item active">Báo cáo Excel</li></ol></nav>
+            <h1>Báo cáo Excel</h1><span class="text-muted-kmn small">Chọn báo cáo và kỳ, xem trước rồi xuất file .xlsx. Doanh thu chỉ tính hóa đơn đã thanh toán.</span></div>
+        </div>
+        <div class="row g-3 mb-3" id="dsBaoCao"></div>
+        <div class="card-kmn panel p-0" style="height:auto">
+          <div class="d-flex flex-wrap gap-2 p-3 pb-0 align-items-center justify-content-between">
+          <div class="d-flex flex-wrap gap-2 align-items-center">
+            <select id="kyNhanh" class="form-select form-select-sm" style="width:auto" aria-label="Chọn kỳ">
+              <option value="thang-nay">Tháng này</option><option value="thang-truoc">Tháng trước</option><option value="hom-nay">Hôm nay</option>
+              <option value="7-ngay">7 ngày qua</option><option value="30-ngay">30 ngày qua</option><option value="nam-nay">Năm nay</option><option value="tuy-chon">Tùy chọn</option></select>
+            <input id="tuNgay" type="date" class="form-control form-control-sm" style="width:auto" aria-label="Từ ngày">
+            <span class="small text-muted-kmn">–</span>
+            <input id="denNgay" type="date" class="form-control form-control-sm" style="width:auto" aria-label="Đến ngày">
+            </div>
+            <div class="d-flex gap-2">
+              <button type="button" class="btn btn-soft btn-sm" id="btnXem"><i class="bi bi-eye me-1"></i>Xem trước</button>
+              <button type="button" class="btn btn-success btn-sm" id="btnXuat"><i class="bi bi-file-earmark-excel me-1"></i>Xuất Excel</button></div>
+          </div>
+          <div class="alert alert-danger small d-none mx-3 mt-3 mb-0" id="loiKy" role="alert"></div>
+          <div class="px-3 pt-3"><h2 class="h6 mb-0" id="tieuDeXem"></h2><span class="small text-muted-kmn" id="moTaXem"></span></div>
+          <div class="table-responsive mt-2"><table class="table table-kmn table-sm mb-0"><thead id="dauBang"></thead><tbody id="bang"></tbody><tfoot id="chanBang"></tfoot></table></div>
+          <div class="p-3 small text-muted-kmn" id="ghiChu"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="../assets/vendor/exceljs/exceljs.min.js"></script>
+  <script src="../assets/js/api.js"></script>
+  <script src="../assets/js/ui.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/thong-ke.js"></script>
+  <script src="../assets/js/pages/bao-cao.js"></script>
+</body>
+</html>
