@@ -187,7 +187,7 @@ const ROLE_MENU = {
     icon: 'bi-cash-coin',
     groups: [
       ['Tổng quan', [['bi-grid-1x2', 'Dashboard', 'dashboard-thu-ngan.html']]],
-      ['Thanh toán', [['bi-receipt', 'Hóa đơn chờ thu', '#'], ['bi-check2-circle', 'Lịch sử thanh toán', '#']]],
+      ['Thanh toán', [['bi-receipt', 'Hóa đơn chờ thu', 'hoa-don-cho-thu.html'], ['bi-check2-circle', 'Lịch sử thanh toán', 'lich-su-thanh-toan.html']]],
       ['Tra cứu', [['bi-capsule', 'Thuốc', 'thuoc.html']]]
     ]
   }
