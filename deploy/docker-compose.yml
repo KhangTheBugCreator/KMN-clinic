@@ -1,0 +1,50 @@
+# Chạy KMN Clinic 24/7 trên một máy chủ Linux có Docker: web + SQL Server 2025 Express.
+# Cách dùng: xem mục "Đưa lên máy chủ chạy 24/7" trong README (chạy deploy/cai-dat.sh).
+name: kmn-clinic
+
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2025-latest
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: Express
+      MSSQL_MEMORY_LIMIT_MB: ${SQL_RAM_MB:-1200}   # giới hạn RAM cho SQL Server, chừa phần cho web (VPS 2GB)
+      MSSQL_SA_PASSWORD: ${SA_PASSWORD:?Thiếu SA_PASSWORD trong deploy/.env}
+      TZ: Asia/Ho_Chi_Minh
+    volumes:
+      - dulieu-sql:/var/opt/mssql        # dữ liệu nằm ở volume, không mất khi cập nhật hay khởi động lại
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -C -S localhost -U sa -P \"$$MSSQL_SA_PASSWORD\" -Q 'SELECT 1' -b -o /dev/null"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+    # Không mở cổng 1433 ra ngoài: chỉ web trong cùng mạng Docker kết nối được
+
+  # Chạy một lần: tạo database PHONGKHAM nếu chưa có (cấu trúc + dữ liệu mẫu), có rồi thì bỏ qua
+  khoi-tao-db:
+    image: mcr.microsoft.com/mssql/server:2025-latest
+    depends_on:
+      db: { condition: service_healthy }
+    environment:
+      MSSQL_SA_PASSWORD: ${SA_PASSWORD}
+      NAP_DU_LIEU_MAU: ${NAP_DU_LIEU_MAU:-1}
+    volumes:
+      - ../database:/database:ro
+      - ./khoi-tao-db.sh:/khoi-tao-db.sh:ro
+    entrypoint: ["/bin/bash", "/khoi-tao-db.sh"]
+    restart: "no"
+
+  web:
+    build: { context: .., dockerfile: Dockerfile }
+    depends_on:
+      khoi-tao-db: { condition: service_completed_successfully }
+    environment:
+      ConnectionStrings__PhongKham: "Server=db,1433;Database=PHONGKHAM;User Id=sa;Password=${SA_PASSWORD};TrustServerCertificate=True"
+      Jwt__Key: ${JWT_KEY:?Thiếu JWT_KEY trong deploy/.env}
+    ports:
+      - "${CONG_WEB:-80}:8080"
+    restart: unless-stopped
+
+volumes:
+  dulieu-sql:

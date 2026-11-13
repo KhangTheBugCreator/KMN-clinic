@@ -1,0 +1,9 @@
+**/bin/
+**/obj/
+.git/
+.vs/
+.vscode/
+tests/
+design/
+**/appsettings.*.local.json
+deploy/.env
