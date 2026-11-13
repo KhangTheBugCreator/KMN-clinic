@@ -50,6 +50,10 @@ public static class SqlErrorTranslator
         if (number is >= 50000 and <= 50999)
             return (StatusCodes.Status400BadRequest, message);
 
+        // Deadlock vẫn còn sau khi Db.InTransactionAsync đã thử lại
+        if (number == 1205)
+            return (StatusCodes.Status503ServiceUnavailable, "Hệ thống đang bận xử lý yêu cầu khác. Vui lòng thử lại sau giây lát.");
+
         if (number is 2627 or 2601)
             return (StatusCodes.Status409Conflict, TimThongBao(message) ?? "Dữ liệu bị trùng với bản ghi đã có.");
 

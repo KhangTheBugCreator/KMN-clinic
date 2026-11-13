@@ -171,7 +171,7 @@ const ROLE_MENU = {
     icon: 'bi-person-workspace',
     groups: [
       ['Tổng quan', [['bi-grid-1x2', 'Dashboard', 'dashboard-le-tan.html']]],
-      ['Tiếp đón', [['bi-calendar-check', 'Lịch hẹn', '#'], ['bi-person-plus', 'Tiếp nhận khách', '#'], ['bi-people', 'Khách hàng', 'khach-hang.html'], ['bi-journal-medical', 'Hồ sơ khám', '#']]],
+      ['Tiếp đón', [['bi-calendar-check', 'Lịch hẹn', 'lich-hen.html'], ['bi-person-plus', 'Tiếp nhận khách', 'tiep-nhan.html'], ['bi-people', 'Khách hàng', 'khach-hang.html']]],
       ['Tra cứu', [['bi-calendar3', 'Lịch làm việc bác sĩ', 'lich-lam-viec.html']]]
     ]
   },

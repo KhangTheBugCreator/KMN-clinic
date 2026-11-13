@@ -73,9 +73,13 @@ public class SqlTests
         await conn.OpenAsync();
         await using var tx = conn.BeginTransaction();
         var ma = await MaSoGenerator.TaoMaAsync(conn, tx, LoaiMa.NhanVien);
+        // Đọc số lớn nhất trong cùng transaction (bộ sinh mã đã khóa bảng), vì test khác có thể đang thêm nhân viên song song
+        await using var cmd = new SqlCommand(
+            "SELECT MAX(TRY_CAST(SUBSTRING(ma_nv, 3, 10) AS int)) FROM Nhan_vien WHERE ma_nv LIKE 'NV[0-9]%'", conn, tx);
+        var lonNhat = (int)(await cmd.ExecuteScalarAsync())!;
         tx.Rollback();
-        // Dữ liệu mẫu có NV0001..NV0005
-        Assert.Equal("NV0006", ma);
+        Assert.Equal("NV" + (lonNhat + 1).ToString("D4"), ma);
+        Assert.True(lonNhat >= 5); // dữ liệu mẫu có NV0001..NV0005
     }
 
     [Fact]
