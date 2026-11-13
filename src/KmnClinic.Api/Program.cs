@@ -23,6 +23,7 @@ builder.Services.AddScoped<LichHenRepository>();
 builder.Services.AddScoped<LeTanRepository>();
 builder.Services.AddScoped<BacSiRepository>();
 builder.Services.AddScoped<ThuNganRepository>();
+builder.Services.AddScoped<ThongKeRepository>();
 
 // ---------- Xác thực JWT + phân quyền theo vai trò ----------
 builder.Services

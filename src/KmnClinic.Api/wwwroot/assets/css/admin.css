@@ -131,3 +131,9 @@ body.admin { background: #f4f7fb; }
 .lich-thang .dong-ngan { font-size:.72rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; border-left:3px solid var(--kmn-blue); padding-left:.3rem; margin-top:.2rem; }
 .thu-chon .btn { min-width:46px; }
 .min-w-0 { min-width: 0; }
+/* Thẻ chọn (dùng ở tiếp nhận vãng lai, báo cáo) – giống public.css */
+.pick-card { cursor: pointer; border: 2px solid var(--kmn-border); border-radius: var(--radius); padding: 1rem; height: 100%;
+  transition: border-color .15s, background .15s; background: #fff; }
+.pick-card:hover { border-color: #b9d6f6; }
+.pick-card.selected { border-color: var(--kmn-blue); background: var(--kmn-sky-2); }
+.pick-card.disabled { opacity: .5; cursor: not-allowed; }
