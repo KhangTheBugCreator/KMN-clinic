@@ -148,3 +148,8 @@ body.public { background: var(--kmn-white); }
 /* Chống xuống dòng trong menu và nút */
 .site-header .nav-link, .site-header .btn { white-space: nowrap; }
 .doctor-card .avatar-lg { width: 72px; height: 72px; }
+
+/* M4: ô lịch bấm được để đặt lịch */
+a.slot { color: var(--kmn-text); transition: border-color .15s, background .15s; }
+a.slot:hover { border-color: var(--kmn-blue); background: var(--kmn-sky); }
+a.week-chip:hover { background: #d7e8fb; }

@@ -14,7 +14,16 @@ const SITE = {
   workingHours: [
     { days: 'Thứ 2 – Thứ 6', hours: '7:00 – 17:00' },
     { days: 'Thứ 7 – Chủ nhật', hours: '8:00 – 16:00' }
-  ]
+  ],
+  heroTitle: 'Chăm sóc sức khỏe tận tâm cho cả gia đình',
+  heroSubtitle: 'Tra cứu bác sĩ, xem lịch làm việc và đặt lịch khám trực tuyến chỉ trong vài bước.',
+  // Đoạn giới thiệu do chủ phòng khám cung cấp; để trống thì trang chủ không hiện đoạn văn này.
+  about: '',
+  googleMapsEmbedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1124.5380450024638!2d106.34575418830666!3d9.92345159459746!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31a0175ea296facb%3A0x55ded92e29068221!2zxJDhuqFpIEjhu41jIFRyw6AgVmluaA!5e1!3m2!1svi!2s!4v1794408505176!5m2!1svi!2s',
+  // Mã bác sĩ nổi bật trên trang chủ; để trống thì lấy các bác sĩ có lịch gần nhất.
+  featuredDoctorIds: [],
+  // Ảnh riêng cho từng khoa, ví dụ { K0001: 'khoa/noi.svg' } (đường dẫn trong assets/img); khoa chưa có ảnh dùng khoa-1..4 xoay vòng.
+  khoaImages: {}
 };
 
 /* Đường dẫn gốc tới thư mục assets, tính theo vị trí trang */
