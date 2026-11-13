@@ -277,11 +277,5 @@ function adminTopnav(user) {
 
     // Ảnh đại diện: mọi <img data-avatar> đều đi qua renderAvatar
     document.querySelectorAll('img[data-avatar]').forEach(img => renderAvatar(img, img.dataset.avatar));
-
-    // Trang còn dùng dữ liệu mẫu (chưa nối API) có nhãn nhắc
-    if (body.dataset.mau === '1') {
-      body.insertAdjacentHTML('beforeend',
-        '<div class="design-ribbon"><i class="bi bi-brush me-1"></i>Nội dung mẫu · chưa nối dữ liệu</div>');
-    }
   });
 })();

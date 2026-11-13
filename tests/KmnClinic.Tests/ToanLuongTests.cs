@@ -10,19 +10,13 @@ namespace KmnClinic.Tests;
 /// M10: một lượt khám đi hết các vai trò qua API thật: khách đặt lịch → lễ tân tiếp nhận → bác sĩ khám, kê đơn, hoàn tất
 /// → thu ngân thu tiền, trừ kho → quản trị viên và bác sĩ xem lại (chỉ đọc). Dùng ca tối nay và thuốc tạm, xóa hết ở cuối.
 /// </summary>
+[Collection("ThongKe")] // chạy riêng, không song song: dùng chung bác sĩ NV0004 và phòng P0003 với các test khác
 public class ToanLuongTests : IClassFixture<TestApp>
 {
     private readonly TestApp _app;
     public ToanLuongTests(TestApp app) => _app = app;
 
-    private static async Task<object?> Sql(string sql, params (string, object)[] ps)
-    {
-        await using var conn = new SqlConnection(TestApp.ChuoiKetNoi);
-        await conn.OpenAsync();
-        await using var cmd = new SqlCommand(sql, conn);
-        foreach (var (n, v) in ps) cmd.Parameters.AddWithValue(n, v);
-        return await cmd.ExecuteScalarAsync();
-    }
+    private static Task<object?> Sql(string sql, params (string, object)[] ps) => TestApp.SqlAsync(sql, ps);
 
     private HttpClient VoiToken(string token)
     {
@@ -100,6 +94,11 @@ public class ToanLuongTests : IClassFixture<TestApp>
             // Sau khi thanh toán hồ sơ bị khóa
             Assert.Equal(HttpStatusCode.Conflict, (await bs.PostAsJsonAsync($"/api/bac-si/ho-so/{hs}/don-thuoc",
                 new { maThuoc = thuoc, soLuong = 1, lieuDung = "x" })).StatusCode);
+
+            // Bộ lọc lịch sử của bác sĩ có tác dụng thật (từng bị binder bỏ qua vì tham số tên q)
+            Assert.Equal(1, (await bs.GetFromJsonAsync<JsonElement>($"/api/bac-si/ho-so?q={hs}")).GetProperty("total").GetInt32());
+            Assert.Equal(0, (await bs.GetFromJsonAsync<JsonElement>("/api/bac-si/ho-so?q=KHONG-CO-HO-SO-NAY")).GetProperty("total").GetInt32());
+            Assert.Equal(0, (await bs.GetFromJsonAsync<JsonElement>($"/api/bac-si/ho-so?q={hs}&trangThai=Chờ khám")).GetProperty("total").GetInt32());
 
             // 5. Quản trị viên xem lại cả chuỗi (chỉ đọc)
             var qt = await NhanVien("NV0001");

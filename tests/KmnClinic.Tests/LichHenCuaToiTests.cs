@@ -15,14 +15,7 @@ public class LichHenCuaToiTests : IClassFixture<TestApp>
     private readonly TestApp _app;
     public LichHenCuaToiTests(TestApp app) => _app = app;
 
-    private static async Task<object?> Sql(string sql, params (string, object)[] ps)
-    {
-        await using var conn = new SqlConnection(TestApp.ChuoiKetNoi);
-        await conn.OpenAsync();
-        await using var cmd = new SqlCommand(sql, conn);
-        foreach (var (n, v) in ps) cmd.Parameters.AddWithValue(n, v);
-        return await cmd.ExecuteScalarAsync();
-    }
+    private static Task<object?> Sql(string sql, params (string, object)[] ps) => TestApp.SqlAsync(sql, ps);
 
     private static string Ngay(int sauSoNgay) => DateTime.Today.AddDays(sauSoNgay).ToString("yyyy-MM-dd");
 

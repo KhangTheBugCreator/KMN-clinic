@@ -25,14 +25,7 @@ public class NhanSuTests : IClassFixture<TestApp>
     private static async Task<string> DocLoi(HttpResponseMessage res)
         => (await res.Content.ReadFromJsonAsync<JsonElement>()).GetProperty("message").GetString()!;
 
-    private static async Task<object?> Sql(string sql, params (string, object)[] ps)
-    {
-        await using var conn = new SqlConnection(TestApp.ChuoiKetNoi);
-        await conn.OpenAsync();
-        await using var cmd = new SqlCommand(sql, conn);
-        foreach (var (n, v) in ps) cmd.Parameters.AddWithValue(n, v);
-        return await cmd.ExecuteScalarAsync();
-    }
+    private static Task<object?> Sql(string sql, params (string, object)[] ps) => TestApp.SqlAsync(sql, ps);
 
     /// <summary>Số điện thoại ngẫu nhiên đầu 08 (dữ liệu mẫu dùng 09).</summary>
     private static string Sdt() => "08" + Random.Shared.Next(0, 100_000_000).ToString("D8");

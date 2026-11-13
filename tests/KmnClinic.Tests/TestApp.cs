@@ -19,6 +19,29 @@ public class TestApp : WebApplicationFactory<Program>
         Environment.GetEnvironmentVariable("KMN_TEST_DB")
         ?? throw new InvalidOperationException("Đặt biến môi trường KMN_TEST_DB là chuỗi kết nối tới database kiểm thử.");
 
+    /// <summary>
+    /// Chạy một câu SQL chuẩn bị hoặc dọn dữ liệu kiểm thử, trả giá trị đầu tiên. Các lớp test chạy song song nên
+    /// lệnh dọn dẹp có thể bị SQL Server chọn làm nạn nhân deadlock (1205): thử lại tối đa 5 lần.
+    /// </summary>
+    public static async Task<object?> SqlAsync(string sql, params (string, object)[] ps)
+    {
+        for (var lan = 1; ; lan++)
+        {
+            try
+            {
+                await using var conn = new Microsoft.Data.SqlClient.SqlConnection(ChuoiKetNoi);
+                await conn.OpenAsync();
+                await using var cmd = new Microsoft.Data.SqlClient.SqlCommand(sql, conn);
+                foreach (var (n, v) in ps) cmd.Parameters.AddWithValue(n, v);
+                return await cmd.ExecuteScalarAsync();
+            }
+            catch (Microsoft.Data.SqlClient.SqlException e) when (e.Number == 1205 && lan < 5)
+            {
+                await Task.Delay(50 * lan);
+            }
+        }
+    }
+
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         Environment.SetEnvironmentVariable("ConnectionStrings__PhongKham", ChuoiKetNoi);

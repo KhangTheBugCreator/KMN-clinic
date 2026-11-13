@@ -39,13 +39,14 @@ public class BacSiController : ControllerBase
     public Task<List<HoSoBacSiItem>> HangCho(CancellationToken ct) => _repo.HangChoAsync(MaBs, ct);
 
     [HttpGet("ho-so")]
-    public Task<TrangKetQua<HoSoBacSiItem>> LichSu([FromQuery] HoSoBacSiQuery q, CancellationToken ct)
+    // Tham số đặt tên tk, không đặt q: ô tìm kiếm cũng tên q nên binder sẽ đọc nhầm tiền tố q.* và bỏ qua mọi bộ lọc
+    public Task<TrangKetQua<HoSoBacSiItem>> LichSu([FromQuery] HoSoBacSiQuery tk, CancellationToken ct)
     {
-        if (q.TrangThai is { Length: > 0 } tt && !TrangThaiHoSo.TatCa.Contains(tt))
+        if (tk.TrangThai is { Length: > 0 } tt && !TrangThaiHoSo.TatCa.Contains(tt))
             throw AppException.BadRequest("Trạng thái hồ sơ không hợp lệ.");
-        if (q.TuNgay is { } tu && q.DenNgay is { } den && tu > den)
+        if (tk.TuNgay is { } tu && tk.DenNgay is { } den && tu > den)
             throw AppException.BadRequest("Từ ngày phải trước hoặc bằng đến ngày.");
-        return _repo.LichSuAsync(MaBs, q, ct);
+        return _repo.LichSuAsync(MaBs, tk, ct);
     }
 
     [HttpGet("ho-so/{ma}")]
