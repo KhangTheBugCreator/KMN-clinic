@@ -77,6 +77,8 @@ Web và SQL Server 2025 Express chạy trong Docker, tự bật lại khi máy k
    `NAP_DU_LIEU_MAU=0` trong `deploy/.env` trước lần chạy đầu.
 3. Mở `http://<IP máy chủ>/chon-vai-tro.html`.
 
+**Bật https với tên miền riêng:** trỏ bản ghi A của `@` và `www` về IP máy chủ, rồi chạy `sudo bash deploy/cai-dat.sh tenmien.com`. Caddy tự xin và tự gia hạn chứng chỉ Let's Encrypt miễn phí. Chỉ cần làm một lần, các lần cập nhật sau chạy `cai-dat.sh` không cần ghi lại tên miền.
+
 **Cập nhật khi có code mới:** `cd KMN-clinic && git pull && sudo bash deploy/cai-dat.sh`. Dữ liệu được giữ nguyên
 (nằm trong volume Docker `kmn-clinic_dulieu-sql`); database đã có thì không bị tạo lại.
 

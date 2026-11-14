@@ -1,5 +1,6 @@
 #!/bin/bash
 # Cài hoặc cập nhật KMN Clinic trên máy chủ Linux có Docker. Chạy từ thư mục gốc repo:  bash deploy/cai-dat.sh
+# Có tên miền (đã trỏ bản ghi A về IP máy chủ) thì bật https:  bash deploy/cai-dat.sh kmnclinic.click
 # Lần đầu: tạo deploy/.env với mật khẩu SQL và khóa JWT ngẫu nhiên. Lần sau (sau git pull): build lại web, giữ nguyên dữ liệu.
 set -euo pipefail
 cd "$(dirname "$0")"
@@ -16,20 +17,27 @@ if [ ! -f .env ]; then
 # Bí mật của máy chủ này, KHÔNG đưa lên Git. Mất file này thì web không vào được database.
 SA_PASSWORD=Kmn$(ngau 20)!a1
 JWT_KEY=$(ngau 64)
-CONG_WEB=80
+
 # 1 = lần đầu nạp dữ liệu mẫu (NV0001 quản trị viên...), 0 = database trống
 NAP_DU_LIEU_MAU=1
 EOT
   chmod 600 .env
   echo "Đã tạo deploy/.env"
 fi
-docker compose up -d --build
+if [ -n "${1:-}" ]; then
+  ten=${1#http*://}; ten=${ten%%/*}; ten=${ten#www.}
+  sed -i '/^TEN_MIEN=/d' .env
+  echo "TEN_MIEN=\"$ten, www.$ten\"" >> .env
+  echo "Đã đặt tên miền: $ten (https tự bật nếu bản ghi A đã trỏ về máy chủ này)"
+fi
+docker compose up -d --build --remove-orphans
 echo "Đang chờ website khởi động..."
-cong=$(grep '^CONG_WEB=' .env | cut -d= -f2); cong=${cong:-80}
 for i in $(seq 1 60); do
-  if curl -fsS "http://localhost:$cong/api/he-thong/trang-thai" >/dev/null 2>&1; then
-    ip=$(hostname -I | awk '{print $1}')
-    echo "Website đang chạy: http://$ip:$cong (máy chủ thuê ngoài: thay $ip bằng IP công khai của máy chủ)"; exit 0
+  if curl -fsS "http://localhost:8080/api/he-thong/trang-thai" >/dev/null 2>&1; then
+    ten=$(grep '^TEN_MIEN=' .env | cut -d'"' -f2 | cut -d, -f1)
+    if [ -n "$ten" ]; then echo "Website đang chạy: https://$ten (lần đầu chờ 1-2 phút để có chứng chỉ https)"
+    else ip=$(hostname -I | awk '{print $1}'); echo "Website đang chạy: http://$ip (máy chủ thuê ngoài: thay $ip bằng IP công khai của máy chủ)"; fi
+    exit 0
   fi
   sleep 3
 done
