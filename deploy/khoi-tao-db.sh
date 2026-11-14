@@ -7,7 +7,7 @@ if [ "$co" = "1" ]; then echo "Database PHONGKHAM đã có, bỏ qua."; exit 0; 
 echo "Tạo cấu trúc database PHONGKHAM..."
 Q -i /database/cau-truc-phongkham.sql > /dev/null
 if [ "${NAP_DU_LIEU_MAU:-1}" = "1" ]; then
-  echo "Nạp dữ liệu mẫu (nhân viên, khách hàng, khoa, phòng, ca, thuốc)..."
-  Q -d PHONGKHAM -i /database/du-lieu-mau-phat-trien.sql > /dev/null
+  echo "Nạp dữ liệu mẫu đầy đủ (32 nhân viên, 10 khách, 30 thuốc, lịch làm việc 2 tháng, 2 hóa đơn)..."
+  Q -d PHONGKHAM -i /database/du-lieu-mau-day-du.sql > /dev/null
 fi
 echo "Xong."

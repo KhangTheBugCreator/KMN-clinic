@@ -7,7 +7,8 @@ quản trị viên, lễ tân, bác sĩ, thu ngân. Chạy trên database **PHON
 |---|---|
 | `src/KmnClinic.Api` | ASP.NET Core 8 Web API (ADO.NET, JWT) và giao diện trong `wwwroot` |
 | `tests/KmnClinic.Tests` | Kiểm thử tự động (xUnit), chạy trên database kiểm thử |
-| `database/du-lieu-mau-phat-trien.sql` | Dữ liệu mẫu để chạy thử, **không dùng cho phòng khám thật** |
+| `database/du-lieu-mau-phat-trien.sql` | Dữ liệu mẫu tối thiểu cho kiểm thử tự động, **không dùng cho phòng khám thật** |
+| `database/du-lieu-mau-day-du.sql` | Dữ liệu mẫu đầy đủ để trình diễn (32 nhân viên, 10 khách, 30 thuốc, lịch 2 tháng từ ngày chạy, 2 hóa đơn). Máy chủ Docker tự nạp file này. Chỉ chạy trên database trống |
 | `design/` | Bộ giao diện tĩnh đã duyệt ở Giai đoạn 2 (bản tham chiếu) |
 
 ## Yêu cầu
