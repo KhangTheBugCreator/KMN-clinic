@@ -1,0 +1,5 @@
+# Không có TEN_MIEN: chạy http ở cổng 80 (vào bằng IP). Có TEN_MIEN: https tự động cho các tên miền đó, http tự chuyển sang https.
+{$TEN_MIEN} {
+	encode gzip
+	reverse_proxy web:8080
+}

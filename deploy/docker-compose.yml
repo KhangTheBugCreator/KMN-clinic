@@ -43,8 +43,25 @@ services:
       ConnectionStrings__PhongKham: "Server=db,1433;Database=PHONGKHAM;User Id=sa;Password=${SA_PASSWORD};TrustServerCertificate=True"
       Jwt__Key: ${JWT_KEY:?Thiếu JWT_KEY trong deploy/.env}
     ports:
-      - "${CONG_WEB:-80}:8080"
+      - "127.0.0.1:8080:8080"   # chỉ mở trong máy chủ; người dùng vào qua Caddy bên dưới
+    restart: unless-stopped
+
+  # Cổng vào: nhận cổng 80/443, chuyển vào web. Có TEN_MIEN thì tự xin chứng chỉ https miễn phí (Let's Encrypt) và tự gia hạn.
+  caddy:
+    image: caddy:2
+    depends_on: [web]
+    environment:
+      TEN_MIEN: ${TEN_MIEN:-:80}   # trống = http cổng 80
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-du-lieu:/data
+      - caddy-cau-hinh:/config
     restart: unless-stopped
 
 volumes:
   dulieu-sql:
+  caddy-du-lieu:
+  caddy-cau-hinh:
